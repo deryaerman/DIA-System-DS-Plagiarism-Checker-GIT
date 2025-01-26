@@ -103,7 +103,10 @@ parameter
 
 // Very simple type spec to catch "int" (you can expand as needed)
 typeSpec
-    : 'int'
+    : 'int' 
+    | 'float'
+    | 'double'
+    | 'char'
     ;
 
 // --------------------------
@@ -132,6 +135,7 @@ unaryExpression
 primaryExpression
     : ID
     | INT
+    | FLOAT
     | '(' expression ')'
     ;
 
@@ -188,6 +192,13 @@ ID
 INT
     : [0-9]+
     ;
+
+FLOAT
+    : [0-9]+ '.' [0-9]+ ([eE] [+-]? [0-9]+)?
+    | '.' [0-9]+ ([eE] [+-]? [0-9]+)?
+    | [0-9]+ ([eE] [+-]? [0-9]+)
+    ;
+
 
 // Skip whitespace and newlines
 WS

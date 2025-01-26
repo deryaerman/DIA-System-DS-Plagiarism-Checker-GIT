@@ -19,28 +19,40 @@ class CassNode:
         # You can adapt parentheses, placeholders, etc. to match your official CASS format
         return f"{self.label}({'/t'.join(child_strings)})"
 
-    def to_dot(self, node_id=0, parent_id=None, lines=None):
+    def to_dot(self):
         """
-        Recursively produce GraphViz DOT notation for rendering a PNG.
+        Generate a GraphViz DOT file with nodes numbered in the CASS-style creation order.
         """
-        if lines is None:
-            lines = ["digraph CASS {", "  node [shape=ellipse];"]
+        lines = ["digraph CASS {", "  node [shape=ellipse];"]
+        node_counter = {"current_id": 1}  # Start numbering at 1
+        edges = []
 
-        current_id = node_id
-        # Escape double quotes in label if necessary
-        safe_label = self.label.replace('"', '\\"')
-        lines.append(f'  n{current_id} [label="[{node_id}]:   {safe_label}"];')
+        def traverse(node, parent_id=None):
+            # Assign the current node's ID
+            current_id = node_counter["current_id"]
+            node_counter["current_id"] += 1
 
-        if parent_id is not None:
-            lines.append(f'  n{parent_id} -> n{current_id};')
+            # Escape double quotes in label if necessary
+            safe_label = node.label.replace('"', '\\"')
+            lines.append(f'  n{current_id} [label="[{current_id}]: {safe_label}"];')
 
-        next_id = current_id + 1
-        for child in self.children:
-            next_id = child.to_dot(next_id, current_id, lines)
+            # Create an edge from parent to the current node
+            if parent_id is not None:
+                edges.append(f'  n{parent_id} -> n{current_id};')
 
-        if parent_id is None:
-            lines.insert(0, "digraph cass {")
-            lines.insert(1, "  node [shape=ellipse];")
-            lines.append("}")
-        return next_id
+            # Visit children in the order they were added
+            for child in node.children:
+                traverse(child, current_id)
 
+            return current_id
+
+        # Start traversal from the root
+        traverse(self)
+
+        # Add edges to the DOT file
+        lines.extend(edges)
+
+        # Close the DOT graph
+        lines.append("}")
+
+        return lines

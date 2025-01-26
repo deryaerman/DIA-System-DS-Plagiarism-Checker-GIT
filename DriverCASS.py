@@ -29,10 +29,7 @@ def main():
     print(cass_root.to_cass_string())
 
     # 4) Create DOT & PNG
-    dot_lines = []
-    cass_root.to_dot(node_id=0, parent_id=None, lines=dot_lines)
-    #dot_str = "\n".join(dot_lines)
-
+    dot_lines = cass_root.to_dot()  # Call to_dot() without extra arguments
     with open("cass.dot", "w") as f:
         f.write("\n".join(dot_lines))
 
