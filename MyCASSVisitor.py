@@ -193,9 +193,71 @@ class MyCassVisitor(CASSVisitor):
         while_node.add_child(body_node)
 
         return while_node
+    
+    def visitIfBlockStatement(self, ctx: CASSParser.IfBlockStatementContext):
+        # Create a node for the "if" statement
+        if_node = CassNode("if($;$)")
+
+        # Condition (the part in parentheses)
+        cond_node = self.visit(ctx.expression())
+        if_node.add_child(cond_node)
+
+        # Separate "if" and "else" blocks
+        if_block = []
+        else_block = []
+
+        # Iterate through statements to determine if they belong to "if" or "else"
+        has_else = False
+        for i, child in enumerate(ctx.children):
+            if child.getText() == "else":
+                has_else = True  # We found the "else"
+            elif isinstance(child, CASSParser.StatementContext):
+                # Add to "else" block if we're in the "else" part
+                if has_else:
+                    else_block.append(child)
+                else:
+                    if_block.append(child)
+
+        # Process "if" block statements
+        for stmt_ctx in if_block:
+            stmt_node = self.visit(stmt_ctx)
+            if_node.add_child(stmt_node)
+
+        # Process "else" block statements, if any
+        if has_else:
+            else_node = CassNode("else")
+            for stmt_ctx in else_block:
+                stmt_node = self.visit(stmt_ctx)
+                else_node.add_child(stmt_node)
+            if_node.add_child(else_node)
+
+        return if_node
 
 
     
+    def visitIfSingleStatement(self, ctx: CASSParser.IfSingleStatementContext):
+        # Create a node for the "if" statement
+        if_node = CassNode("if($;$)")
+
+        # Condition
+        cond_node = self.visit(ctx.expression())
+        if_node.add_child(cond_node)
+
+        # Single "if" body statement
+        if_body_node = self.visit(ctx.statement(0))
+        if_node.add_child(if_body_node)
+
+        # Optional "else"
+        if ctx.statement(1):
+            else_node = CassNode("else")
+            else_body_node = self.visit(ctx.statement(1))
+            else_node.add_child(else_body_node)
+            if_node.add_child(else_node)
+
+        return if_node
+
+
+
     def visitRelationalExpression(self, ctx: CASSParser.RelationalExpressionContext):
     # If there's only one child additiveExpression, just pass it up the chain
         if len(ctx.children) == 1:

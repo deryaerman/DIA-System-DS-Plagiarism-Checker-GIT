@@ -31,6 +31,9 @@ statement
 
     | whileBlockStatement       // While loop with { }
     | whileSingleStatement
+    | ifBlockStatement           // If with { }
+    | ifSingleStatement          // If without { }
+
     // e.g.  return sum;
     | returnStatement
     // e.g.  sum += i;
@@ -68,6 +71,15 @@ whileBlockStatement
 whileSingleStatement
     : 'while' '(' expression ')' statement
     ;
+
+ifBlockStatement
+    : 'if' '(' expression ')' '{' statement* '}' ('else' '{' statement* '}')?
+    ;
+
+ifSingleStatement
+    : 'if' '(' expression ')' statement ('else' statement)?
+    ;
+
 
 returnStatement
     : 'return' expression? ';'
