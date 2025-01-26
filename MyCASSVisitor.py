@@ -38,11 +38,18 @@ class MyCassVisitor(CASSVisitor):
         return CassNode(f"#VAR:{param_name}")
 
     def visitCompoundStatement(self, ctx: CASSParser.CompoundStatementContext):
-        block_node = CassNode("#compound_statement#{$}")
+        # Count the number of direct statements (children) in the compound statement
+        num_children = len(ctx.statement())
+        dollar_placeholders = "$" * num_children  # Create the correct number of $ placeholders
+        block_node = CassNode(f"#compound_statement#{{{dollar_placeholders}}}")
+
+        # Add each statement as a direct child
         for st in ctx.statement():
-            stmt_node = self.visit(st)   # e.g. $; => $+=$ => (#VAR:sum, #VAR:j)
+            stmt_node = self.visit(st)
             block_node.add_child(stmt_node)
+
         return block_node
+
     
 
     def visitDeclarationStatement(self, ctx: CASSParser.DeclarationStatementContext):
@@ -255,6 +262,46 @@ class MyCassVisitor(CASSVisitor):
             if_node.add_child(else_node)
 
         return if_node
+    
+    def visitAdditiveExpression(self, ctx: CASSParser.AdditiveExpressionContext):
+        # If there's only one child, pass it up the chain (e.g., "a")
+        if len(ctx.children) == 1:
+            return self.visit(ctx.multiplicativeExpression(0))
+
+        # If there are multiple operands, create a node for each operator and operand
+        operands = ctx.multiplicativeExpression()
+        result = self.visit(operands[0])  # Start with the first operand
+
+        for i in range(1, len(operands)):
+            operator = ctx.getChild(2 * i - 1).getText()  # Get "+" or "-"
+            next_operand = self.visit(operands[i])
+            operator_node = CassNode(f"${operator}$")
+            operator_node.add_child(result)
+            operator_node.add_child(next_operand)
+            result = operator_node  # Update the result to the new operator node
+
+        return result
+    
+    def visitMultiplicativeExpression(self, ctx: CASSParser.MultiplicativeExpressionContext):
+        # If there's only one child, pass it up the chain (e.g., "a")
+        if len(ctx.children) == 1:
+            return self.visit(ctx.unaryExpression(0))
+
+        # If there are multiple operands, create a node for each operator and operand
+        operands = ctx.unaryExpression()
+        result = self.visit(operands[0])  # Start with the first operand
+
+        for i in range(1, len(operands)):
+            operator = ctx.getChild(2 * i - 1).getText()  # Get "*" or "/"
+            next_operand = self.visit(operands[i])
+            operator_node = CassNode(f"${operator}$")
+            operator_node.add_child(result)
+            operator_node.add_child(next_operand)
+            result = operator_node  # Update the result to the new operator node
+
+        return result
+
+
 
 
 
@@ -303,7 +350,6 @@ class MyCassVisitor(CASSVisitor):
         # This might still be a nest of sub-rules:
         # assignmentExpression, unaryExpression, logicalAndExpression, etc.
         # Instead of recursing deeply, we can unify them:
-
         # We can just do:
         return self.visit(ctx.assignmentExpression())
 

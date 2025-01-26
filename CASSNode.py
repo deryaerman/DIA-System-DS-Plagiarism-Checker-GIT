@@ -17,7 +17,7 @@ class CassNode:
         # Example approach: label(child1(...) child2(...) ...)
         child_strings = [c.to_cass_string() for c in self.children]
         # You can adapt parentheses, placeholders, etc. to match your official CASS format
-        return f"{self.label}({','.join(child_strings)})"
+        return f"{self.label}({'/t'.join(child_strings)})"
 
     def to_dot(self, node_id=0, parent_id=None, lines=None):
         """

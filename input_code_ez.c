@@ -1,18 +1,7 @@
-int summation(int start_val, int end_val)
+int summation(int start, int end) 
 {
     int sum = 0;
-    for (int i = start_val; i <= end_val; ++i) {
-        sum += i;
+    for (int i=start; i<=end; ++i) 
         sum += 1;
-    }
-
-    //comment
-    if (start_val < end_val) 
-        sum += start_val;
-    else
-        sum += end_val;
-    
-    
-
     return sum;
 }
