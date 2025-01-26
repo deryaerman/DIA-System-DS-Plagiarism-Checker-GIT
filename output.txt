@@ -1,0 +1,1 @@
+(start_ (expr (expr - (expr ( (expr (expr (atom 1)) + (expr (atom 2))) ))) / (expr (atom 3))) ; (expr (atom 1)) ; (expr (expr (atom 2)) + (expr (atom 3))) ; (expr (expr (atom 8)) * (expr (atom 9))) <EOF>)
