@@ -64,6 +64,16 @@ class CASSVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CASSParser#ifBlockStatement.
+    def visitIfBlockStatement(self, ctx:CASSParser.IfBlockStatementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CASSParser#ifSingleStatement.
+    def visitIfSingleStatement(self, ctx:CASSParser.IfSingleStatementContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CASSParser#returnStatement.
     def visitReturnStatement(self, ctx:CASSParser.ReturnStatementContext):
         return self.visitChildren(ctx)

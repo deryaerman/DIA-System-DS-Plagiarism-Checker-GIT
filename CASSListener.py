@@ -107,6 +107,24 @@ class CASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CASSParser#ifBlockStatement.
+    def enterIfBlockStatement(self, ctx:CASSParser.IfBlockStatementContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#ifBlockStatement.
+    def exitIfBlockStatement(self, ctx:CASSParser.IfBlockStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#ifSingleStatement.
+    def enterIfSingleStatement(self, ctx:CASSParser.IfSingleStatementContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#ifSingleStatement.
+    def exitIfSingleStatement(self, ctx:CASSParser.IfSingleStatementContext):
+        pass
+
+
     # Enter a parse tree produced by CASSParser#returnStatement.
     def enterReturnStatement(self, ctx:CASSParser.ReturnStatementContext):
         pass
