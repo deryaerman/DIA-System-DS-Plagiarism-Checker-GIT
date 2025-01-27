@@ -154,5 +154,10 @@ class CASSVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CASSParser#operationExpression.
+    def visitOperationExpression(self, ctx:CASSParser.OperationExpressionContext):
+        return self.visitChildren(ctx)
+
+
 
 del CASSParser

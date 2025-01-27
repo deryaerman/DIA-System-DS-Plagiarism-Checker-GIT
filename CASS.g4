@@ -106,7 +106,6 @@ typeSpec
     : 'int' 
     | 'float'
     | 'double'
-    | 'char'
     ;
 
 // --------------------------
@@ -123,6 +122,7 @@ assignmentExpression
     // e.g. "sum += i" or "i = i + 1"
     : unaryExpression assignmentOperator assignmentExpression
     | logicalOrExpression
+    //| parenOperation
     ;
 
 // e.g. ++i, --i, i++, i--
@@ -132,11 +132,15 @@ unaryExpression
     | primaryExpression
     ;
 
+// parenOperation
+//     : '(' operationExpression ')'
+//     ;
+
 primaryExpression
-    : ID
-    | INT
-    | FLOAT
-    | '(' expression ')'
+    : ID 
+    | INT 
+    | FLOAT 
+    | '(' expression ')'      
     ;
 
 // Compound assignment ops
@@ -171,6 +175,11 @@ additiveExpression
 
 multiplicativeExpression
     : unaryExpression (( '*' | '/' ) unaryExpression)*
+    ;
+
+operationExpression
+    : additiveExpression  // Handles '+' and '-' precedence
+    | multiplicativeExpression  // Handles '*' and '/'
     ;
 
 // --------------------------

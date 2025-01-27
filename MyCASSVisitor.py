@@ -305,6 +305,7 @@ class MyCassVisitor(CASSVisitor):
 
 
 
+
     def visitRelationalExpression(self, ctx: CASSParser.RelationalExpressionContext):
     # If there's only one child additiveExpression, just pass it up the chain
         if len(ctx.children) == 1:
@@ -347,11 +348,10 @@ class MyCassVisitor(CASSVisitor):
     # Expression Collapsing
     # ---------------------
     def visitExpression(self, ctx: CASSParser.ExpressionContext):
-        # This might still be a nest of sub-rules:
-        # assignmentExpression, unaryExpression, logicalAndExpression, etc.
-        # Instead of recursing deeply, we can unify them:
-        # We can just do:
-        return self.visit(ctx.assignmentExpression())
+        if ctx.assignmentExpression():
+            return self.visit(ctx.assignmentExpression())
+        return None
+
 
     def visitAssignmentExpression(self, ctx: CASSParser.AssignmentExpressionContext):
         # We'll check if we have something like "sum += i"
@@ -386,14 +386,39 @@ class MyCassVisitor(CASSVisitor):
             return self.visit(ctx.primaryExpression())
 
     def visitPrimaryExpression(self, ctx: CASSParser.PrimaryExpressionContext):
+        # Case 1: It's an identifier
         if ctx.ID():
             var_text = ctx.ID().getText()
             return CassNode(f"#VAR:{var_text}")
+        
+        # Case 2: It's an integer literal
         elif ctx.INT():
             lit_text = ctx.INT().getText()
             return CassNode(f"#LIT:{lit_text}")
+        
+        # Case 3: It's a float literal
+        elif ctx.FLOAT():
+            lit_text = ctx.FLOAT().getText()
+            return CassNode(f"#LIT:{lit_text}")
+        
+        # Case 4: It's parentheses => ( expression )
         elif ctx.expression():
-            # ( expression )
-            return self.visit(ctx.expression())
+            # 1) Visit the sub-expression
+            subexpr_node = self.visit(ctx.expression())
+
+            # 2) Check if subexpr_node is an additive expression
+            #    For example, if your additive visitor produces "$+$" or "$-$" as the label:
+            if subexpr_node and subexpr_node.label in {"$+$", "$-$", "$*$", "$/$", "$%$"}:
+                # Create a paren node
+                paren_node = CassNode("#paren_op_exp#($)")
+                paren_node.add_child(subexpr_node)
+                return paren_node
+            else:
+                # If not additive, just return the inner expression without special wrapping
+                return subexpr_node
+        
+        # Fallback if something unexpected
         else:
-            return CassNode("???")  # Fallback
+            return CassNode("???")
+
+##addddd modulo digggaaqaa

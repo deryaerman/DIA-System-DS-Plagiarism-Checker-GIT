@@ -269,5 +269,14 @@ class CASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CASSParser#operationExpression.
+    def enterOperationExpression(self, ctx:CASSParser.OperationExpressionContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#operationExpression.
+    def exitOperationExpression(self, ctx:CASSParser.OperationExpressionContext):
+        pass
+
+
 
 del CASSParser
