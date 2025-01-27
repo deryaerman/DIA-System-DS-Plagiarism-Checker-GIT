@@ -29,14 +29,35 @@ public:
   virtual void enterDeclarationStatement(CASSParser::DeclarationStatementContext *ctx) = 0;
   virtual void exitDeclarationStatement(CASSParser::DeclarationStatementContext *ctx) = 0;
 
-  virtual void enterForStatement(CASSParser::ForStatementContext *ctx) = 0;
-  virtual void exitForStatement(CASSParser::ForStatementContext *ctx) = 0;
+  virtual void enterForBlockStatement(CASSParser::ForBlockStatementContext *ctx) = 0;
+  virtual void exitForBlockStatement(CASSParser::ForBlockStatementContext *ctx) = 0;
+
+  virtual void enterForSingleStatement(CASSParser::ForSingleStatementContext *ctx) = 0;
+  virtual void exitForSingleStatement(CASSParser::ForSingleStatementContext *ctx) = 0;
 
   virtual void enterForInit(CASSParser::ForInitContext *ctx) = 0;
   virtual void exitForInit(CASSParser::ForInitContext *ctx) = 0;
 
   virtual void enterForUpdate(CASSParser::ForUpdateContext *ctx) = 0;
   virtual void exitForUpdate(CASSParser::ForUpdateContext *ctx) = 0;
+
+  virtual void enterWhileBlockStatement(CASSParser::WhileBlockStatementContext *ctx) = 0;
+  virtual void exitWhileBlockStatement(CASSParser::WhileBlockStatementContext *ctx) = 0;
+
+  virtual void enterWhileSingleStatement(CASSParser::WhileSingleStatementContext *ctx) = 0;
+  virtual void exitWhileSingleStatement(CASSParser::WhileSingleStatementContext *ctx) = 0;
+
+  virtual void enterIfBlockStatement(CASSParser::IfBlockStatementContext *ctx) = 0;
+  virtual void exitIfBlockStatement(CASSParser::IfBlockStatementContext *ctx) = 0;
+
+  virtual void enterIfSingleStatement(CASSParser::IfSingleStatementContext *ctx) = 0;
+  virtual void exitIfSingleStatement(CASSParser::IfSingleStatementContext *ctx) = 0;
+
+  virtual void enterFunctionCall(CASSParser::FunctionCallContext *ctx) = 0;
+  virtual void exitFunctionCall(CASSParser::FunctionCallContext *ctx) = 0;
+
+  virtual void enterArgumentList(CASSParser::ArgumentListContext *ctx) = 0;
+  virtual void exitArgumentList(CASSParser::ArgumentListContext *ctx) = 0;
 
   virtual void enterReturnStatement(CASSParser::ReturnStatementContext *ctx) = 0;
   virtual void exitReturnStatement(CASSParser::ReturnStatementContext *ctx) = 0;
@@ -85,6 +106,9 @@ public:
 
   virtual void enterMultiplicativeExpression(CASSParser::MultiplicativeExpressionContext *ctx) = 0;
   virtual void exitMultiplicativeExpression(CASSParser::MultiplicativeExpressionContext *ctx) = 0;
+
+  virtual void enterOperationExpression(CASSParser::OperationExpressionContext *ctx) = 0;
+  virtual void exitOperationExpression(CASSParser::OperationExpressionContext *ctx) = 0;
 
 
 };

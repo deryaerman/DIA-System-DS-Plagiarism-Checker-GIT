@@ -5,15 +5,20 @@ class CassNode:
         """
         self.label = label
         self.children = []
+        self.prevUse = -1 #keep track of the prev node usage
+        self.nextUse = -1
 
     def add_child(self, child):
         self.children.append(child)
 
     def to_cass_string(self) -> str:
+        
         child_strings = [c.to_cass_string() for c in self.children]
-        cass_string = f"{self.label}\\t" + "".join(child_strings)
-        # Return the final string without modification (no spaces added)
-        return cass_string
+        if self.label == 'removed':
+            return f"".join(child_strings)
+        else:
+            return f"{self.label}\\t" + "".join(child_strings)
+        
 
     def to_dot(self):
         """

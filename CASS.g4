@@ -38,6 +38,7 @@ statement
     // e.g.  sum += i;
     | expressionStatement
     | functionDefinition
+   // | includeStatement
     ;
 
 // A simple variable declaration with initialization, e.g. "int sum = 0;"
@@ -96,6 +97,9 @@ expressionStatement
     : expression ';'
     ;
 
+//includeStatement
+//    : 'include' STRING
+//    ;
 // --------------------------
 // 3) Parameters & Types
 // --------------------------
