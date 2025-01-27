@@ -125,6 +125,24 @@ class CASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CASSParser#functionCall.
+    def enterFunctionCall(self, ctx:CASSParser.FunctionCallContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#functionCall.
+    def exitFunctionCall(self, ctx:CASSParser.FunctionCallContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#argumentList.
+    def enterArgumentList(self, ctx:CASSParser.ArgumentListContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#argumentList.
+    def exitArgumentList(self, ctx:CASSParser.ArgumentListContext):
+        pass
+
+
     # Enter a parse tree produced by CASSParser#returnStatement.
     def enterReturnStatement(self, ctx:CASSParser.ReturnStatementContext):
         pass

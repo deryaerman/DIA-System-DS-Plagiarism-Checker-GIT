@@ -32,8 +32,7 @@ statement
     | whileBlockStatement       // While loop with { }
     | whileSingleStatement
     | ifBlockStatement           // If with { }
-    | ifSingleStatement          // If without { }
-    
+    | ifSingleStatement    
     // e.g.  return sum;
     | returnStatement
     // e.g.  sum += i;
@@ -81,6 +80,13 @@ ifSingleStatement
     : 'if' '(' expression ')' statement ('else' statement)?
     ;
 
+functionCall
+    : ID '(' argumentList? ')'  
+    ;
+
+argumentList
+    : expression (',' expression)*  
+    ;
 
 returnStatement
     : 'return' expression? ';'
@@ -138,12 +144,13 @@ unaryExpression
 //     ;
 
 primaryExpression
-    : ID 
-    | INT 
-    | FLOAT 
-    | CHAR
-    | STRING
-    | '(' expression ')'      
+    : ID                     
+    | INT                    
+    | FLOAT                  
+    | CHAR                   
+    | STRING                 
+    | functionCall           
+    | '(' expression ')'     
     ;
 
 // Compound assignment ops

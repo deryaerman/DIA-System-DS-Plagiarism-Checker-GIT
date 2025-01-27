@@ -323,7 +323,57 @@ class MyCassVisitor(CASSVisitor):
         node.add_child(left)
         node.add_child(right)
         return node
+    
+    def visitFunctionCall(self, ctx: CASSParser.FunctionCallContext):
+        """
+        Grammar snippet:
+            functionCall
+                : ID '(' argumentList? ')'  # FuncCall
+                ;
+        """
+        # 1) The function name is the ID
+        func_name = ctx.ID().getText()  # e.g. "init"
 
+        # 2) Create the top-level node for the call. You could label it differently.
+        call_node = CassNode("$call$")
+
+        # 3) First child = "F<funcName>", e.g. Finit
+        func_node = CassNode(f"F{func_name}")
+        call_node.add_child(func_node)
+
+        # 4) Second child = the argument list (which might be empty)
+        if ctx.argumentList():
+            arg_list_node = self.visit(ctx.argumentList())
+            call_node.add_child(arg_list_node)
+        else:
+            # No arguments => #argument_list#() with zero placeholders
+            empty_args = CassNode("#argument_list#()")
+            call_node.add_child(empty_args)
+
+        return call_node
+
+
+    def visitArgumentList(self, ctx: CASSParser.ArgumentListContext):
+        """
+        Grammar snippet:
+            argumentList
+                : expression (',' expression)*  # ArgumentList
+                ;
+        """
+        # Count how many arguments we have
+        num_args = len(ctx.expression())
+
+        # Create a label like #argument_list#($$$...) with as many $ as arguments
+        placeholders = "$" * num_args
+        arg_list_node = CassNode(f"#argument_list#({placeholders})")
+
+        # For each expression argument, visit it and add as a child
+        for expr_ctx in ctx.expression():
+            arg_node = self.visit(expr_ctx)
+            arg_list_node.add_child(arg_node)
+
+        return arg_list_node
+    
 
     def visitReturnStatement(self, ctx: CASSParser.ReturnStatementContext):
         # e.g. "return sum;"
@@ -425,6 +475,9 @@ class MyCassVisitor(CASSVisitor):
             else:
                 # If not additive, just return the inner expression without special wrapping
                 return subexpr_node
+            
+        elif ctx.functionCall():
+            return self.visit(ctx.functionCall())
         
         # Fallback if something unexpected
         else:
