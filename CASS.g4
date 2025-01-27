@@ -184,7 +184,7 @@ additiveExpression
     ;
 
 multiplicativeExpression
-    : unaryExpression (( '*' | '/' ) unaryExpression)*
+    : unaryExpression (( '*' | '/' | '%' ) unaryExpression)*
     ;
 
 operationExpression

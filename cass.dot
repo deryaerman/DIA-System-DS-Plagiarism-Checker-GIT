@@ -8,12 +8,12 @@ digraph CASS {
   n6 [label="[6]: #VAR:res"];
   n7 [label="[7]: $*$"];
   n8 [label="[8]: #parenthesized_expression#"];
-  n9 [label="[9]: $+$"];
+  n9 [label="[9]: $%$"];
   n10 [label="[10]: vglobal1"];
   n11 [label="[11]: vglobal2"];
-  n12 [label="[12]: $call$"];
+  n12 [label="[12]: #call_expression#$$"];
   n13 [label="[13]: Finit"];
-  n14 [label="[14]: #argument_list#($$)"];
+  n14 [label="[14]: #argument_list#($,$)"];
   n15 [label="[15]: vglobal1"];
   n16 [label="[16]: vglobal2"];
   n17 [label="[17]: return$"];
