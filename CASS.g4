@@ -6,7 +6,7 @@ grammar CASS;
 
 // Parse one or more function definitions.
 prog
-    : functionDefinition+ EOF
+    : statement+ EOF
     ;
 
 functionDefinition
@@ -33,11 +33,12 @@ statement
     | whileSingleStatement
     | ifBlockStatement           // If with { }
     | ifSingleStatement          // If without { }
-
+    
     // e.g.  return sum;
     | returnStatement
     // e.g.  sum += i;
     | expressionStatement
+    | functionDefinition
     ;
 
 // A simple variable declaration with initialization, e.g. "int sum = 0;"
@@ -140,6 +141,8 @@ primaryExpression
     : ID 
     | INT 
     | FLOAT 
+    | CHAR
+    | STRING
     | '(' expression ')'      
     ;
 
@@ -208,6 +211,17 @@ FLOAT
     | [0-9]+ ([eE] [+-]? [0-9]+)
     ;
 
+CHAR 
+    : '"'[a-zA-Z] '"'
+    ;
+
+STRING
+    : '"' (ESC_SEQ | ~["\\])* '"'  // A string starts and ends with double quotes
+    ;
+
+fragment ESC_SEQ
+    : '\\' [btnfr"'\\]  // Escape sequences for backslash, single quote, double quote, etc.
+    ;
 
 // Skip whitespace and newlines
 WS

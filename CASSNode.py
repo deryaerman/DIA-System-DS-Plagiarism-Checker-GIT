@@ -10,14 +10,10 @@ class CassNode:
         self.children.append(child)
 
     def to_cass_string(self) -> str:
-        """
-        Recursively produce a textual representation for debugging
-        or for MISIM consumption, depending on how you format it.
-        """
-        # Example approach: label(child1(...) child2(...) ...)
         child_strings = [c.to_cass_string() for c in self.children]
-        # You can adapt parentheses, placeholders, etc. to match your official CASS format
-        return f"{self.label}({'/t'.join(child_strings)})"
+        cass_string = f"{self.label}\\t" + "".join(child_strings)
+        # Return the final string without modification (no spaces added)
+        return cass_string
 
     def to_dot(self):
         """

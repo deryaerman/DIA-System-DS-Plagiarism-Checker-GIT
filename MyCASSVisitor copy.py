@@ -391,24 +391,17 @@ class MyCassVisitor(CASSVisitor):
         # Case 1: It's an identifier
         if ctx.ID():
             var_text = ctx.ID().getText()
-            return CassNode(f"v{var_text}")
+            return CassNode(f"#VAR:{var_text}")
         
         # Case 2: It's an integer literal
         elif ctx.INT():
             lit_text = ctx.INT().getText()
-            return CassNode(f"N{lit_text}")
+            return CassNode(f"#LIT:{lit_text}")
         
         # Case 3: It's a float literal
         elif ctx.FLOAT():
             lit_text = ctx.FLOAT().getText()
-            return CassNode(f"N{lit_text}")
-        
-        elif ctx.CHAR():
-            lit_text = ctx.CHAR().getText()
-            return CassNode(f"C{lit_text}")
-        elif ctx.STRING():
-            str_text = ctx.STRING().getText()
-            return CassNode(f"S{str_text}")
+            return CassNode(f"#LIT:{lit_text}")
         
         # Case 4: It's parentheses => ( expression )
         elif ctx.expression():
@@ -419,7 +412,7 @@ class MyCassVisitor(CASSVisitor):
             #    For example, if your additive visitor produces "$+$" or "$-$" as the label:
             if subexpr_node and subexpr_node.label in {"$+$", "$-$", "$*$", "$/$", "$%$"}:
                 # Create a paren node
-                paren_node = CassNode("#parenthesized_expression#")
+                paren_node = CassNode("#paren_op_exp#($)")
                 paren_node.add_child(subexpr_node)
                 return paren_node
             else:
