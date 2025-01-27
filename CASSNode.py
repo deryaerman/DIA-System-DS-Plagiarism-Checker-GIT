@@ -13,7 +13,7 @@ class CassNode:
 
     def to_cass_string(self) -> str:
         child_strings = [c.to_cass_string() for c in self.children]
-        if self.label == 'removed':
+        if self.label == "removed":
             return f"".join(child_strings)
         else:
             return f"{self.label}\\t" + "".join(child_strings)

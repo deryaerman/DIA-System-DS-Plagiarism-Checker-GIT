@@ -336,11 +336,7 @@ class MyCassVisitor(CASSVisitor):
         func_name = ctx.ID().getText()  # e.g. "init"
 
         # 2) Create the top-level node for the call. You could label it differently.
-<<<<<<< HEAD
-        call_node = CassNode("#call_expression#")
-=======
         call_node = CassNode("#call_expression#$$")
->>>>>>> a13906a03923d48a4f24bce1fec246a0b696d584
 
         # 3) First child = "F<funcName>", e.g. Finit
         func_node = CassNode(f"F{func_name}")
@@ -369,11 +365,7 @@ class MyCassVisitor(CASSVisitor):
         num_args = len(ctx.expression())
 
         # Create a label like #argument_list#($$$...) with as many $ as arguments
-<<<<<<< HEAD
-        placeholders = ",".join(["$"] * num_args)
-=======
         placeholders = ",".join(["$"] * num_args)  # Join $ with commas if more than one
->>>>>>> a13906a03923d48a4f24bce1fec246a0b696d584
         arg_list_node = CassNode(f"#argument_list#({placeholders})")
         arg_list_node.add_child(CassNode(f"{num_args}"))
 
