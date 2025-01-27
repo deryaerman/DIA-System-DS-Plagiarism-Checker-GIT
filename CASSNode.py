@@ -12,7 +12,6 @@ class CassNode:
         self.children.append(child)
 
     def to_cass_string(self) -> str:
-        
         child_strings = [c.to_cass_string() for c in self.children]
         if self.label == 'removed':
             return f"".join(child_strings)
@@ -29,23 +28,31 @@ class CassNode:
         edges = []
 
         def traverse(node, parent_id=None):
-            # Assign the current node's ID
+            
             current_id = node_counter["current_id"]
-            node_counter["current_id"] += 1
+            
 
-            # Escape double quotes in label if necessary
-            safe_label = node.label.replace('"', '\\"')
-            lines.append(f'  n{current_id} [label="[{current_id}]: {safe_label}"];')
+            # Assign the current node's ID
+            if (not(node.label.lstrip('-').isdigit()) and not(node.label == 'removed')):
+                
+                node_counter["current_id"] += 1
 
-            # Create an edge from parent to the current node
-            if parent_id is not None:
-                edges.append(f'  n{parent_id} -> n{current_id};')
+                # Escape double quotes in label if necessary
+                safe_label = node.label.replace('"', '\\"')
+                lines.append(f'  n{current_id} [label="[{current_id}]: {safe_label}"];')
 
-            # Visit children in the order they were added
-            for child in node.children:
-                traverse(child, current_id)
+                # Create an edge from parent to the current node
+                if parent_id is not None:
+                    edges.append(f'  n{parent_id} -> n{current_id};')
 
-            return current_id
+                # Visit children in the order they were added
+                for child in node.children:
+                    traverse(child, current_id)
+
+                return current_id
+            else: 
+                for child in node.children:
+                    traverse(child, current_id)
 
         # Start traversal from the root
         traverse(self)
