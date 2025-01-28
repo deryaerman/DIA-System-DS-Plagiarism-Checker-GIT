@@ -4,6 +4,10 @@ from CASSNode import CassNode  # or define CassNode inline here if you prefer
 
 class MyCassVisitor(CASSVisitor):
 
+    def __init__(self):
+        super().__init__()
+        self.scopes = []  # stack of sets, each set contains declared variable names
+
     def visitProg(self, ctx: CASSParser.ProgContext):
         # 'prog' might be your top-level rule
         root = CassNode("root")
@@ -78,6 +82,9 @@ class MyCassVisitor(CASSVisitor):
         return CassNode(f"v:{param_name}")
 
     def visitCompoundStatement(self, ctx: CASSParser.CompoundStatementContext):
+        # 1) Push a new empty set for local declarations in this block
+        self.scopes.append(set())
+
         # Count the number of direct statements (children) in the compound statement
         num_children = len(ctx.statement())
         dollar_signs = "$" * num_children  # Create the correct number of $ placeholders
@@ -91,12 +98,19 @@ class MyCassVisitor(CASSVisitor):
             #stmt_node.is_in_comp_stmt = True
             block_node.add_child(stmt_node)
 
+        # 4) Pop the scope after leaving this block    
+        self.scopes.pop()
         return block_node
     
     def visitIncludeStatement(self, ctx: CASSParser.IncludeStatementContext):
         return CassNode('removed')
 
     def visitDeclarationStatement(self, ctx: CASSParser.DeclarationStatementContext):
+
+        # Mark this variable as local in the top scope
+        var_name = ctx.ID().getText()
+        if len(self.scopes) > 0:
+            self.scopes[-1].add(var_name)
         
         type_label = ctx.typeSpec().getText()   # e.g. "int"
         decl_node = CassNode(f"I#declaration#{type_label}$;") ##intermediate nodes
@@ -428,7 +442,11 @@ class MyCassVisitor(CASSVisitor):
 
     def visitExpressionStatement(self, ctx: CASSParser.ExpressionStatementContext):
 
+<<<<<<< HEAD
         statement_node = CassNode('#expression_statement#')
+=======
+        statement_node = CassNode('#expression_statement#$')
+>>>>>>> b113d8ab834beaf707736c1b68893fd3ffa29589
 
         # 2) Visit the expression, which might yield something like "$+=$"
         expr_node = self.visit(ctx.expression())
@@ -449,20 +467,30 @@ class MyCassVisitor(CASSVisitor):
 
 
     def visitAssignmentExpression(self, ctx: CASSParser.AssignmentExpressionContext):
-        # We'll check if we have something like "sum += i"
+        # Distinguish between:
+        #   unaryExpression assignmentOperator assignmentExpression
+        # vs
+        #   logicalOrExpression
+
         if ctx.assignmentOperator():
-            # e.g. sum += i
-            op = ctx.assignmentOperator().getText()  # '+='
-            op = f"${op}$"
-            lhs = self.visit(ctx.unaryExpression())
-            rhs = self.visit(ctx.assignmentExpression())
-            node = CassNode(op)
+            # e.g. b = b + 1
+            op_text = ctx.assignmentOperator().getText()  # '=' or '+=' or ...
+            
+            # Use a node labeled #assignment_expression#$<op_text>
+            # For a simple '=' you might produce '#assignment_expression#$=$'
+            # For '+=' maybe '#assignment_expression#$+=$', etc.
+            node = CassNode(f"#assignment_expression#$" + op_text + "$")
+
+            lhs = self.visit(ctx.unaryExpression())  # e.g. b
+            rhs = self.visit(ctx.assignmentExpression())  # e.g. b + 1
+
             node.add_child(lhs)
             node.add_child(rhs)
             return node
         else:
-            # We presumably have logicalOrExpression
+            # No assignment operator => just pass logicalOrExpression up
             return self.visit(ctx.logicalOrExpression())
+
 
     def visitUnaryExpression(self, ctx: CASSParser.UnaryExpressionContext):
         # e.g. ++i, primaryExpression, etc.
@@ -481,12 +509,26 @@ class MyCassVisitor(CASSVisitor):
         else:
             # We might have a primary expression
             return self.visit(ctx.primaryExpression())
+        
+    def isLocal(self, var_name: str) -> bool:
+        # Search from the top of the stack downward
+        for scope_set in reversed(self.scopes):
+            if var_name in scope_set:
+                return True
+        return False
 
     def visitPrimaryExpression(self, ctx: CASSParser.PrimaryExpressionContext):
         # Case 1: It's an identifier
         if ctx.ID():
             var_text = ctx.ID().getText()
-            return CassNode(f"v{var_text}")
+
+            # Check if var_text is declared in the current or any parent scope
+            if self.isLocal(var_text):
+                return CassNode(f"v{var_text}")
+            else:
+                # If not found in any scope, treat as global
+                return CassNode(f"V{var_text}")
+
         
         # Case 2: It's an integer literal
         elif ctx.INT():

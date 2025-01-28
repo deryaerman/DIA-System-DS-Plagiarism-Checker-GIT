@@ -1,14 +1,22 @@
 digraph CASS {
   node [shape=ellipse];
+<<<<<<< HEAD
   n1 [label="[1]: S#FS#1_0"];
   n2 [label="[2]: I#compound_statement#{$$$$}"];
   n3 [label="[3]: I#declaration#int$;"];
   n4 [label="[4]: I#init_declarator#$=$"];
+=======
+  n1 [label="[1]: S#FS#10"];
+  n2 [label="[2]: #compound_statement#{$$$$}"];
+  n3 [label="[3]: #declaration#int$;"];
+  n4 [label="[4]: #init_declarator#$=$"];
+>>>>>>> b113d8ab834beaf707736c1b68893fd3ffa29589
   n5 [label="[5]: va"];
   n6 [label="[6]: N0"];
   n7 [label="[7]: I#declaration#float$;"];
   n8 [label="[8]: I#init_declarator#$=$"];
   n9 [label="[9]: vres"];
+<<<<<<< HEAD
   n10 [label="[10]: #binary_expression#$*$"];
   n11 [label="[11]: #parenthesized_expression#($)"];
   n12 [label="[12]: #binary_expression#$+$"];
@@ -25,6 +33,24 @@ digraph CASS {
   n23 [label="[23]: vmama"];
   n24 [label="[24]: #return_statement#return$;"];
   n25 [label="[25]: vres"];
+=======
+  n10 [label="[10]: #parenthesized_expression#($)"];
+  n11 [label="[11]: #binary_expression#$+$"];
+  n12 [label="[12]: va"];
+  n13 [label="[13]: Vc"];
+  n14 [label="[14]: S#FS#10"];
+  n15 [label="[15]: #compound_statement#{$$}"];
+  n16 [label="[16]: #expression_statement#$"];
+  n17 [label="[17]: #assignment_expression#$=$"];
+  n18 [label="[18]: Vb"];
+  n19 [label="[19]: #assignment_expression#$+=$"];
+  n20 [label="[20]: Vb"];
+  n21 [label="[21]: N1"];
+  n22 [label="[22]: return$"];
+  n23 [label="[23]: Vb"];
+  n24 [label="[24]: return$"];
+  n25 [label="[25]: N0"];
+>>>>>>> b113d8ab834beaf707736c1b68893fd3ffa29589
   n1 -> n2;
   n2 -> n3;
   n3 -> n4;
@@ -36,16 +62,22 @@ digraph CASS {
   n8 -> n10;
   n10 -> n11;
   n11 -> n12;
-  n12 -> n13;
-  n12 -> n14;
-  n10 -> n15;
+  n11 -> n13;
+  n2 -> n14;
+  n14 -> n15;
   n15 -> n16;
-  n15 -> n17;
+  n16 -> n17;
   n17 -> n18;
   n17 -> n19;
+<<<<<<< HEAD
   n2 -> n20;
   n20 -> n21;
   n21 -> n22;
+=======
+  n19 -> n20;
+  n19 -> n21;
+  n15 -> n22;
+>>>>>>> b113d8ab834beaf707736c1b68893fd3ffa29589
   n22 -> n23;
   n2 -> n24;
   n24 -> n25;
