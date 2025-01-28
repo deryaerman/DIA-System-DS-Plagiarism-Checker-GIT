@@ -10,7 +10,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitProg(self, ctx: CASSParser.ProgContext):
         # 'prog' might be your top-level rule
-        root = CassNode("root")
+        root = CassNode("removed")
         for statement in ctx.statement():
             n = self.visit(statement)
             root.add_child(n)
