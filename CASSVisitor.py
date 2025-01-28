@@ -94,6 +94,11 @@ class CASSVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CASSParser#includeStatement.
+    def visitIncludeStatement(self, ctx:CASSParser.IncludeStatementContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CASSParser#parameterList.
     def visitParameterList(self, ctx:CASSParser.ParameterListContext):
         return self.visitChildren(ctx)

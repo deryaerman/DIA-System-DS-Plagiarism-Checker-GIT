@@ -58,7 +58,7 @@ class CassNode:
         traverse(self)
 
         # Add edges to the DOT file
-        lines.extend(edges)
+        lines.extend(edges[1:])
 
         # Close the DOT graph
         lines.append("}")
