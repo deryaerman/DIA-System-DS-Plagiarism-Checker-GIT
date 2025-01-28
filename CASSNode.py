@@ -79,9 +79,13 @@ class CassNode:
                     traverse(child, current_id)
 
                 return current_id
+            
             else: 
+
                 for child in node.children:
                     traverse(child, current_id)
+
+                return current_id
 
         # Start traversal from the root
         traverse(self)
