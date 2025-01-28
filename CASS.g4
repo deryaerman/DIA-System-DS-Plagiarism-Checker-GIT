@@ -117,6 +117,7 @@ typeSpec
     : 'int' 
     | 'float'
     | 'double'
+    | 'void'
     ;
 
 // --------------------------
@@ -124,6 +125,7 @@ typeSpec
 // --------------------------
 
 // For simplicity, we let "expression" wrap typical C operator precedences.
+
 
 expression
     : assignmentExpression
@@ -142,10 +144,6 @@ unaryExpression
     | '--' unaryExpression
     | primaryExpression
     ;
-
-// parenOperation
-//     : '(' operationExpression ')'
-//     ;
 
 primaryExpression
     : ID                     

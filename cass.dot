@@ -18,7 +18,7 @@ digraph CASS {
   n16 [label="[16]: #argument_list#($,$)"];
   n17 [label="[17]: Vglobal1"];
   n18 [label="[18]: Vglobal2"];
-  n19 [label="[19]: I#if_statement#if($;$)"];
+  n19 [label="[19]: I#if_statement#if$$"];
   n20 [label="[20]: Vb"];
   n21 [label="[21]: #return_statement#return$;"];
   n22 [label="[22]: N3"];

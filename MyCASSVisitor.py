@@ -266,8 +266,10 @@ class MyCassVisitor(CASSVisitor):
         return while_node
     
     def visitIfBlockStatement(self, ctx: CASSParser.IfBlockStatementContext):
-        # Create a node for the "if" statement
-        if_node = CassNode("I#if_statement#if($;$)")
+
+        # 2 children cause condition_clause and compound_statemenet
+        if_node = CassNode("I#if_statement#if$$")
+        if_node.add_child(CassNode("2"))
 
         # Condition (the part in parentheses)
         cond_node = self.visit(ctx.expression())
@@ -307,8 +309,9 @@ class MyCassVisitor(CASSVisitor):
 
     
     def visitIfSingleStatement(self, ctx: CASSParser.IfSingleStatementContext):
-        # Create a node for the "if" statement
-        if_node = CassNode("I#if_statement#if($;$)")
+        
+        #One child cause there's no compound statement
+        if_node = CassNode("I#if_statement#if$$")
 
         # Condition
         cond_node = self.visit(ctx.expression())
@@ -380,7 +383,7 @@ class MyCassVisitor(CASSVisitor):
         right = self.visit(ctx.additiveExpression(1))
 
         # Create a node labeled "$<=$" (or "$>$" etc.)
-        node = CassNode(f"${op}$")
+        node = CassNode(f"I#binary_expression#${op}$")
         node.add_child(left)
         node.add_child(right)
         return node
@@ -410,12 +413,7 @@ class MyCassVisitor(CASSVisitor):
 
 
     def visitArgumentList(self, ctx: CASSParser.ArgumentListContext):
-        """
-        Grammar snippet:
-            argumentList
-                : expression (',' expression)*  # ArgumentList
-                ;
-        """
+        
         # Count how many arguments we have
         num_args = len(ctx.expression())
 
@@ -443,19 +441,11 @@ class MyCassVisitor(CASSVisitor):
     def visitExpressionStatement(self, ctx: CASSParser.ExpressionStatementContext):
 
         statement_node = CassNode('#expression_statement#$')
-
-        # 2) Visit the expression, which might yield something like "$+=$"
         expr_node = self.visit(ctx.expression())
-
-        # 3) Add it as a child
         statement_node.add_child(expr_node)
-
         return statement_node
+    
 
-
-    # ---------------------
-    # Expression Collapsing
-    # ---------------------
     def visitExpression(self, ctx: CASSParser.ExpressionContext):
         if ctx.assignmentExpression():
             return self.visit(ctx.assignmentExpression())
@@ -471,10 +461,6 @@ class MyCassVisitor(CASSVisitor):
         if ctx.assignmentOperator():
             # e.g. b = b + 1
             op_text = ctx.assignmentOperator().getText()  # '=' or '+=' or ...
-            
-            # Use a node labeled #assignment_expression#$<op_text>
-            # For a simple '=' you might produce '#assignment_expression#$=$'
-            # For '+=' maybe '#assignment_expression#$+=$', etc.
             node = CassNode(f"#assignment_expression#$" + op_text + "$")
 
             lhs = self.visit(ctx.unaryExpression())  # e.g. b
@@ -483,10 +469,10 @@ class MyCassVisitor(CASSVisitor):
             node.add_child(lhs)
             node.add_child(rhs)
             return node
+        
         else:
-            # No assignment operator => just pass logicalOrExpression up
             return self.visit(ctx.logicalOrExpression())
-
+            
 
     def visitUnaryExpression(self, ctx: CASSParser.UnaryExpressionContext):
         # e.g. ++i, primaryExpression, etc.
