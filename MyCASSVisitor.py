@@ -53,8 +53,9 @@ class MyCassVisitor(CASSVisitor):
             block_node.add_child(stmt_node)
 
         return block_node
-    #def visitIncludeStatement(self, ctx: CASSParser.IncludeStatementContext):
-    #    return CassNode('removed')
+    
+    def visitIncludeStatement(self, ctx: CASSParser.IncludeStatementContext):
+        return CassNode('removed')
     
 
     def visitDeclarationStatement(self, ctx: CASSParser.DeclarationStatementContext):
@@ -286,7 +287,7 @@ class MyCassVisitor(CASSVisitor):
         for i in range(1, len(operands)):
             operator = ctx.getChild(2 * i - 1).getText()  # Get "+" or "-"
             next_operand = self.visit(operands[i])
-            operator_node = CassNode(f"#binary_operation#${operator}$")
+            operator_node = CassNode(f"#binary_expression#${operator}$")
             operator_node.add_child(CassNode("2"))
             operator_node.add_child(result)
             operator_node.add_child(next_operand)
@@ -306,7 +307,7 @@ class MyCassVisitor(CASSVisitor):
         for i in range(1, len(operands)):
             operator = ctx.getChild(2 * i - 1).getText()  # Get "*" or "/"
             next_operand = self.visit(operands[i])
-            operator_node = CassNode(f"#binary_operation#${operator}$")
+            operator_node = CassNode(f"#binary_expression#${operator}$")
             operator_node.add_child(CassNode("2"))
             operator_node.add_child(result)
             operator_node.add_child(next_operand)
@@ -471,9 +472,9 @@ class MyCassVisitor(CASSVisitor):
 
             # 2) Check if subexpr_node is an additive expression
             #    For example, if your additive visitor produces "$+$" or "$-$" as the label:
-            if subexpr_node and subexpr_node.label in {"$+$", "$-$", "$*$", "$/$", "$%$"}:
+            if subexpr_node and subexpr_node.label in {"#binary_expression#$+$", "#binary_expression#$-$", "#binary_expression#$*$", "#binary_expression#$/$", "#binary_expression#$%$"}:
                 # Create a paren node
-                paren_node = CassNode("#parenthesized_expression#")
+                paren_node = CassNode("#parenthesized_expression#($)")
                 paren_node.add_child(subexpr_node)
                 return paren_node
             else:

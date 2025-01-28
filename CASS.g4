@@ -38,7 +38,7 @@ statement
     // e.g.  sum += i;
     | expressionStatement
     | functionDefinition
-   // | includeStatement
+    | includeStatement
     ;
 
 // A simple variable declaration with initialization, e.g. "int sum = 0;"
@@ -97,9 +97,9 @@ expressionStatement
     : expression ';'
     ;
 
-//includeStatement
-//    : 'include' STRING
-//    ;
+includeStatement
+    : 'include' STRING
+    ;
 // --------------------------
 // 3) Parameters & Types
 // --------------------------
