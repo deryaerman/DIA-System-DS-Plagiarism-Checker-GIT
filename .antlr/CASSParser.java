@@ -1,4 +1,4 @@
-// Generated from c:/Users/Maria/Downloads/DIA-System-DS-Plagiarism-Checker-GIT/CASS.g4 by ANTLR 4.13.1
+// Generated from /Users/deryaerman/Desktop/School/Uni/DIA/DIA-System-DS-Plagiarism-Checker-GIT/CASS.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -835,8 +835,8 @@ public class CASSParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class IfBlockStatementContext extends ParserRuleContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
+		public LogicalOrExpressionContext logicalOrExpression() {
+			return getRuleContext(LogicalOrExpressionContext.class,0);
 		}
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
@@ -862,7 +862,7 @@ public class CASSParser extends Parser {
 			setState(178);
 			match(T__0);
 			setState(179);
-			expression();
+			logicalOrExpression();
 			setState(180);
 			match(T__1);
 			setState(181);
@@ -2123,7 +2123,7 @@ public class CASSParser extends Parser {
 		"\u00ae\u0003*\u0015\u0000\u00ae\u00af\u0005\u0002\u0000\u0000\u00af\u00b0"+
 		"\u0003\u0006\u0003\u0000\u00b0\u0015\u0001\u0000\u0000\u0000\u00b1\u00b2"+
 		"\u0005\t\u0000\u0000\u00b2\u00b3\u0005\u0001\u0000\u0000\u00b3\u00b4\u0003"+
-		"*\u0015\u0000\u00b4\u00b5\u0005\u0002\u0000\u0000\u00b5\u00b9\u0005\u0003"+
+		"4\u001a\u0000\u00b4\u00b5\u0005\u0002\u0000\u0000\u00b5\u00b9\u0005\u0003"+
 		"\u0000\u0000\u00b6\u00b8\u0003\u0006\u0003\u0000\u00b7\u00b6\u0001\u0000"+
 		"\u0000\u0000\u00b8\u00bb\u0001\u0000\u0000\u0000\u00b9\u00b7\u0001\u0000"+
 		"\u0000\u0000\u00b9\u00ba\u0001\u0000\u0000\u0000\u00ba\u00bc\u0001\u0000"+

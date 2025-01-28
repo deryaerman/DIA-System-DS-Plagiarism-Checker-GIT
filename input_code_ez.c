@@ -1,12 +1,22 @@
-float func() {
+int main() {
+   
+    int b = 1;
 
-    int a = 0;
-    float res = (global1 + global2) * init(global1, global2); 
-
-    if (a && b) {
-
-        return 3;
+    
+    for (int i = 0; i < 10; ++i) {
+         b = b + 1;
     }
+    
+    
+    return result; // Return 0 to indicate successful execution
+} 
 
-    return res; 
-}
+
+
+
+
+
+
+
+
+

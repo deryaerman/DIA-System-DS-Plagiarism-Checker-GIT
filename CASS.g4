@@ -74,7 +74,7 @@ whileSingleStatement
     ;
 
 ifBlockStatement
-    : 'if' '(' expression ')' '{' statement* '}' ('else' '{' statement* '}')?
+    : 'if' '(' logicalOrExpression ')' '{' statement* '}' ('else' '{' statement* '}')?
     ;
 
 ifSingleStatement

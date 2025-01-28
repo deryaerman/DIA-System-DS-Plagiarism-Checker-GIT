@@ -80,7 +80,7 @@ def serializedATN():
         1,0,0,0,168,166,1,0,0,0,169,170,5,4,0,0,170,19,1,0,0,0,171,172,5,
         8,0,0,172,173,5,1,0,0,173,174,3,42,21,0,174,175,5,2,0,0,175,176,
         3,6,3,0,176,21,1,0,0,0,177,178,5,9,0,0,178,179,5,1,0,0,179,180,3,
-        42,21,0,180,181,5,2,0,0,181,185,5,3,0,0,182,184,3,6,3,0,183,182,
+        52,26,0,180,181,5,2,0,0,181,185,5,3,0,0,182,184,3,6,3,0,183,182,
         1,0,0,0,184,187,1,0,0,0,185,183,1,0,0,0,185,186,1,0,0,0,186,188,
         1,0,0,0,187,185,1,0,0,0,188,198,5,4,0,0,189,190,5,10,0,0,190,194,
         5,3,0,0,191,193,3,6,3,0,192,191,1,0,0,0,193,196,1,0,0,0,194,192,
@@ -1147,8 +1147,8 @@ class CASSParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def expression(self):
-            return self.getTypedRuleContext(CASSParser.ExpressionContext,0)
+        def logicalOrExpression(self):
+            return self.getTypedRuleContext(CASSParser.LogicalOrExpressionContext,0)
 
 
         def statement(self, i:int=None):
@@ -1190,7 +1190,7 @@ class CASSParser ( Parser ):
             self.state = 178
             self.match(CASSParser.T__0)
             self.state = 179
-            self.expression()
+            self.logicalOrExpression()
             self.state = 180
             self.match(CASSParser.T__1)
             self.state = 181
