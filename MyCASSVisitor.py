@@ -442,11 +442,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitExpressionStatement(self, ctx: CASSParser.ExpressionStatementContext):
 
-<<<<<<< HEAD
-        statement_node = CassNode('#expression_statement#')
-=======
         statement_node = CassNode('#expression_statement#$')
->>>>>>> b113d8ab834beaf707736c1b68893fd3ffa29589
 
         # 2) Visit the expression, which might yield something like "$+=$"
         expr_node = self.visit(ctx.expression())
