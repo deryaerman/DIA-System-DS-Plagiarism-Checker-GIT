@@ -239,7 +239,7 @@ class MyCassVisitor(CASSVisitor):
 
     
     def visitWhileBlockStatement(self, ctx: CASSParser.WhileBlockStatementContext):
-        while_node = CassNode("#while_statement#while($;$)")
+        while_node = CassNode("I#while_statement#while($;$)")
 
         # Condition
         cond_node = self.visit(ctx.expression())
@@ -253,7 +253,7 @@ class MyCassVisitor(CASSVisitor):
         return while_node
     
     def visitWhileSingleStatement(self, ctx: CASSParser.WhileSingleStatementContext):
-        while_node = CassNode("#while_statement#while($;$)")
+        while_node = CassNode("I#while_statement#while($;$)")
 
         # Condition
         cond_node = self.visit(ctx.expression())
@@ -267,7 +267,7 @@ class MyCassVisitor(CASSVisitor):
     
     def visitIfBlockStatement(self, ctx: CASSParser.IfBlockStatementContext):
         # Create a node for the "if" statement
-        if_node = CassNode("#if_statement#if($;$)")
+        if_node = CassNode("I#if_statement#if($;$)")
 
         # Condition (the part in parentheses)
         cond_node = self.visit(ctx.expression())
@@ -308,7 +308,7 @@ class MyCassVisitor(CASSVisitor):
     
     def visitIfSingleStatement(self, ctx: CASSParser.IfSingleStatementContext):
         # Create a node for the "if" statement
-        if_node = CassNode("#if_statement#if($;$)")
+        if_node = CassNode("I#if_statement#if($;$)")
 
         # Condition
         cond_node = self.visit(ctx.expression())
@@ -339,7 +339,7 @@ class MyCassVisitor(CASSVisitor):
         for i in range(1, len(operands)):
             operator = ctx.getChild(2 * i - 1).getText()  # Get "+" or "-"
             next_operand = self.visit(operands[i])
-            operator_node = CassNode(f"#binary_expression#${operator}$")
+            operator_node = CassNode(f"I#binary_expression#${operator}$")
             operator_node.add_child(CassNode("2"))
             operator_node.add_child(result)
             operator_node.add_child(next_operand)
@@ -359,7 +359,7 @@ class MyCassVisitor(CASSVisitor):
         for i in range(1, len(operands)):
             operator = ctx.getChild(2 * i - 1).getText()  # Get "*" or "/"
             next_operand = self.visit(operands[i])
-            operator_node = CassNode(f"#binary_expression#${operator}$")
+            operator_node = CassNode(f"I#binary_expression#${operator}$")
             operator_node.add_child(CassNode("2"))
             operator_node.add_child(result)
             operator_node.add_child(next_operand)
