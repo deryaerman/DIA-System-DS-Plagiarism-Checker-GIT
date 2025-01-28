@@ -65,6 +65,9 @@ public:
   virtual void enterExpressionStatement(CASSParser::ExpressionStatementContext *ctx) = 0;
   virtual void exitExpressionStatement(CASSParser::ExpressionStatementContext *ctx) = 0;
 
+  virtual void enterIncludeStatement(CASSParser::IncludeStatementContext *ctx) = 0;
+  virtual void exitIncludeStatement(CASSParser::IncludeStatementContext *ctx) = 0;
+
   virtual void enterParameterList(CASSParser::ParameterListContext *ctx) = 0;
   virtual void exitParameterList(CASSParser::ParameterListContext *ctx) = 0;
 

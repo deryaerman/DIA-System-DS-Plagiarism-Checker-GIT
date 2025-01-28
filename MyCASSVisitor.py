@@ -6,7 +6,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitProg(self, ctx: CASSParser.ProgContext):
         # 'prog' might be your top-level rule
-        root = CassNode("removed")
+        root = CassNode("root")
         for statement in ctx.statement():
             n = self.visit(statement)
             root.add_child(n)
@@ -15,58 +15,96 @@ class MyCassVisitor(CASSVisitor):
     def visitFunctionDefinition(self, ctx: CASSParser.FunctionDefinitionContext):
         func_type = 1 if ctx.typeSpec().getText() != 'void' else 0
         params_num = len(ctx.parameterList().parameter()) if ctx.parameterList() else 0
-        if params_num > 2:
-            paramsnum = 2
+    
+        option = 1
+        
+        if option == 1:
+            
+            if params_num > 2:
+                params_num = 2
+            
+            node = CassNode(f"S#FS#{func_type}_{params_num}")
+        
+        else:
+  
+            node = CassNode(f"I#function_definition#{func_type}$$") #always 2 children: funct declarator and comp stmt
+            node.add_child(CassNode("2"))
+            
+            if params_num == 0:
+                x = "$()"
+                num = 1
+            else :
+                x = "$$"
+                num = 2
+            node.add_child("I#function_declarator#" + f"{x}")
+            node.add_child(CassNode(f"{num}"))
+            node.add_child(CassNode(f"v{ctx.ID().getText()}"))
+            node.add_child("-1") # never used before
+            node.add_child("-1") # will never be used as a variable
+            # Gather parameters
+            if ctx.parameterList():
+                params_node = self.visit(ctx.parameterList())
+                node.add_child(params_node)        
 
-        node = CassNode(f"S#FS#{func_type}{params_num}")
-        # Gather parameters
-        if ctx.parameterList():
-            params_node = self.visit(ctx.parameterList())
-            node.add_child(params_node)
+    
         # Visit the compoundStatement
         block_node = self.visit(ctx.compoundStatement())
         node.add_child(block_node)
+
+        self.parentNode = node.label
+
         return node
 
     def visitParameterList(self, ctx: CASSParser.ParameterListContext):
-        node = CassNode('removed')
+        #I#parameter_list#($)\t1\tI#parameter_declaration#int$\t1\tvc\t-1\t24\tI#compound_statement#
+        num_params = len(ctx.parameter())
+        dollar_signs = "$" * num_params
+        node = CassNode(f'I#parameter_list#({dollar_signs})')
+        node.add_child(CassNode(f"{num_params}"))
         for p in ctx.parameter():
             node.add_child(self.visit(p))
         return node
 
     def visitParameter(self, ctx: CASSParser.ParameterContext):
         # e.g. "int start_val"
+        param_type = ctx.typeSpec().getText()
         param_name = ctx.ID().getText()
+        node = CassNode(f"I#parameter_declaration#{param_type}$")
+        node.add_child(CassNode("1"))
+        node.add_child(CassNode(f"v{param_name}"))
+        node.add_child(CassNode("-1"))
+        node.add_child(CassNode("-1"))
+        
         return CassNode(f"v:{param_name}")
 
     def visitCompoundStatement(self, ctx: CASSParser.CompoundStatementContext):
         # Count the number of direct statements (children) in the compound statement
         num_children = len(ctx.statement())
-        dollar_placeholders = "$" * num_children  # Create the correct number of $ placeholders
-        block_node = CassNode(f"#compound_statement#{{{dollar_placeholders}}}")
+        dollar_signs = "$" * num_children  # Create the correct number of $ placeholders
+        block_node = CassNode(f"I#compound_statement#{{{dollar_signs}}}")
         block_node.add_child(CassNode(F"{num_children}"))
+        block_node.is_in_comp_stmt = True
 
         # Add each statement as a direct child
         for st in ctx.statement():
             stmt_node = self.visit(st)
-            stmt_node.is_in_comp_stmt = True
+            #stmt_node.is_in_comp_stmt = True
             block_node.add_child(stmt_node)
 
         return block_node
     
     def visitIncludeStatement(self, ctx: CASSParser.IncludeStatementContext):
         return CassNode('removed')
-    
 
     def visitDeclarationStatement(self, ctx: CASSParser.DeclarationStatementContext):
         
         type_label = ctx.typeSpec().getText()   # e.g. "int"
-        decl_node = CassNode(f"#declaration#{type_label}$;") ##intermediate nodes
+        decl_node = CassNode(f"I#declaration#{type_label}$;") ##intermediate nodes
 
         # e.g. "int sum = 0;"
         var_name = ctx.ID().getText()
         if ctx.expression():
-            assign_node = CassNode("#init_declarator#$=$")
+            assign_node = CassNode("I#init_declarator#$=$")
             assign_node.add_child(CassNode(f"v{var_name}"))
             assign_node.prevUse = -1 # -> initial declaration so the node has not been used
             #assign_node.nextUse()
@@ -120,8 +158,8 @@ class MyCassVisitor(CASSVisitor):
 
     def visitForBlockStatement(self, ctx: CASSParser.ForBlockStatementContext):
         num_children = len(ctx.statement())
-        dollar_placeholders = "$" * num_children
-        for_node = CassNode(f"for($$;$){dollar_placeholders}")
+        dollar_signs = "$" * num_children
+        for_node = CassNode(f"#for_statement#for($$;$){dollar_signs}")
         for_node.add_child(CassNode(f"{num_children+3}"))
 
         # Initialization (forInit)
@@ -153,7 +191,7 @@ class MyCassVisitor(CASSVisitor):
         return for_node
     
     def visitForSingleStatement(self, ctx: CASSParser.ForSingleStatementContext):
-        for_node = CassNode("for($$;$)$")
+        for_node = CassNode("I#for_statement#for($$;$)$")
         for_node.add_child(CassNode("4"))
 
         # Initialization (forInit)
@@ -187,7 +225,7 @@ class MyCassVisitor(CASSVisitor):
 
     
     def visitWhileBlockStatement(self, ctx: CASSParser.WhileBlockStatementContext):
-        while_node = CassNode("while($;$)")
+        while_node = CassNode("#while_statement#while($;$)")
 
         # Condition
         cond_node = self.visit(ctx.expression())
@@ -201,7 +239,7 @@ class MyCassVisitor(CASSVisitor):
         return while_node
     
     def visitWhileSingleStatement(self, ctx: CASSParser.WhileSingleStatementContext):
-        while_node = CassNode("while($;$)")
+        while_node = CassNode("#while_statement#while($;$)")
 
         # Condition
         cond_node = self.visit(ctx.expression())
@@ -215,7 +253,7 @@ class MyCassVisitor(CASSVisitor):
     
     def visitIfBlockStatement(self, ctx: CASSParser.IfBlockStatementContext):
         # Create a node for the "if" statement
-        if_node = CassNode("if($;$)")
+        if_node = CassNode("#if_statement#if($;$)")
 
         # Condition (the part in parentheses)
         cond_node = self.visit(ctx.expression())
@@ -256,7 +294,7 @@ class MyCassVisitor(CASSVisitor):
     
     def visitIfSingleStatement(self, ctx: CASSParser.IfSingleStatementContext):
         # Create a node for the "if" statement
-        if_node = CassNode("if($;$)")
+        if_node = CassNode("#if_statement#if($;$)")
 
         # Condition
         cond_node = self.visit(ctx.expression())
@@ -338,7 +376,7 @@ class MyCassVisitor(CASSVisitor):
         # 1) The function name is the ID
         func_name = ctx.ID().getText()  # e.g. "init"
 
-        # 2) Create the top-level node for the call. You could label it differently.
+        # call_expression always has 2 children: name and parameter list
         call_node = CassNode("#call_expression#$$")
 
         # 3) First child = "F<funcName>", e.g. Finit
@@ -382,7 +420,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitReturnStatement(self, ctx: CASSParser.ReturnStatementContext):
         # e.g. "return sum;"
-        node = CassNode("return$")
+        node = CassNode("#return_statement#return$;")
         if ctx.expression():
             expr_node = self.visit(ctx.expression())
             node.add_child(expr_node)
@@ -390,7 +428,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitExpressionStatement(self, ctx: CASSParser.ExpressionStatementContext):
 
-        statement_node = CassNode('removed')
+        statement_node = CassNode('#expression_statement#')
 
         # 2) Visit the expression, which might yield something like "$+=$"
         expr_node = self.visit(ctx.expression())
@@ -434,9 +472,11 @@ class MyCassVisitor(CASSVisitor):
             # e.g. '++' unaryExpression
             # We'll produce a node for e.g. '++ #VAR'
             op = text[:2]  + "$" # '++' or '--'
+            node = CassNode(f"#update_statement#{op}")
             var_text = ctx.unaryExpression().getText()
-            node = CassNode(op)
             node.add_child(CassNode(f"v{var_text}"))
+            node.add_child("-1")
+            node.add_child("-1")
             return node
         else:
             # We might have a primary expression

@@ -67,6 +67,9 @@ public:
   virtual void enterExpressionStatement(CASSParser::ExpressionStatementContext * /*ctx*/) override { }
   virtual void exitExpressionStatement(CASSParser::ExpressionStatementContext * /*ctx*/) override { }
 
+  virtual void enterIncludeStatement(CASSParser::IncludeStatementContext * /*ctx*/) override { }
+  virtual void exitIncludeStatement(CASSParser::IncludeStatementContext * /*ctx*/) override { }
+
   virtual void enterParameterList(CASSParser::ParameterListContext * /*ctx*/) override { }
   virtual void exitParameterList(CASSParser::ParameterListContext * /*ctx*/) override { }
 

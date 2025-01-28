@@ -7,14 +7,14 @@ class CassNode:
         self.children = []
         self.prevUse = -1 #keep track of the prev node usage
         self.nextUse = -1
-        self.is_in_comp_stmt = False
+
 
     def add_child(self, child):
         self.children.append(child)
 
     def to_cass_string(self) -> str:
         child_strings = [c.to_cass_string() for c in self.children]
-        if self.label == "removed" :
+        if self.label == "removed" or self.label == "root" :
             return f"".join(child_strings)
         else:
             return f"{self.label}\\t" + "".join(child_strings)
@@ -34,7 +34,7 @@ class CassNode:
             
 
             # Assign the current node's ID
-            if (not(node.label.lstrip('-').isdigit()) and not(node.label == 'removed') and node.is_in_comp_stmt == True):
+            if (not(node.label.lstrip('-').isdigit()) and not(node.label == 'removed') and not(node.label == 'root')):
                 
                 node_counter["current_id"] += 1
 
@@ -55,6 +55,8 @@ class CassNode:
 
                 for child in node.children:
                     traverse(child, current_id)
+
+                return current_id
 
         # Start traversal from the root
         traverse(self)

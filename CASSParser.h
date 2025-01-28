@@ -17,8 +17,8 @@ public:
     T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
     T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
     T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, T__30 = 31, T__31 = 32, 
-    T__32 = 33, SL_COMMENT = 34, ML_COMMENT = 35, ID = 36, INT = 37, FLOAT = 38, 
-    CHAR = 39, STRING = 40, WS = 41
+    T__32 = 33, T__33 = 34, T__34 = 35, SL_COMMENT = 36, ML_COMMENT = 37, 
+    ID = 38, INT = 39, FLOAT = 40, CHAR = 41, STRING = 42, WS = 43
   };
 
   enum {
@@ -27,12 +27,12 @@ public:
     RuleForSingleStatement = 6, RuleForInit = 7, RuleForUpdate = 8, RuleWhileBlockStatement = 9, 
     RuleWhileSingleStatement = 10, RuleIfBlockStatement = 11, RuleIfSingleStatement = 12, 
     RuleFunctionCall = 13, RuleArgumentList = 14, RuleReturnStatement = 15, 
-    RuleExpressionStatement = 16, RuleParameterList = 17, RuleParameter = 18, 
-    RuleTypeSpec = 19, RuleExpression = 20, RuleAssignmentExpression = 21, 
-    RuleUnaryExpression = 22, RulePrimaryExpression = 23, RuleAssignmentOperator = 24, 
-    RuleLogicalOrExpression = 25, RuleLogicalAndExpression = 26, RuleEqualityExpression = 27, 
-    RuleRelationalExpression = 28, RuleAdditiveExpression = 29, RuleMultiplicativeExpression = 30, 
-    RuleOperationExpression = 31
+    RuleExpressionStatement = 16, RuleIncludeStatement = 17, RuleParameterList = 18, 
+    RuleParameter = 19, RuleTypeSpec = 20, RuleExpression = 21, RuleAssignmentExpression = 22, 
+    RuleUnaryExpression = 23, RulePrimaryExpression = 24, RuleAssignmentOperator = 25, 
+    RuleLogicalOrExpression = 26, RuleLogicalAndExpression = 27, RuleEqualityExpression = 28, 
+    RuleRelationalExpression = 29, RuleAdditiveExpression = 30, RuleMultiplicativeExpression = 31, 
+    RuleOperationExpression = 32
   };
 
   explicit CASSParser(antlr4::TokenStream *input);
@@ -69,6 +69,7 @@ public:
   class ArgumentListContext;
   class ReturnStatementContext;
   class ExpressionStatementContext;
+  class IncludeStatementContext;
   class ParameterListContext;
   class ParameterContext;
   class TypeSpecContext;
@@ -144,6 +145,7 @@ public:
     ReturnStatementContext *returnStatement();
     ExpressionStatementContext *expressionStatement();
     FunctionDefinitionContext *functionDefinition();
+    IncludeStatementContext *includeStatement();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -340,6 +342,19 @@ public:
   };
 
   ExpressionStatementContext* expressionStatement();
+
+  class  IncludeStatementContext : public antlr4::ParserRuleContext {
+  public:
+    IncludeStatementContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *STRING();
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+   
+  };
+
+  IncludeStatementContext* includeStatement();
 
   class  ParameterListContext : public antlr4::ParserRuleContext {
   public:
