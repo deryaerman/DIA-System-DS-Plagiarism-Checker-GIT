@@ -227,15 +227,10 @@ class MyCassVisitor(CASSVisitor):
         return while_node
     
     def visitIfBlockStatement(self, ctx: CASSParser.IfBlockStatementContext):
-<<<<<<< HEAD
 
         # 2 children cause condition_clause and compound_statemenet
         if_node = CassNode("I#if_statement#if$$")
         if_node.add_child(CassNode("2"))
-=======
-        # Create a node for the "if" statement
-        if_node = CassNode("if($;$)")
->>>>>>> 80488b1b1088c678c7b6ef8008aa74b7a0ac6f8b
 
         # Condition (the part in parentheses)
         cond_node = self.visit(ctx.expression())
@@ -275,14 +270,9 @@ class MyCassVisitor(CASSVisitor):
 
     
     def visitIfSingleStatement(self, ctx: CASSParser.IfSingleStatementContext):
-<<<<<<< HEAD
         
         #One child cause there's no compound statement
         if_node = CassNode("I#if_statement#if$$")
-=======
-        # Create a node for the "if" statement
-        if_node = CassNode("if($;$)")
->>>>>>> 80488b1b1088c678c7b6ef8008aa74b7a0ac6f8b
 
         # Condition
         cond_node = self.visit(ctx.expression())
