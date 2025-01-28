@@ -472,7 +472,7 @@ class MyCassVisitor(CASSVisitor):
             #    For example, if your additive visitor produces "$+$" or "$-$" as the label:
             if subexpr_node and subexpr_node.label in {"#binary_expression#$+$", "#binary_expression#$-$", "#binary_expression#$*$", "#binary_expression#$/$", "#binary_expression#$%$"}:
                 # Create a paren node
-                paren_node = CassNode("#parenthesized_expression#")
+                paren_node = CassNode("#parenthesized_expression#($)")
                 paren_node.add_child(subexpr_node)
                 return paren_node
             else:
