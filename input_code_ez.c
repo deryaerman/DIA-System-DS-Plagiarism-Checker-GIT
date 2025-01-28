@@ -1,5 +1,7 @@
 #include "stdbool.h"
+int a = 0;
+
 float func() {
-     float res = (global1 % global2) * init(global1, global2); 
+     float res = (global1 + global2) * init(global1, global2); 
      return res; 
 }

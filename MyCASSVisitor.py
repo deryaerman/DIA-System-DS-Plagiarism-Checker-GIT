@@ -49,6 +49,7 @@ class MyCassVisitor(CASSVisitor):
         # Add each statement as a direct child
         for st in ctx.statement():
             stmt_node = self.visit(st)
+            stmt_node.is_in_comp_stmt = True
             block_node.add_child(stmt_node)
 
         return block_node
@@ -66,7 +67,8 @@ class MyCassVisitor(CASSVisitor):
         if ctx.expression():
             assign_node = CassNode("#init_declarator#$=$")
             assign_node.add_child(CassNode(f"v{var_name}"))
-            assign_node.add_child(CassNode("-1")) # -> initial declaration so the node has not been used
+            assign_node.prevUse = -1 # -> initial declaration so the node has not been used
+            #assign_node.nextUse()
 
             # Visit the expression to see if it's #VAR or #LIT or something else
             value_node = self.visit(ctx.expression())
