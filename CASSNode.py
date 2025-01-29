@@ -15,6 +15,11 @@ class CassNode:
         child_strings = [c.to_cass_string() for c in self.children]
         if self.label == "removed":
             return "".join(child_strings)
+        
+        if self.label.startswith("v"):
+            return (prefix +
+                    f"{self.label}\\t{self.prevUse}\\t{self.nextUse}\\t" +
+                    "".join(child_strings))
 
         # 5) Include the label for non-removed nodes
         return f"{self.label}\\t" + "".join(child_strings)
@@ -99,3 +104,62 @@ class CassNode:
     
     
 
+def assign_usage_links(root: CassNode):
+    """
+    1) Do a DFS or BFS over 'root' in the same order you produce your final numbering.
+    2) For each node referencing a local variable (label 'vX'), record it in usage_map.
+    3) After collecting, fill in .prevUse and .nextUse.
+    """
+
+    # usage_map: varName -> list of (sequentialIndex, nodeObj)
+    usage_map = {}
+
+    # We'll track an incremental index to replicate the order you see in .to_cass_string
+    # Because .to_cass_string calls get_node_count first, then it visits children in order.
+    # So let's do a simple pre-order DFS. 
+    # If you want EXACT matching with your existing "node numbering," 
+    # you may replicate the logic from get_node_count/to_dot, etc.
+    current_id = [1]  # store in a list so we can increment in nested function
+
+    def dfs(node: CassNode):
+        # If this node is "valid" (not "removed", not purely numeric, etc.):
+        if (node.label != "removed" and not node.label.lstrip('-').isdigit()):
+            this_index = current_id[0]
+            current_id[0] += 1
+
+            # If it's a local variable usage, store in usage_map
+            if node.label.startswith("v"):
+                var_name = node.label[1:]  # e.g. "vsum" => "sum"
+                if var_name not in usage_map:
+                    usage_map[var_name] = []
+                usage_map[var_name].append((this_index, node))
+
+            # Recurse on children
+            for child in node.children:
+                dfs(child)
+        else:
+            # Even if it's "removed" or numeric, we want to DFS into children
+            # if you want to skip children for certain nodes, do so carefully
+            for child in node.children:
+                dfs(child)
+
+    # 1) Collect usage in a DFS
+    dfs(root)
+
+    # 2) For each variable, link up usage
+    for var_name, usage_list in usage_map.items():
+        # usage_list is e.g. [(4, nodeObj), (8, nodeObj), (21, nodeObj)]
+        for i, (this_idx, node_obj) in enumerate(usage_list):
+            # prev
+            if i > 0:
+                prev_idx = usage_list[i-1][0]
+                node_obj.prevUse = prev_idx
+            else:
+                node_obj.prevUse = -1
+
+            # next
+            if i < len(usage_list)-1:
+                next_idx = usage_list[i+1][0]
+                node_obj.nextUse = next_idx
+            else:
+                node_obj.nextUse = -1

@@ -90,7 +90,7 @@ class MyCassVisitor(CASSVisitor):
         num_children = len(ctx.statement())
         dollar_signs = "$" * num_children  # Create the correct number of $ placeholders
         block_node = CassNode(f"I#compound_statement#{{{dollar_signs}}}")
-        block_node.add_child(CassNode(F"{num_children}"))
+        #block_node.add_child(CassNode(F"{num_children}"))
         block_node.is_in_comp_stmt = True
 
         # Add each statement as a direct child
@@ -193,7 +193,7 @@ class MyCassVisitor(CASSVisitor):
     
     def visitForSingleStatement(self, ctx: CASSParser.ForSingleStatementContext):
         for_node = CassNode("I#for_statement#for($$;$)$")
-        for_node.add_child(CassNode("4"))
+        #for_node.add_child(CassNode("4"))
 
         # Initialization (forInit)
         if ctx.forInit():
@@ -324,7 +324,7 @@ class MyCassVisitor(CASSVisitor):
             operator = ctx.getChild(2 * i - 1).getText()  # Get "+" or "-"
             next_operand = self.visit(operands[i])
             operator_node = CassNode(f"I#binary_expression#${operator}$")
-            operator_node.add_child(CassNode("2"))
+            #operator_node.add_child(CassNode("2"))
             operator_node.add_child(result)
             operator_node.add_child(next_operand)
             result = operator_node  # Update the result to the new operator node
@@ -344,7 +344,7 @@ class MyCassVisitor(CASSVisitor):
             operator = ctx.getChild(2 * i - 1).getText()  # Get "*" or "/"
             next_operand = self.visit(operands[i])
             operator_node = CassNode(f"I#binary_expression#${operator}$")
-            operator_node.add_child(CassNode("2"))
+            #operator_node.add_child(CassNode("2"))
             operator_node.add_child(result)
             operator_node.add_child(next_operand)
             result = operator_node  # Update the result to the new operator node
