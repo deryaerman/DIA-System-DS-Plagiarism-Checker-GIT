@@ -4,6 +4,7 @@ from antlr4 import FileStream, CommonTokenStream
 from CASSLexer import CASSLexer
 from CASSParser import CASSParser
 from MyCASSVisitor import MyCassVisitor
+from CASSNode import assign_usage_links
 
 def main():
     if len(sys.argv) < 2:
@@ -23,6 +24,7 @@ def main():
     # 2) Transform to CASS
     visitor = MyCassVisitor()
     cass_root = visitor.visit(parse_tree)
+    assign_usage_links(cass_root)
     count = cass_root.get_node_count()
 
     # 3) Print or visualize

@@ -18,11 +18,18 @@ class CassNode:
             return "".join(child_strings)
         
         if self.label.startswith("v"):
-            return (prefix +
-                    f"{self.label}\\t{self.prevUse}\\t{self.nextUse}\\t" +
+            return (f"{self.label}\\t{self.prevUse}\\t{self.nextUse}\\t" +
                     "".join(child_strings))
+        
+        if self.label.startswith("V"):
+            return f"{self.label}\\t" + "".join(child_strings)
+        
+        if self.label.startswith(("N", "C", "S")):
+            return f"{self.label}\\t" + "".join(child_strings)
 
-        return f"{self.label}\\t" + "".join(child_strings)
+        # 5) Include the label for non-removed nodes
+        child_count = len(self.children)
+        return f"{self.label}\\t{child_count}\\t" + "".join(child_strings)
         
     def get_node_count(self) -> int:
         """

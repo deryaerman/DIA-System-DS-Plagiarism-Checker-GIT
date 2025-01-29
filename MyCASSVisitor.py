@@ -21,8 +21,10 @@ class MyCassVisitor(CASSVisitor):
         We differentiate between a function defined at global scope vs. 
         one defined inside another function (nested).
         """
+
+        self.scopes.append(set())
         # Determine if we are at global scope by checking if self.scopes is empty
-        in_global_scope = (len(self.scopes) == 0)
+        in_global_scope = (len(self.scopes) == 1)
 
         # Get the textual type (e.g. "int", "float", "void", etc.)
         
@@ -48,7 +50,7 @@ class MyCassVisitor(CASSVisitor):
             declarator_node = CassNode(decl_label)
 
             func_name = ctx.primaryExpression().getText()
-            declarator_node.add_child(self.visit(ctx.primaryExpression()))
+            declarator_node.add_child(CassNode(f"v{func_name}"))
 
             if ctx.parameterList():
                 param_list_node = self.visitParameterList(ctx.parameterList())
@@ -56,9 +58,12 @@ class MyCassVisitor(CASSVisitor):
 
             node.add_child(declarator_node)
 
+        
     
         block_node = self.visit(ctx.compoundStatement())
         node.add_child(block_node)
+
+        self.scopes.pop()
 
         return node
 
@@ -67,7 +72,7 @@ class MyCassVisitor(CASSVisitor):
         num_params = len(ctx.parameter())
         dollar_signs = "$" * num_params
         node = CassNode(f'I#parameter_list#({dollar_signs})')
-        node.add_child(CassNode(f"{num_params}"))
+        #node.add_child(CassNode(f"{num_params}"))
         for p in ctx.parameter():
             node.add_child(self.visit(p))
         return node
@@ -76,8 +81,12 @@ class MyCassVisitor(CASSVisitor):
         
         param_type = ctx.typeSpec().getText()
         param_name = ctx.primaryExpression().getText()
+
+        if self.scopes:
+            self.scopes[-1].add(param_name)
+
         node = CassNode(f"I#parameter_declaration#{param_type}$")
-        node.add_child(CassNode("1"))
+        #node.add_child(CassNode("1"))
         node.add_child(self.visit(ctx.primaryExpression()))
         
         return node
@@ -437,7 +446,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitReturnStatement(self, ctx: CASSParser.ReturnStatementContext):
         # e.g. "return sum;"
-        node = CassNode("#return_statement#return$;")
+        node = CassNode("I#return_statement#return$;")
         if ctx.expression():
             expr_node = self.visit(ctx.expression())
             node.add_child(expr_node)
@@ -445,7 +454,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitExpressionStatement(self, ctx: CASSParser.ExpressionStatementContext):
 
-        statement_node = CassNode("#expression_statement#$")
+        statement_node = CassNode("I#expression_statement#$;")
 
         # 2) Visit the expression, which might yield something like "$+=$"
         expr_node = self.visit(ctx.expression())
@@ -478,7 +487,7 @@ class MyCassVisitor(CASSVisitor):
             # Use a node labeled #assignment_expression#$<op_text>
             # For a simple '=' you might produce '#assignment_expression#$=$'
             # For '+=' maybe '#assignment_expression#$+=$', etc.
-            node = CassNode(f"#assignment_expression#$" + op_text + "$")
+            node = CassNode(f"I#assignment_expression#$" + op_text + "$")
 
             lhs = self.visit(ctx.unaryExpression())  # e.g. b
             rhs = self.visit(ctx.assignmentExpression())  # e.g. b + 1

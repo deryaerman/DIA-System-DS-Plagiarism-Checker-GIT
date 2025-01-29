@@ -1,5 +1,6 @@
 digraph CASS {
   node [shape=ellipse];
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
 <<<<<<< Updated upstream
@@ -24,12 +25,15 @@ digraph CASS {
   n19 [label="[19]: Vresult"];
 =======
 >>>>>>> 85caaad470118ded42952f268fb496d49a08790b
+=======
+>>>>>>> Stashed changes
   n1 [label="[1]: S#FS#1_2"];
   n2 [label="[2]: I#compound_statement#{$$$}"];
   n3 [label="[3]: I#declaration#int$;"];
   n4 [label="[4]: I#init_declarator#$=$"];
   n5 [label="[5]: vsum"];
   n6 [label="[6]: N0"];
+<<<<<<< Updated upstream
 <<<<<<< HEAD
   n7 [label="[7]: #for_statement#for($$;$)$"];
   n8 [label="[8]: #assignment_expression#$=$"];
@@ -65,6 +69,23 @@ digraph CASS {
   n22 [label="[22]: vsum"];
 >>>>>>> Stashed changes
 >>>>>>> 85caaad470118ded42952f268fb496d49a08790b
+=======
+  n7 [label="[7]: I#function_definition#void$$"];
+  n8 [label="[8]: I#function_declarator#$$"];
+  n9 [label="[9]: vhallo"];
+  n10 [label="[10]: I#parameter_list#($)"];
+  n11 [label="[11]: I#parameter_declaration#int$"];
+  n12 [label="[12]: vb"];
+  n13 [label="[13]: I#compound_statement#{$}"];
+  n14 [label="[14]: I#expression_statement#$;"];
+  n15 [label="[15]: I#assignment_expression#$=$"];
+  n16 [label="[16]: vsum"];
+  n17 [label="[17]: I#binary_expression#$+$"];
+  n18 [label="[18]: vb"];
+  n19 [label="[19]: Vc"];
+  n20 [label="[20]: I#return_statement#return$;"];
+  n21 [label="[21]: vsum"];
+>>>>>>> Stashed changes
   n1 -> n2;
   n2 -> n3;
   n3 -> n4;
@@ -74,11 +95,19 @@ digraph CASS {
   n7 -> n8;
   n8 -> n9;
   n8 -> n10;
+<<<<<<< Updated upstream
   n7 -> n11;
   n11 -> n12;
   n11 -> n13;
   n7 -> n14;
   n7 -> n15;
+=======
+  n10 -> n11;
+  n11 -> n12;
+  n7 -> n13;
+  n13 -> n14;
+  n14 -> n15;
+>>>>>>> Stashed changes
   n15 -> n16;
 <<<<<<< HEAD
   n16 -> n17;
@@ -88,6 +117,7 @@ digraph CASS {
   n20 -> n21;
 =======
   n15 -> n17;
+<<<<<<< Updated upstream
   n2 -> n18;
   n18 -> n19;
 <<<<<<< Updated upstream
@@ -97,4 +127,10 @@ digraph CASS {
   n21 -> n22;
 >>>>>>> Stashed changes
 >>>>>>> 85caaad470118ded42952f268fb496d49a08790b
+=======
+  n17 -> n18;
+  n17 -> n19;
+  n2 -> n20;
+  n20 -> n21;
+>>>>>>> Stashed changes
 }
