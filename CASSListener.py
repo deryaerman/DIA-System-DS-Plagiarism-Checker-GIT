@@ -89,6 +89,15 @@ class CASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CASSParser#conditionClause.
+    def enterConditionClause(self, ctx:CASSParser.ConditionClauseContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#conditionClause.
+    def exitConditionClause(self, ctx:CASSParser.ConditionClauseContext):
+        pass
+
+
     # Enter a parse tree produced by CASSParser#whileBlockStatement.
     def enterWhileBlockStatement(self, ctx:CASSParser.WhileBlockStatementContext):
         pass

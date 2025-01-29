@@ -54,6 +54,11 @@ class CASSVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CASSParser#conditionClause.
+    def visitConditionClause(self, ctx:CASSParser.ConditionClauseContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CASSParser#whileBlockStatement.
     def visitWhileBlockStatement(self, ctx:CASSParser.WhileBlockStatementContext):
         return self.visitChildren(ctx)

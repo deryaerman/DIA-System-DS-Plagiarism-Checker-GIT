@@ -23,10 +23,11 @@ def main():
     # 2) Transform to CASS
     visitor = MyCassVisitor()
     cass_root = visitor.visit(parse_tree)
+    count = cass_root.get_node_count()
 
     # 3) Print or visualize
     print("=== CASS String ===")
-    print(cass_root.to_cass_string())
+    print(f"{count}\\t" + cass_root.to_cass_string())
 
     # 4) Create DOT & PNG
     dot_lines = cass_root.to_dot()  # Call to_dot() without extra arguments

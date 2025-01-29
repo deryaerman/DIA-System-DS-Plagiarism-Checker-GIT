@@ -12,14 +12,12 @@ class CassNode:
         self.children.append(child)
 
     def to_cass_string(self) -> str:
-        count = self.get_node_count()
-        prefix = f"{count}\\t"
         child_strings = [c.to_cass_string() for c in self.children]
         if self.label == "removed":
             return "".join(child_strings)
 
         # 5) Include the label for non-removed nodes
-        return prefix + f"{self.label}\\t" + "".join(child_strings)
+        return f"{self.label}\\t" + "".join(child_strings)
         
     def get_node_count(self) -> int:
         """

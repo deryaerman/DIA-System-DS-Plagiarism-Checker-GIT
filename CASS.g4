@@ -10,7 +10,7 @@ prog
     ;
 
 functionDefinition
-    : typeSpec ID '(' parameterList? ')' compoundStatement
+    : typeSpec primaryExpression '(' parameterList? ')' compoundStatement
     ;
 
 // A block of statements in braces
@@ -37,18 +37,18 @@ statement
     | returnStatement
     // e.g.  sum += i;
     | expressionStatement
-    | functionDefinition
+    | functionDefinition  
     | includeStatement
     ;
 
 // A simple variable declaration with initialization, e.g. "int sum = 0;"
 declarationStatement
-    : typeSpec ID ('=' expression)? ';'
+    : typeSpec primaryExpression ('=' expression)? ';'
     ;
 
 // For loop in a slightly simplified form
 forBlockStatement
-    : 'for' '(' forInit? ';' expression? ';' forUpdate? ')' '{' statement* '}'
+    : 'for' '(' forInit? ';' expression? ';' forUpdate? ')' compoundStatement
     ;
 
 forSingleStatement
@@ -57,7 +57,7 @@ forSingleStatement
 
 // Optional initialization part of the for loop, e.g. "int i = start_val"
 forInit
-    : typeSpec ID '=' expression
+    : typeSpec primaryExpression '=' expression
     ;
 
 // Optional update part, e.g. "++i" or "i++" or "i += 2"
@@ -65,20 +65,24 @@ forUpdate
     : unaryExpression
     ;
 
+conditionClause
+    : expression
+    ;
+
 whileBlockStatement
-    : 'while' '(' expression ')' '{' statement* '}'
+    : 'while' '(' conditionClause ')' compoundStatement
     ;
 
 whileSingleStatement
-    : 'while' '(' expression ')' statement
+    : 'while' '(' conditionClause ')' statement
     ;
 
 ifBlockStatement
-    : 'if' '(' logicalOrExpression ')' '{' statement* '}' ('else' '{' statement* '}')?
+    : 'if' '(' conditionClause ')' compoundStatement ('else' compoundStatement)?
     ;
 
 ifSingleStatement
-    : 'if' '(' expression ')' statement ('else' statement)?
+    : 'if' '(' conditionClause ')' statement ('else' statement)?
     ;
 
 functionCall
@@ -109,7 +113,7 @@ parameterList
     ;
 
 parameter
-    : typeSpec ID
+    : typeSpec primaryExpression
     ;
 
 // Very simple type spec to catch "int" (you can expand as needed)
