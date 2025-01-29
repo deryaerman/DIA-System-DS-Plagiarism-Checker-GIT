@@ -1,5 +1,6 @@
 digraph CASS {
   node [shape=ellipse];
+<<<<<<< HEAD
   n1 [label="[1]: S#FS#1_2"];
   n2 [label="[2]: I#compound_statement#{$$}"];
   n3 [label="[3]: #for_statement#for($$;$)$"];
@@ -35,6 +36,43 @@ digraph CASS {
   n3 -> n14;
   n14 -> n15;
   n15 -> n16;
+=======
+  n1 [label="[1]: S#FS#1_0"];
+  n2 [label="[2]: I#compound_statement#{$$}"];
+  n3 [label="[3]: I#for_statement#for($$;$)$"];
+  n4 [label="[4]: I#declaration#int$;"];
+  n5 [label="[5]: I#init_declarator#$=$"];
+  n6 [label="[6]: vi"];
+  n7 [label="[7]: N0"];
+  n8 [label="[8]: I#binary_expression#$<$"];
+  n9 [label="[9]: vi"];
+  n10 [label="[10]: N10"];
+  n11 [label="[11]: vi"];
+  n12 [label="[12]: I#compound_statement#{$}"];
+  n13 [label="[13]: I#expression_statement#$;"];
+  n14 [label="[14]: I#assignment_expression#$=$"];
+  n15 [label="[15]: Vsum"];
+  n16 [label="[16]: I#binary_expression#$+$"];
+  n17 [label="[17]: vi"];
+  n18 [label="[18]: Vsum"];
+  n19 [label="[19]: I#return_statement#return$;"];
+  n20 [label="[20]: Vsum"];
+  n1 -> n2;
+  n2 -> n3;
+  n3 -> n4;
+  n4 -> n5;
+  n5 -> n6;
+  n5 -> n7;
+  n3 -> n8;
+  n8 -> n9;
+  n8 -> n10;
+  n3 -> n11;
+  n3 -> n12;
+  n12 -> n13;
+  n13 -> n14;
+  n14 -> n15;
+  n14 -> n16;
+>>>>>>> 6481511b986874c6c1f0a1aafdc43e3601cbded9
   n16 -> n17;
   n16 -> n18;
   n2 -> n19;
