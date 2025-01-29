@@ -1,21 +1,21 @@
-int summation(int start_val,int end_val) { 
-    int sum= 0; 
+// int summation(int start_val,int end_val) { 
+//     int sum= 0; 
 
-    void hallo (int b) {
-        sum = b + c;
+//     void hallo (int b) {
+//         sum = b + c;
 
-    }
+//     }
 
     
-    return sum; 
-}
+//     return sum; 
+// }
 int main() {
 
-    int func(int a, int b) {
-        b=b-1;
+    for (int i = 0; i < 10; i++){
+        sum = i + sum;
     }
     
-    return result; // Return 0 to indicate successful execution
+    return sum; // Return 0 to indicate successful execution
 } 
 
 

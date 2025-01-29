@@ -147,8 +147,8 @@ class MyCassVisitor(CASSVisitor):
 
     def visitForBlockStatement(self, ctx: CASSParser.ForBlockStatementContext):
     
-        for_node = CassNode(f"#for_statement#for($$;$)$")
-        for_node.add_child(CassNode("4"))
+        for_node = CassNode(f"I#for_statement#for($$;$)$")
+        #for_node.add_child(CassNode("4"))
 
         # Initialization (forInit)
         if ctx.declarationStatement():
