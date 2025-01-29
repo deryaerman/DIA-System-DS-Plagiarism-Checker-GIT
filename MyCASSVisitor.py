@@ -303,7 +303,7 @@ class MyCassVisitor(CASSVisitor):
 
         # Condition (the part in parentheses)
         if_node.add_child(CassNode("2"))
-        if_node.add_child(CassNode('#condition_clause#($)'))
+        if_node.add_child(CassNode("#condition_clause#($)"))
         cond_node = self.visit(ctx.logicalOrExpression())
         if_node.add_child(cond_node)
 
@@ -476,7 +476,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitExpressionStatement(self, ctx: CASSParser.ExpressionStatementContext):
 
-        statement_node = CassNode('#expression_statement#$')
+        statement_node = CassNode("#expression_statement#$")
 
         # 2) Visit the expression, which might yield something like "$+=$"
         expr_node = self.visit(ctx.expression())
@@ -600,4 +600,3 @@ class MyCassVisitor(CASSVisitor):
         else:
             return CassNode("???")
 
-##addddd modulo digggaaqaa
