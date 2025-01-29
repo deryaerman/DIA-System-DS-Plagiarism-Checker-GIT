@@ -43,30 +43,19 @@ statement
 
 // A simple variable declaration with initialization, e.g. "int sum = 0;"
 declarationStatement
-    : typeSpec primaryExpression ('=' expression)? ';'
+    : typeSpec primaryExpression ('=' expression)? ';'?
     ;
 
-// For loop in a slightly simplified form
 forBlockStatement
-    : 'for' '(' forInit? ';' expression? ';' forUpdate? ')' compoundStatement
+    : 'for' '(' (declarationStatement? || assignmentExpression?) ';' logicalOrExpression? ';' unaryExpression? ')' compoundStatement
     ;
 
 forSingleStatement
-    : 'for' '(' forInit? ';' expression? ';' forUpdate? ')' statement 
-    ;
-
-// Optional initialization part of the for loop, e.g. "int i = start_val"
-forInit
-    : typeSpec primaryExpression '=' expression
-    ;
-
-// Optional update part, e.g. "++i" or "i++" or "i += 2"
-forUpdate
-    : unaryExpression
+    : 'for' '(' (declarationStatement? || assignmentExpression?) ';' logicalOrExpression? ';' unaryExpression? ')' statement
     ;
 
 conditionClause
-    : expression
+    : logicalOrExpression
     ;
 
 whileBlockStatement
@@ -147,6 +136,13 @@ unaryExpression
     : '++' unaryExpression
     | '--' unaryExpression
     | primaryExpression ('++' | '--')?
+    ;
+
+comparingExpression
+    : '>'
+    | '<'
+    | '<='
+    | '>='
     ;
 
 primaryExpression

@@ -3,7 +3,7 @@ class CassNode:
         """
         label: The string label for this node, e.g. "#VAR", "for($S;$S$)$", "return", etc.
         """
-        self.label = label
+        self.label = str(label)
         self.children = []
         self.prevUse = -1 #keep track of the prev node usage
         self.nextUse = -1
@@ -12,11 +12,11 @@ class CassNode:
         self.children.append(child)
 
     def to_cass_string(self) -> str:
+        
         child_strings = [c.to_cass_string() for c in self.children]
         if self.label == "removed":
             return "".join(child_strings)
 
-        # 5) Include the label for non-removed nodes
         return f"{self.label}\\t" + "".join(child_strings)
         
     def get_node_count(self) -> int:

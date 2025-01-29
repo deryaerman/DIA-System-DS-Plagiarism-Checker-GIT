@@ -134,62 +134,36 @@ class MyCassVisitor(CASSVisitor):
 
         return decl_node
     
-    def visitForInit(self, ctx: CASSParser.ForInitContext):
-        
-
-        # 1) Create the top-level node for the type, e.g. "int$;"
-        type_text = ctx.typeSpec().getText()  # should be "int"
-        init_node = CassNode(f"{type_text}$;")
-
-        # 2) Create the "$=$" node
-        assign_node = CassNode("$=$")
-
-        # 3) The left side is the variable being declared
-        var_name = ctx.primaryExpression().getText()  # e.g. "i"
-        var_node = CassNode(self.visit(ctx.primaryExpression()))
-        assign_node.add_child(var_node)
-
-        # 4) The right side is the expression
-        expr_node = self.visit(ctx.expression())  # this might yield #VAR:start_val, #LIT:0, etc.
-        assign_node.add_child(expr_node)
-
-        # Link everything: "int$;" -> "$=$"
-        init_node.add_child(assign_node)
-
-        return init_node
-
 
 
     def visitForBlockStatement(self, ctx: CASSParser.ForBlockStatementContext):
-
+    
         for_node = CassNode(f"#for_statement#for($$;$)$")
         for_node.add_child(CassNode("4"))
 
         # Initialization (forInit)
-        if ctx.forInit():
-            init_node = self.visit(ctx.forInit())
-            for_node.add_child(init_node)
+        if ctx.declarationStatement():
+            init_node = self.visit(ctx.declarationStatement())
         else:
-            for_node.add_child(CassNode("EMPTY_INIT"))
-
-        # Condition
-        if ctx.expression():
-            cond_node = self.visit(ctx.expression())
-            for_node.add_child(cond_node)
-        else:
-            for_node.add_child(CassNode("EMPTY_COND"))
-
+            init_node = self.visit(ctx.assignmentExpression())
+            
+        for_node.add_child(init_node)
+       
+        cond_node = self.visit(ctx.logicalOrExpression())
+        for_node.add_child(cond_node)
+       
         # Update (forUpdate)
-        if ctx.forUpdate():
-            update_node = self.visit(ctx.forUpdate())
+        if ctx.unaryExpression():
+            update_node = self.visit(ctx.unaryExpression())
             for_node.add_child(update_node)
         else:
             for_node.add_child(CassNode("EMPTY_UPDATE"))
 
-        
+        # Body (multiple statements in the block)
         for_node.add_child(self.visit(ctx.compoundStatement()))
 
         return for_node
+
     
     def visitForSingleStatement(self, ctx: CASSParser.ForSingleStatementContext):
         for_node = CassNode("I#for_statement#for($$;$)$")
@@ -223,11 +197,13 @@ class MyCassVisitor(CASSVisitor):
 
         return for_node
 
+#if_statement#if$$\t2\tI#condition_clause#($)\t1\tI#binary_expression#$&&$\t2\tI#binary_expression#$>$\t2\tva\t4\t-1\tN5\tVb\
     def visitConditionClause(self, ctx: CASSParser.ConditionClauseContext):
-    
-        node = CassNode("#condition_clause($)")
-        node.add_child(CassNode("1"))
-        node.add_child(self.visit(ctx.expression()))
+        node = CassNode("I#condition_clause($)")
+        
+        if ctx.logicalOrExpression():
+            node.add_child(self.visit(ctx.logicalOrExpression()))
+        
         return node
 
     
@@ -282,7 +258,8 @@ class MyCassVisitor(CASSVisitor):
 
         # Process "else" block statements, if any
         if has_else:
-            else_node = CassNode("else")
+            else_node = CassNode("I#else_clause#else$")
+            else_node.add_child(CassNode("1"))
             else_node.add_child(self.visit(ctx.compoundStatement(1)))
             if_node.add_child(else_node)
 
@@ -304,12 +281,70 @@ class MyCassVisitor(CASSVisitor):
 
         # Optional "else"
         if ctx.statement(1):
-            else_node = CassNode("else")
+            else_node = CassNode("I#else_clause#else$")
             else_body_node = self.visit(ctx.statement(1))
+            else_node.add_child(CassNode("1"))
             else_node.add_child(else_body_node)
             if_node.add_child(else_node)
 
         return if_node
+    
+    def visitLogicalOrExpression(self, ctx: CASSParser.LogicalOrExpressionContext):
+        if len(ctx.logicalAndExpression()) == 1:
+            # If there is only one logicalAndExpression, visit it directly
+            return self.visit(ctx.logicalAndExpression(0))
+        
+        # Otherwise, create a node to represent the OR operation
+        node = CassNode("I#binary_expression#$||$")
+        node.add_child(CassNode("2"))
+        
+        for expr in ctx.logicalAndExpression():
+            node.add_child(self.visit(expr))
+        
+        return node
+
+    def visitLogicalAndExpression(self, ctx: CASSParser.LogicalAndExpressionContext):
+        if len(ctx.equalityExpression()) == 1:
+            return self.visit(ctx.equalityExpression(0))
+        
+        node = CassNode("I#binary_expression#$&&$")
+        node.add_child(CassNode("2"))
+        
+        for expr in ctx.equalityExpression():
+            node.add_child(self.visit(expr))
+        
+        return node
+    
+    def visitEqualityExpression(self, ctx: CASSParser.EqualityExpressionContext):
+        if len(ctx.relationalExpression()) == 1:
+            return self.visit(ctx.relationalExpression(0))
+        
+        node = CassNode(f"I#binary_expression#${ctx.getChild(1).getText()}$")
+        node.add_child(CassNode("2"))
+        
+        lhs = self.visit(ctx.relationalExpression(0))  # Left operand
+        rhs = self.visit(ctx.relationalExpression(1))  # Right operand
+        
+        node.add_child(lhs)
+        node.add_child(rhs)
+        
+        return node
+    
+    def visitRelationalExpression(self, ctx: CASSParser.RelationalExpressionContext):
+    # If there's only one child additiveExpression, just pass it up the chain
+        if len(ctx.children) == 1:
+            return self.visit(ctx.additiveExpression(0))
+
+        # If there's an operator like "<=" or ">" ...
+        left = self.visit(ctx.additiveExpression(0))
+        op = ctx.getChild(1).getText()  # e.g. "<="
+        right = self.visit(ctx.additiveExpression(1))
+
+        # Create a node labeled "$<=$" (or "$>$" etc.)
+        node = CassNode(f"I#binary_expression#${op}$")
+        node.add_child(left)
+        node.add_child(right)
+        return node
     
     def visitAdditiveExpression(self, ctx: CASSParser.AdditiveExpressionContext):
         # If there's only one child, pass it up the chain (e.g., "a")
@@ -352,22 +387,6 @@ class MyCassVisitor(CASSVisitor):
         return result
         
 
-
-    def visitRelationalExpression(self, ctx: CASSParser.RelationalExpressionContext):
-    # If there's only one child additiveExpression, just pass it up the chain
-        if len(ctx.children) == 1:
-            return self.visit(ctx.additiveExpression(0))
-
-        # If there's an operator like "<=" or ">" ...
-        left = self.visit(ctx.additiveExpression(0))
-        op = ctx.getChild(1).getText()  # e.g. "<="
-        right = self.visit(ctx.additiveExpression(1))
-
-        # Create a node labeled "$<=$" (or "$>$" etc.)
-        node = CassNode(f"${op}$")
-        node.add_child(left)
-        node.add_child(right)
-        return node
     
     def visitFunctionCall(self, ctx: CASSParser.FunctionCallContext):
        

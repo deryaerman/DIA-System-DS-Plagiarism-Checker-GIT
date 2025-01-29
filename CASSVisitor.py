@@ -44,16 +44,6 @@ class CASSVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CASSParser#forInit.
-    def visitForInit(self, ctx:CASSParser.ForInitContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CASSParser#forUpdate.
-    def visitForUpdate(self, ctx:CASSParser.ForUpdateContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by CASSParser#conditionClause.
     def visitConditionClause(self, ctx:CASSParser.ConditionClauseContext):
         return self.visitChildren(ctx)
@@ -131,6 +121,11 @@ class CASSVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CASSParser#unaryExpression.
     def visitUnaryExpression(self, ctx:CASSParser.UnaryExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CASSParser#comparingExpression.
+    def visitComparingExpression(self, ctx:CASSParser.ComparingExpressionContext):
         return self.visitChildren(ctx)
 
 

@@ -71,24 +71,6 @@ class CASSListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by CASSParser#forInit.
-    def enterForInit(self, ctx:CASSParser.ForInitContext):
-        pass
-
-    # Exit a parse tree produced by CASSParser#forInit.
-    def exitForInit(self, ctx:CASSParser.ForInitContext):
-        pass
-
-
-    # Enter a parse tree produced by CASSParser#forUpdate.
-    def enterForUpdate(self, ctx:CASSParser.ForUpdateContext):
-        pass
-
-    # Exit a parse tree produced by CASSParser#forUpdate.
-    def exitForUpdate(self, ctx:CASSParser.ForUpdateContext):
-        pass
-
-
     # Enter a parse tree produced by CASSParser#conditionClause.
     def enterConditionClause(self, ctx:CASSParser.ConditionClauseContext):
         pass
@@ -230,6 +212,15 @@ class CASSListener(ParseTreeListener):
 
     # Exit a parse tree produced by CASSParser#unaryExpression.
     def exitUnaryExpression(self, ctx:CASSParser.UnaryExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#comparingExpression.
+    def enterComparingExpression(self, ctx:CASSParser.ComparingExpressionContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#comparingExpression.
+    def exitComparingExpression(self, ctx:CASSParser.ComparingExpressionContext):
         pass
 
 
