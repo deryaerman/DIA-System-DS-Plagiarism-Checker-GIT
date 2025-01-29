@@ -1,17 +1,64 @@
 from CASSVisitor import CASSVisitor
 from CASSParser import CASSParser
-from CASSNode import CassNode  # or define CassNode inline here if you prefer
+from CASSNode import CassNode 
+
+"""
+Original implementation by IntelLabs: https://github.com/IntelLabs/MICSAS/tree/master
+
+Cass strings in the original implementation come with a configuration setup. This is the setup (most likely) used in this project and decides on whether a node gets a label. 
+  
+    annot_mode : Annotations
+    compound_mode: Compound Statements
+    gvar_mode : Global Variable 
+    gfun_mode : Global Function  
+    fsig_mode : Function Signatures
+
+Unfortunately we don't know for sure how labels influence the Cass string as changing the configuration inside the original implementation cloned from GitHub has no effect on the final output string.
+
+A Node according to the original implementation consists of 3 parts:
+   1) Node type :
+        -> I : Internal
+        -> N / C / S : Number / Char / String literal
+        -> F : Global function
+        -> f : Local function
+        -> V : Global variable
+        -> v : Local variable
+        -> S : Function signature
+        -> E : Error * not implemented
+
+    2) Annotation : #compound_statement#, #init_declarator# etc.
+    3) Labels : #VAR, #GVAR, #GFUN, {#} ? 
+
+In this project we focused on replicating the Cass string building logic of the original implementation to be able to then vectorize it and calculate a similarity score. Our nodes include node types, annotations, observed suffixes representing a binary operation or the number of immediate children nodes using dollar signs "$=$", {$$$} as well as variable/function names. While building the string, nodes are seperated using '\t' followed with either number of immediate children nodes like '2' or the number (id) of the node that a local variable/function has been previously used it, and the node number where it will next be used it (current node numer).
+
+Here's an example of a Cass string for a simple program obtained from the original implementation showing the structure we were trying to implement :
+
+int summation(int start_val, int end_val) { 
+    int sum = 0; 
+    for (int i = start_val; i <= end_val; ++i) {
+        sum += i;
+    } 
+    return sum;
+}
+
+['0,0,6,1\t23\tS#FS#1_2\tI#compound_statement#{$$$}\t3\tI#declaration#int$;\t1\tI#init_declarator#$=$\t2\tvsum\t-1\t19\tN0\tI#for_statement#for($$;$)$\t4\tI#declaration#int$;\t1\tI#init_declarator#$=$\t2\tvi\t-1\t12\tvstart_val\t-1\t-1\tI#binary_expression#$<=$\t2\tvi\t9\t15\tvend_val\t-1\t-1\tI#update_expression#++$\t1\tvi\t12\t20\tI#compound_statement#{$}\t1\tI#expression_statement#$;\t1\tI#assignment_expression#$+=$\t2\tvsum\t4\t22\tvi\t15\t-1\tI#return_statement#return$;\t1\tvsum\t19\t-1\t']
+
+-> 0,0,6,1 being the source range (start_row, start_col, end_row, end_col)
+-> first number is the total number of nodes, here 23
+"""
+
+
 
 class MyCassVisitor(CASSVisitor):
 
     def __init__(self):
         super().__init__()
-        self.scopes = []  # stack of sets, each set contains declared variable names
+        self.scopes = []  # keeping track of scopes to differenciate between local/global
 
     def visitProg(self, ctx: CASSParser.ProgContext):
-        # 'prog' might be your top-level rule
-        root = CassNode("removed")
-        for statement in ctx.statement():
+
+        root = CassNode("removed") # marking root node to remove
+        for statement in ctx.statement(): # visiting first line of code
             n = self.visit(statement)
             root.add_child(n)
         return root
@@ -37,10 +84,16 @@ class MyCassVisitor(CASSVisitor):
             if params_num > 2:
                 params_num = 2
 
+            # first function starting the programgets a function signature node
             node = CassNode(f"S#FS#{func_type}_{params_num}")
 
         else:
             
+            # nested functions get more detailed context 
+
+            # contains the return type and 2*$ representing two child nodes:
+            # -> function declarator
+            # -> compound statement { * }
             node = CassNode(f"I#function_definition#{func_type_text}$$")
 
             if params_num == 0:
@@ -58,7 +111,6 @@ class MyCassVisitor(CASSVisitor):
 
             node.add_child(declarator_node)
 
-        
     
         block_node = self.visit(ctx.compoundStatement())
         node.add_child(block_node)
@@ -206,10 +258,9 @@ class MyCassVisitor(CASSVisitor):
 
         return for_node
 
-#if_statement#if$$\t2\tI#condition_clause#($)\t1\tI#binary_expression#$&&$\t2\tI#binary_expression#$>$\t2\tva\t4\t-1\tN5\tVb\
     def visitConditionClause(self, ctx: CASSParser.ConditionClauseContext):
         node = CassNode("I#condition_clause($)")
-        
+    
         if ctx.logicalOrExpression():
             node.add_child(self.visit(ctx.logicalOrExpression()))
         
@@ -505,15 +556,12 @@ class MyCassVisitor(CASSVisitor):
         text = ctx.getText()
         # If it's prefix like ++i
         if ctx.unaryExpression():
-            # e.g. '++' unaryExpression
-            # We'll produce a node for e.g. '++ #VAR'
-            op = text[:2]  + "$" # '++' or '--'
-            node = CassNode(f"#update_statement#{op}")
-            var_text = ctx.unaryExpression().getText()
-            node.add_child(self.visit(ctx.primaryExpression()))
+            op = ''.join('$' if x not in ('+', '-') else x for x in ctx.getText())
+            node = CassNode(f"I#update_statement#{op}")
+            node.add_child(self.visit(ctx.unaryExpression()))
             return node
         else:
-            # We might have a primary expression
+
             return self.visit(ctx.primaryExpression())
         
     def isLocal(self, var_name: str) -> bool:

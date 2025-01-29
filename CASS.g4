@@ -23,25 +23,20 @@ compoundStatement
 // --------------------------
 
 statement
-    // e.g.  int sum = 0;
+   
     : declarationStatement
-    // e.g.  for (int i = start_val; i <= end_val; ++i) sum += i;
-    | forBlockStatement          // For loop with { }
-    | forSingleStatement         // For loop without { }
-
-    | whileBlockStatement       // While loop with { }
+    | forBlockStatement          
+    | forSingleStatement         
+    | whileBlockStatement       
     | whileSingleStatement
-    | ifBlockStatement           // If with { }
+    | ifBlockStatement           
     | ifSingleStatement    
-    // e.g.  return sum;
     | returnStatement
-    // e.g.  sum += i;
     | expressionStatement
     | functionDefinition  
     | includeStatement
     ;
 
-// A simple variable declaration with initialization, e.g. "int sum = 0;"
 declarationStatement
     : typeSpec primaryExpression ('=' expression)? ';'?
     ;
@@ -105,7 +100,6 @@ parameter
     : typeSpec primaryExpression
     ;
 
-// Very simple type spec to catch "int" (you can expand as needed)
 typeSpec
     : 'int' 
     | 'float'
@@ -125,17 +119,14 @@ expression
     ;
 
 assignmentExpression
-    // e.g. "sum += i" or "i = i + 1"
     : unaryExpression assignmentOperator assignmentExpression
     | logicalOrExpression
-    //| parenOperation
     ;
 
-// e.g. ++i, --i, i++, i--
 unaryExpression
-    : '++' unaryExpression
-    | '--' unaryExpression
-    | primaryExpression ('++' | '--')?
+    : ('++' | '--') unaryExpression
+    | unaryExpression ('++' | '--')
+    | primaryExpression
     ;
 
 comparingExpression
@@ -150,12 +141,12 @@ primaryExpression
     | INT                    
     | FLOAT                  
     | CHAR                   
-    | STRING                 
+    | STRING
+    | BOOL                 
     | functionCall           
     | '(' expression ')'     
     ;
 
-// Compound assignment ops
 assignmentOperator
     : '='
     | '+='
@@ -164,7 +155,6 @@ assignmentOperator
     | '/='
     ;
 
-// A minimal boolean-expr chain
 logicalOrExpression
     : logicalAndExpression ('||' logicalAndExpression)*
     ;
@@ -212,6 +202,11 @@ ID
 
 INT
     : [0-9]+
+    ;
+
+BOOL
+    : 'true'
+    | 'false'
     ;
 
 FLOAT
