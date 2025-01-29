@@ -25,74 +25,45 @@ class MyCassVisitor(CASSVisitor):
         in_global_scope = (len(self.scopes) == 0)
 
         # Get the textual type (e.g. "int", "float", "void", etc.)
+        
         func_type_text = ctx.typeSpec().getText()
-
-        # Count how many parameters were declared
-        params_num = 0
-        if ctx.parameterList():
-            params_num = len(ctx.parameterList().parameter())
+        params_num = len(ctx.parameterList().parameter()) if (ctx.parameterList()) else 0
 
         if in_global_scope:
-            # ---------------------------
-            # 1) GLOBAL / TOP-LEVEL FUNCTION
-            # ---------------------------
-            #
-            # Keep using the older "S#FS#" style node that your friend implemented
-            # The code below is basically your "option == 1" path:
-            #
-            # Optionally clamp param count if your format demands that
+            
+            func_type = 0 if func_type_text == 'void' else 1
             if params_num > 2:
                 params_num = 2
 
-            node = CassNode(f"S#FS#{func_type_text}_{params_num}")
+            node = CassNode(f"S#FS#{func_type}_{params_num}")
 
         else:
-            # ---------------------------
-            # 2) NESTED / LOCAL FUNCTION
-            # ---------------------------
-            #
-            # Build an "I#function_definition#float$$" style node
-            # that has exactly two children:
-            #   (a) I#function_declarator#...
-            #   (b) the compound statement
-            #
-
-            # 2A) Create the function_definition node
+            
             node = CassNode(f"I#function_definition#{func_type_text}$$")
 
-            # 2B) Create the function_declarator node.
-            #     If there are parameters, we typically use two '$' in the label; 
-            #     if none, something like '$()'.  You can refine if needed.
             if params_num == 0:
                 decl_label = "I#function_declarator#$()"
             else:
                 decl_label = "I#function_declarator#$$"
             declarator_node = CassNode(decl_label)
 
-            # Add the function name child, e.g. 'vfuncName'
             func_name = ctx.ID().getText()
             declarator_node.add_child(CassNode(f"v{func_name}"))
 
-            # If there is a parameter list, visit it and add it as a child
             if ctx.parameterList():
                 param_list_node = self.visitParameterList(ctx.parameterList())
                 declarator_node.add_child(param_list_node)
 
-            # Add the declarator as the first child of the function_definition
             node.add_child(declarator_node)
 
-        # ---------------------------
-        # Common step: visit the compound block,
-        # then add it as the last child to `node`.
-        # ---------------------------
+    
         block_node = self.visitCompoundStatement(ctx.compoundStatement())
         node.add_child(block_node)
 
-        # Store or return the final node
         return node
 
     def visitParameterList(self, ctx: CASSParser.ParameterListContext):
-        #I#parameter_list#($)\t1\tI#parameter_declaration#int$\t1\tvc\t-1\t24\tI#compound_statement#
+        
         num_params = len(ctx.parameter())
         dollar_signs = "$" * num_params
         node = CassNode(f'I#parameter_list#({dollar_signs})')
@@ -102,7 +73,7 @@ class MyCassVisitor(CASSVisitor):
         return node
 
     def visitParameter(self, ctx: CASSParser.ParameterContext):
-        # e.g. "int start_val"
+        
         param_type = ctx.typeSpec().getText()
         param_name = ctx.ID().getText()
         node = CassNode(f"I#parameter_declaration#{param_type}$")
@@ -135,7 +106,7 @@ class MyCassVisitor(CASSVisitor):
         return block_node
     
     def visitIncludeStatement(self, ctx: CASSParser.IncludeStatementContext):
-        return CassNode('removed')
+        return CassNode("removed")
 
     def visitDeclarationStatement(self, ctx: CASSParser.DeclarationStatementContext):
 
