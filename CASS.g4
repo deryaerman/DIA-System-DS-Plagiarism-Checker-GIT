@@ -142,7 +142,7 @@ assignmentExpression
 unaryExpression
     : '++' unaryExpression
     | '--' unaryExpression
-    | primaryExpression
+    | primaryExpression ('++' | '--')?
     ;
 
 primaryExpression
