@@ -504,8 +504,8 @@ class MyCassVisitor(CASSVisitor):
             node = CassNode(f"#update_statement#{op}")
             var_text = ctx.unaryExpression().getText()
             node.add_child(CassNode(f"v{var_text}"))
-            node.add_child("-1")
-            node.add_child("-1")
+            node.add_child(CassNode("-1"))
+            node.add_child(CassNode("-1"))
             return node
         else:
             # We might have a primary expression
