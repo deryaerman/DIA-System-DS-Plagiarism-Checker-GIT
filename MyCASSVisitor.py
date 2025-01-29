@@ -75,7 +75,7 @@ class MyCassVisitor(CASSVisitor):
 
         # Get the textual type (e.g. "int", "float", "void", etc.)
         
-        func_type_text = ctx.typeSpec().getText()
+        func_type_text = ctx.typeSpec().getText()       
         params_num = len(ctx.parameterList().parameter()) if (ctx.parameterList()) else 0
 
         if in_global_scope:
@@ -195,6 +195,7 @@ class MyCassVisitor(CASSVisitor):
 
         return decl_node
     
+    
 
 
     def visitForBlockStatement(self, ctx: CASSParser.ForBlockStatementContext):
@@ -216,9 +217,11 @@ class MyCassVisitor(CASSVisitor):
         # Update (forUpdate)
         if ctx.unaryExpression():
             update_node = self.visit(ctx.unaryExpression())
-            for_node.add_child(update_node)
         else:
             for_node.add_child(CassNode("EMPTY_UPDATE"))
+
+        for_node.add_child(update_node)
+
 
         # Body (multiple statements in the block)
         for_node.add_child(self.visit(ctx.compoundStatement()))
@@ -319,7 +322,7 @@ class MyCassVisitor(CASSVisitor):
         # Process "else" block statements, if any
         if has_else:
             else_node = CassNode("I#else_clause#else$")
-            else_node.add_child(CassNode("1"))
+            #else_node.add_child(CassNode("1"))
             else_node.add_child(self.visit(ctx.compoundStatement(1)))
             if_node.add_child(else_node)
 
@@ -343,7 +346,7 @@ class MyCassVisitor(CASSVisitor):
         if ctx.statement(1):
             else_node = CassNode("I#else_clause#else$")
             else_body_node = self.visit(ctx.statement(1))
-            else_node.add_child(CassNode("1"))
+            #else_node.add_child(CassNode("1"))
             else_node.add_child(else_body_node)
             if_node.add_child(else_node)
 
@@ -553,7 +556,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitUnaryExpression(self, ctx: CASSParser.UnaryExpressionContext):
         # e.g. ++i, primaryExpression, etc.
-        text = ctx.getText()
+        
         # If it's prefix like ++i
         if ctx.unaryExpression():
             op = ''.join('$' if x not in ('+', '-') else x for x in ctx.getText())
