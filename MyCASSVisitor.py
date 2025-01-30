@@ -150,7 +150,7 @@ class MyCassVisitor(CASSVisitor):
     def visitCompoundStatement(self, ctx: CASSParser.CompoundStatementContext):
         # 1) Push a new empty set for local declarations in this block
         self.scopes.append(set())
-
+    
         # Count the number of direct statements (children) in the compound statement
         num_children = len(ctx.statement())
         dollar_signs = "$" * num_children  # Create the correct number of $ placeholders
@@ -257,6 +257,10 @@ class MyCassVisitor(CASSVisitor):
 
                 
                 decl_node.add_child(assign_node)
+            
+            else:
+
+                decl_node.add_child(self.visit(ctx.primaryExpression()))
 
             return decl_node
     
@@ -446,6 +450,38 @@ class MyCassVisitor(CASSVisitor):
 
         return if_node
     
+    def visitSwitchStatement(self, ctx: CASSParser.SwitchStatementContext):
+
+        switch_node = CassNode("I#switch_statement#switch$$")
+        switch_node.add_child(self.visit(ctx.conditionClause()))
+        switch_node.add_child(self.visit(ctx.compoundStatement()))
+    
+        return switch_node
+    
+    def visitCaseStatement(self, ctx: CASSParser.CaseStatementContext):
+
+        case_name = 'case$'
+        has_break = ''
+
+        if ctx.breakExpression():
+            has_break = 'break'
+
+        if ctx.defaultExpression():
+            case_name = 'default'
+
+        num_statement = len(ctx.statement())
+        placeholder = "$" * num_statement
+
+        case_node = CassNode(f"I#case_statement#{case_name}:{placeholder}{has_break}")
+        
+        if(ctx.primaryExpression()):
+            case_node.add_child(self.visit(ctx.primaryExpression()))
+
+        for c in ctx.statement():
+            case_node.add_child(self.visit(c))
+
+        return case_node
+
     def visitLogicalOrExpression(self, ctx: CASSParser.LogicalOrExpressionContext):
         if len(ctx.logicalAndExpression()) == 1:
             # If there is only one logicalAndExpression, visit it directly
@@ -551,7 +587,7 @@ class MyCassVisitor(CASSVisitor):
         func_name = ctx.ID().getText()  # e.g. "init"
 
         # call_expression always has 2 children: name and parameter list
-        call_node = CassNode("#call_expression#$$")
+        call_node = CassNode("I#call_expression#$$")
 
         # 3) First child = "F<funcName>", e.g. Finit
         func_node = CassNode(f"F{func_name}")
@@ -563,7 +599,7 @@ class MyCassVisitor(CASSVisitor):
             call_node.add_child(arg_list_node)
         else:
             # No arguments => #argument_list#() with zero placeholders
-            empty_args = CassNode("#argument_list#()")
+            empty_args = CassNode("I#argument_list#()")
             call_node.add_child(empty_args)
 
         return call_node
@@ -581,8 +617,7 @@ class MyCassVisitor(CASSVisitor):
 
         # Create a label like #argument_list#($,$,$...) with as many $ as arguments
         placeholders = ",".join(["$"] * num_args)  # Join $ with commas if more than one
-        arg_list_node = CassNode(f"#argument_list#({placeholders})")
-        arg_list_node.add_child(CassNode(f"{num_args}"))
+        arg_list_node = CassNode(f"I#argument_list#({placeholders})")
 
         # For each expression argument, visit it and add as a child
         for expr_ctx in ctx.expression():
@@ -765,9 +800,9 @@ class MyCassVisitor(CASSVisitor):
 
             # 2) Check if subexpr_node is an additive expression
             #    For example, if your additive visitor produces "$+$" or "$-$" as the label:
-            if subexpr_node and subexpr_node.label in {"#binary_expression#$+$", "#binary_expression#$-$", "#binary_expression#$*$", "#binary_expression#$/$", "#binary_expression#$%$"}:
+            if subexpr_node and subexpr_node.label in {"I#binary_expression#$+$", "I#binary_expression#$-$", "I#binary_expression#$*$", "I#binary_expression#$/$", "I#binary_expression#$%$"}:
                 # Create a paren node
-                paren_node = CassNode("#parenthesized_expression#($)")
+                paren_node = CassNode("I#parenthesized_expression#($)")
                 paren_node.add_child(subexpr_node)
                 return paren_node
             else:

@@ -28,7 +28,7 @@ class CassNode:
         if self.label.startswith("V"):
             return f"{self.label}\\t" + "".join(child_strings)
         
-        if self.label.startswith(("N", "C", "S")):
+        if self.label.startswith(("N", "C", "S", "F")):
             return f"{self.label}\\t" + "".join(child_strings)
 
         # 5) Include the label for non-removed nodes

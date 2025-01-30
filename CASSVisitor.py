@@ -74,6 +74,16 @@ class CASSVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CASSParser#switchStatement.
+    def visitSwitchStatement(self, ctx:CASSParser.SwitchStatementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CASSParser#caseStatement.
+    def visitCaseStatement(self, ctx:CASSParser.CaseStatementContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CASSParser#functionCall.
     def visitFunctionCall(self, ctx:CASSParser.FunctionCallContext):
         return self.visitChildren(ctx)
@@ -136,6 +146,16 @@ class CASSVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CASSParser#expression.
     def visitExpression(self, ctx:CASSParser.ExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CASSParser#defaultExpression.
+    def visitDefaultExpression(self, ctx:CASSParser.DefaultExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CASSParser#breakExpression.
+    def visitBreakExpression(self, ctx:CASSParser.BreakExpressionContext):
         return self.visitChildren(ctx)
 
 

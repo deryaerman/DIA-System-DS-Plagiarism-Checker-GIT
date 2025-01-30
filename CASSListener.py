@@ -125,6 +125,24 @@ class CASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CASSParser#switchStatement.
+    def enterSwitchStatement(self, ctx:CASSParser.SwitchStatementContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#switchStatement.
+    def exitSwitchStatement(self, ctx:CASSParser.SwitchStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#caseStatement.
+    def enterCaseStatement(self, ctx:CASSParser.CaseStatementContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#caseStatement.
+    def exitCaseStatement(self, ctx:CASSParser.CaseStatementContext):
+        pass
+
+
     # Enter a parse tree produced by CASSParser#functionCall.
     def enterFunctionCall(self, ctx:CASSParser.FunctionCallContext):
         pass
@@ -239,6 +257,24 @@ class CASSListener(ParseTreeListener):
 
     # Exit a parse tree produced by CASSParser#expression.
     def exitExpression(self, ctx:CASSParser.ExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#defaultExpression.
+    def enterDefaultExpression(self, ctx:CASSParser.DefaultExpressionContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#defaultExpression.
+    def exitDefaultExpression(self, ctx:CASSParser.DefaultExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#breakExpression.
+    def enterBreakExpression(self, ctx:CASSParser.BreakExpressionContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#breakExpression.
+    def exitBreakExpression(self, ctx:CASSParser.BreakExpressionContext):
         pass
 
 

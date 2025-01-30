@@ -18,6 +18,7 @@ compoundStatement
     : '{' statement* '}'
     ;
 
+
 // --------------------------
 // 2) Declarations & Statements
 // --------------------------
@@ -32,6 +33,8 @@ statement
     | ifBlockStatement           
     | ifSingleStatement    
     | returnStatement
+    | switchStatement
+    | caseStatement
     | expressionStatement
     | functionDefinition  
     | includeStatement
@@ -71,6 +74,14 @@ ifSingleStatement
 
 elseClause
     : 'else' (compoundStatement | ifBlockStatement | statement)
+    ;
+
+switchStatement
+    : 'switch' '(' conditionClause ')' compoundStatement
+    ;
+
+caseStatement
+    : ('case' | defaultExpression) primaryExpression? ':' statement* breakExpression?
     ;
 
 functionCall
@@ -138,8 +149,16 @@ expression
     : assignmentExpression
     ;
 
+defaultExpression
+    : 'default'
+    ;
+
+breakExpression
+    : 'break' ';'
+    ;
+
 assignmentExpression
-    : unaryExpression assignmentOperator (assignmentExpression || nullptr || emptyInitializer) 
+    : unaryExpression assignmentOperator assignmentExpression nullptr? emptyInitializer?
     | logicalOrExpression
     ;
 
@@ -228,7 +247,7 @@ ID
     ;
 
 INT
-    : [0-9]+
+    : '-'? [0-9]+
     ;
 
 BOOL

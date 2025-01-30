@@ -1,235 +1,70 @@
 digraph CASS {
   node [shape=ellipse];
-<<<<<<< HEAD
-=======
-  n1 [label="[1]: S#FS#1_0"];
+  n1 [label="[1]: S#FS#1_1"];
   n2 [label="[2]: I#compound_statement#{$}"];
   n3 [label="[3]: I#if_statement#if$$$"];
   n4 [label="[4]: I#condition_clause($)"];
-  n5 [label="[5]: I#binary_expression#$&&$"];
-  n6 [label="[6]: I#binary_expression#$>$"];
-  n7 [label="[7]: Vstart_val"];
-  n8 [label="[8]: N20"];
-  n9 [label="[9]: I#binary_expression#$==$"];
-  n10 [label="[10]: Vend_val"];
-  n11 [label="[11]: N10"];
-  n12 [label="[12]: I#compound_statement#{$}"];
-  n13 [label="[13]: I#expression_statement#$;"];
-  n14 [label="[14]: I#assignment_expression#$=$"];
-  n15 [label="[15]: Vstart_val"];
-  n16 [label="[16]: I#binary_expression#$-$"];
-  n17 [label="[17]: Vstart_val"];
-  n18 [label="[18]: N1"];
-  n19 [label="[19]: I#else_clause#else$"];
-  n20 [label="[20]: I#if_statement#if$$$"];
-  n21 [label="[21]: I#condition_clause($)"];
-  n22 [label="[22]: I#binary_expression#$<$"];
-  n23 [label="[23]: Vstart_val"];
-  n24 [label="[24]: N18"];
-  n25 [label="[25]: I#compound_statement#{$}"];
-  n26 [label="[26]: I#expression_statement#$;"];
-  n27 [label="[27]: I#assignment_expression#$=$"];
-  n28 [label="[28]: Vstart_val"];
-  n29 [label="[29]: I#binary_expression#$-$"];
-  n30 [label="[30]: Vstart_val"];
-  n31 [label="[31]: N8"];
-  n32 [label="[32]: I#else_clause#else$"];
-  n33 [label="[33]: I#compound_statement#{$}"];
-  n34 [label="[34]: I#expression_statement#$;"];
-  n35 [label="[35]: I#assignment_expression#$=$"];
-  n36 [label="[36]: Vstart_val"];
-  n37 [label="[37]: Vstart_val"];
-  n38 [label="[38]: S#FS#1_0"];
-  n39 [label="[39]: I#compound_statement#{$}"];
-  n40 [label="[40]: I#if_statement#if$$$"];
-  n41 [label="[41]: I#condition_clause($)"];
-  n42 [label="[42]: I#binary_expression#$&&$"];
-  n43 [label="[43]: I#binary_expression#$>$"];
-  n44 [label="[44]: Vstart_val"];
-  n45 [label="[45]: N20"];
-  n46 [label="[46]: I#binary_expression#$==$"];
-  n47 [label="[47]: Vend_val"];
-  n48 [label="[48]: N10"];
-  n49 [label="[49]: I#expression_statement#$;"];
-  n50 [label="[50]: I#assignment_expression#$=$"];
-  n51 [label="[51]: Vstart_val"];
-  n52 [label="[52]: I#binary_expression#$-$"];
-  n53 [label="[53]: Vstart_val"];
-  n54 [label="[54]: N1"];
-  n55 [label="[55]: I#else_clause#else$"];
-  n56 [label="[56]: I#if_statement#if$$$"];
-  n57 [label="[57]: I#condition_clause($)"];
-  n58 [label="[58]: I#binary_expression#$<$"];
-  n59 [label="[59]: Vstart_val"];
-  n60 [label="[60]: N18"];
-  n61 [label="[61]: I#expression_statement#$;"];
-  n62 [label="[62]: I#assignment_expression#$=$"];
-  n63 [label="[63]: Vstart_val"];
-  n64 [label="[64]: I#binary_expression#$-$"];
-  n65 [label="[65]: Vstart_val"];
-  n66 [label="[66]: N8"];
-  n67 [label="[67]: I#else_clause#else$"];
-  n68 [label="[68]: I#expression_statement#$;"];
-  n69 [label="[69]: I#assignment_expression#$=$"];
-  n70 [label="[70]: Vstart_val"];
-  n71 [label="[71]: Vstart_val"];
-<<<<<<< HEAD
-=======
-=======
->>>>>>> f9e769fcbe369a0ce02eb95d1291721e440183ce
-  n1 [label="[1]: S#FS#1_2"];
-  n2 [label="[2]: I#compound_statement#{$}"];
-  n3 [label="[3]: I#expression_statement#$;"];
-  n4 [label="[4]: I#assignment_expression#$=$"];
-  n5 [label="[5]: Va"];
-  n6 [label="[6]: I#initializer_list#{$,$,$}"];
-  n7 [label="[7]: Va"];
-<<<<<<< HEAD
-  n8 [label="[8]: Vb"];
-  n9 [label="[9]: Vc"];
-=======
-=======
-  n2 [label="[2]: I#compound_statement#{$$}"];
-  n3 [label="[3]: I#if_statement#if$$"];
-  n4 [label="[4]: I#condition_clause($)"];
-  n5 [label="[5]: I#binary_expression#$>$"];
-  n6 [label="[6]: vstart_val"];
-  n7 [label="[7]: N20"];
+  n5 [label="[5]: I#binary_expression#$<$"];
+  n6 [label="[6]: vn"];
+  n7 [label="[7]: N0"];
   n8 [label="[8]: I#compound_statement#{$}"];
-  n9 [label="[9]: I#expression_statement#$;"];
-  n10 [label="[10]: I#assignment_expression#$=$"];
-  n11 [label="[11]: vstart_val"];
-  n12 [label="[12]: I#binary_expression#$-$"];
-  n13 [label="[13]: vstart_val"];
-  n14 [label="[14]: N1"];
-  n15 [label="[15]: I#if_statement#if$$"];
-  n16 [label="[16]: I#condition_clause($)"];
-  n17 [label="[17]: I#binary_expression#$<$"];
-  n18 [label="[18]: vstart_val"];
-  n19 [label="[19]: N18"];
-  n20 [label="[20]: I#compound_statement#{$}"];
-  n21 [label="[21]: I#expression_statement#$;"];
-  n22 [label="[22]: I#assignment_expression#$=$"];
-  n23 [label="[23]: vstart_val"];
-  n24 [label="[24]: I#binary_expression#$-$"];
-  n25 [label="[25]: vstart_val"];
-  n26 [label="[26]: N8"];
-  n27 [label="[27]: I#else_clause#else$"];
-  n28 [label="[28]: I#compound_statement#{$}"];
-  n29 [label="[29]: I#expression_statement#$;"];
-  n30 [label="[30]: I#assignment_expression#$=$"];
-  n31 [label="[31]: vstart_val"];
-  n32 [label="[32]: vstart_val"];
->>>>>>> bd4bf85794e4d5d1578bb68450a949d5c3ff1557
->>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
->>>>>>> c94456b9d0efc9550097aa4f809f580b6100a6b3
->>>>>>> e2301c7fc8f51cf76518d2738e9e9b298dc63a4a
->>>>>>> f9e769fcbe369a0ce02eb95d1291721e440183ce
+  n9 [label="[9]: I#return_statement#return$;"];
+  n10 [label="[10]: N-1"];
+  n11 [label="[11]: I#else_clause#else$"];
+  n12 [label="[12]: I#if_statement#if$$$"];
+  n13 [label="[13]: I#condition_clause($)"];
+  n14 [label="[14]: I#binary_expression#$||$"];
+  n15 [label="[15]: I#binary_expression#$==$"];
+  n16 [label="[16]: vn"];
+  n17 [label="[17]: N0"];
+  n18 [label="[18]: I#binary_expression#$==$"];
+  n19 [label="[19]: vn"];
+  n20 [label="[20]: N1"];
+  n21 [label="[21]: I#compound_statement#{$}"];
+  n22 [label="[22]: I#return_statement#return$;"];
+  n23 [label="[23]: N1"];
+  n24 [label="[24]: I#else_clause#else$"];
+  n25 [label="[25]: I#compound_statement#{$}"];
+  n26 [label="[26]: I#return_statement#return$;"];
+  n27 [label="[27]: I#binary_expression#$*$"];
+  n28 [label="[28]: vn"];
+  n29 [label="[29]: #call_expression#$$"];
+  n30 [label="[30]: Ffactorial"];
+  n31 [label="[31]: I#argument_list#($)"];
+  n32 [label="[32]: I#binary_expression#$-$"];
+  n33 [label="[33]: vn"];
+  n34 [label="[34]: N1"];
   n1 -> n2;
   n2 -> n3;
   n3 -> n4;
   n4 -> n5;
-<<<<<<< HEAD
-  n4 -> n6;
-  n6 -> n7;
-  n6 -> n8;
-  n6 -> n9;
-=======
   n5 -> n6;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-  n4 -> n7;
-  n7 -> n8;
-  n2 -> n9;
+  n5 -> n7;
+  n3 -> n8;
+  n8 -> n9;
   n9 -> n10;
-  n10 -> n11;
-  n10 -> n12;
-  n2 -> n13;
-=======
-<<<<<<< HEAD
->>>>>>> e2301c7fc8f51cf76518d2738e9e9b298dc63a4a
-  n6 -> n7;
-  n6 -> n8;
-  n5 -> n9;
-  n9 -> n10;
-  n9 -> n11;
-  n3 -> n12;
+  n3 -> n11;
+  n11 -> n12;
   n12 -> n13;
->>>>>>> c94456b9d0efc9550097aa4f809f580b6100a6b3
   n13 -> n14;
   n14 -> n15;
-  n14 -> n16;
-  n16 -> n17;
-  n16 -> n18;
-<<<<<<< HEAD
-  n2 -> n19;
-  n19 -> n20;
-  n20 -> n21;
-  n21 -> n22;
-  n20 -> n23;
-=======
-  n3 -> n19;
-  n19 -> n20;
-  n20 -> n21;
+  n15 -> n16;
+  n15 -> n17;
+  n14 -> n18;
+  n18 -> n19;
+  n18 -> n20;
+  n12 -> n21;
   n21 -> n22;
   n22 -> n23;
-  n22 -> n24;
-  n20 -> n25;
+  n12 -> n24;
+  n24 -> n25;
   n25 -> n26;
   n26 -> n27;
   n27 -> n28;
   n27 -> n29;
   n29 -> n30;
   n29 -> n31;
-  n20 -> n32;
+  n31 -> n32;
   n32 -> n33;
-  n33 -> n34;
-  n34 -> n35;
-  n35 -> n36;
-  n35 -> n37;
-  n1 -> n38;
-  n38 -> n39;
-  n39 -> n40;
-  n40 -> n41;
-  n41 -> n42;
-  n42 -> n43;
-  n43 -> n44;
-  n43 -> n45;
-  n42 -> n46;
-  n46 -> n47;
-  n46 -> n48;
-  n40 -> n49;
-  n49 -> n50;
-  n50 -> n51;
-  n50 -> n52;
-  n52 -> n53;
-  n52 -> n54;
-  n40 -> n55;
-  n55 -> n56;
-  n56 -> n57;
-  n57 -> n58;
-  n58 -> n59;
-  n58 -> n60;
-  n56 -> n61;
-  n61 -> n62;
-  n62 -> n63;
-  n62 -> n64;
-  n64 -> n65;
-  n64 -> n66;
-  n56 -> n67;
-  n67 -> n68;
-  n68 -> n69;
-  n69 -> n70;
-  n69 -> n71;
-<<<<<<< HEAD
-=======
-=======
-  n30 -> n31;
-  n30 -> n32;
->>>>>>> bd4bf85794e4d5d1578bb68450a949d5c3ff1557
->>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
->>>>>>> c94456b9d0efc9550097aa4f809f580b6100a6b3
->>>>>>> e2301c7fc8f51cf76518d2738e9e9b298dc63a4a
->>>>>>> f9e769fcbe369a0ce02eb95d1291721e440183ce
+  n32 -> n34;
 }
