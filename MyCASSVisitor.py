@@ -328,7 +328,8 @@ class MyCassVisitor(CASSVisitor):
         # Process "else" block statements, if any
         if has_else:
             else_node = CassNode("I#else_clause#else$")
-            #else_node.add_child(CassNode("1"))
+            # if len(ctx.ifBlockStatement().parameter()) > 1:
+            #     else_node.add_child(self.visit(ctx.ifBlockStatement(1)))
             else_node.add_child(self.visit(ctx.compoundStatement(1)))
             if_node.add_child(else_node)
 
