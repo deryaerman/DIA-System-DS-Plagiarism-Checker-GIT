@@ -69,6 +69,11 @@ class CASSVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CASSParser#elseClause.
+    def visitElseClause(self, ctx:CASSParser.ElseClauseContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CASSParser#functionCall.
     def visitFunctionCall(self, ctx:CASSParser.FunctionCallContext):
         return self.visitChildren(ctx)
