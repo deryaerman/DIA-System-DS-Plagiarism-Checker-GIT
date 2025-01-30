@@ -65,56 +65,60 @@ class MyCassVisitor(CASSVisitor):
 
     def visitFunctionDefinition(self, ctx: CASSParser.FunctionDefinitionContext):
         """
-        We differentiate between a function defined at global scope vs. 
-        one defined inside another function (nested).
+        If we're at the top (most global) level, we produce an "S#FS#..." node.
+        If it's nested (within another function), we produce an "I#function_definition#...".
+        But in both cases, we push a scope so that parameters and local variables become local.
         """
-
+        # 1) Push a new scope so that parameters/locals are recognized as local
         self.scopes.append(set())
-        # Determine if we are at global scope by checking if self.scopes is empty
         in_global_scope = (len(self.scopes) == 1)
 
-        # Get the textual type (e.g. "int", "float", "void", etc.)
-        
+        # 2) Build the function node label
         func_type_text = ctx.typeSpec().getText()
-        params_num = len(ctx.parameterList().parameter()) if (ctx.parameterList()) else 0
+        params_num = 0
+        if ctx.parameterList():
+            params_num = len(ctx.parameterList().parameter())
 
         if in_global_scope:
-            
+            # This is the very first function => produce "S#FS#..." style
             func_type = 0 if func_type_text == 'void' else 1
+            # Possibly clamp param count
             if params_num > 2:
                 params_num = 2
-
-            # first function starting the programgets a function signature node
             node = CassNode(f"S#FS#{func_type}_{params_num}")
-
         else:
-            
-            # nested functions get more detailed context 
-
-            # contains the return type and 2*$ representing two child nodes:
-            # -> function declarator
-            # -> compound statement { * }
+            # Nested function => produce "I#function_definition#..." style
             node = CassNode(f"I#function_definition#{func_type_text}$$")
 
+       
+        if not in_global_scope:
+            # Create "I#function_declarator#$$" or similar
             if params_num == 0:
                 decl_label = "I#function_declarator#$()"
             else:
                 decl_label = "I#function_declarator#$$"
-            declarator_node = CassNode(decl_label)
+            decl_node = CassNode(decl_label)
 
+            # The function name (the grammar has "primaryExpression" after typeSpec)
             func_name = ctx.primaryExpression().getText()
-            declarator_node.add_child(CassNode(f"v{func_name}"))
+            decl_node.add_child(CassNode(f"v{func_name}"))
 
+            # If there are parameters, build the param list (which also adds them to scope)
             if ctx.parameterList():
                 param_list_node = self.visitParameterList(ctx.parameterList())
-                declarator_node.add_child(param_list_node)
+                decl_node.add_child(param_list_node)
 
-            node.add_child(declarator_node)
+            node.add_child(decl_node)
+        else:
+           
+            if ctx.parameterList():
+                self.visitParameterList(ctx.parameterList())  # Adds param names to scope
 
-    
+        # 4) Visit the compound statement so local declarations become part of the scope
         block_node = self.visit(ctx.compoundStatement())
         node.add_child(block_node)
 
+        # 5) Pop the scope after finishing
         self.scopes.pop()
 
         return node
@@ -199,9 +203,12 @@ class MyCassVisitor(CASSVisitor):
 
         return decl_node
     
+    
 
 
     def visitForBlockStatement(self, ctx: CASSParser.ForBlockStatementContext):
+
+        
     
         for_node = CassNode(f"I#for_statement#for($$;$)$")
         #for_node.add_child(CassNode("4"))
@@ -220,9 +227,11 @@ class MyCassVisitor(CASSVisitor):
         # Update (forUpdate)
         if ctx.unaryExpression():
             update_node = self.visit(ctx.unaryExpression())
-            for_node.add_child(update_node)
         else:
             for_node.add_child(CassNode("EMPTY_UPDATE"))
+
+        for_node.add_child(update_node)
+
 
         # Body (multiple statements in the block)
         for_node.add_child(self.visit(ctx.compoundStatement()))
@@ -323,7 +332,8 @@ class MyCassVisitor(CASSVisitor):
         # Process "else" block statements, if any
         if has_else:
             else_node = CassNode("I#else_clause#else$")
-            else_node.add_child(CassNode("1"))
+            # if len(ctx.ifBlockStatement().parameter()) > 1:
+            #     else_node.add_child(self.visit(ctx.ifBlockStatement(1)))
             else_node.add_child(self.visit(ctx.compoundStatement(1)))
             if_node.add_child(else_node)
 
@@ -347,7 +357,7 @@ class MyCassVisitor(CASSVisitor):
         if ctx.statement(1):
             else_node = CassNode("I#else_clause#else$")
             else_body_node = self.visit(ctx.statement(1))
-            else_node.add_child(CassNode("1"))
+            #else_node.add_child(CassNode("1"))
             else_node.add_child(else_body_node)
             if_node.add_child(else_node)
 
@@ -557,7 +567,7 @@ class MyCassVisitor(CASSVisitor):
 
     def visitUnaryExpression(self, ctx: CASSParser.UnaryExpressionContext):
         # e.g. ++i, primaryExpression, etc.
-        text = ctx.getText()
+        
         # If it's prefix like ++i
         if ctx.unaryExpression():
             op = ''.join('$' if x not in ('+', '-') else x for x in ctx.getText())

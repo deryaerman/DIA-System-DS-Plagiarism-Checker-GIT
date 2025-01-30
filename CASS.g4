@@ -62,7 +62,7 @@ whileSingleStatement
     ;
 
 ifBlockStatement
-    : 'if' '(' conditionClause ')' compoundStatement ('else' compoundStatement)?
+    : 'if' '(' conditionClause ')' compoundStatement ('else' compoundStatement)? 
     ;
 
 ifSingleStatement
