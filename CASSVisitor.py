@@ -79,6 +79,26 @@ class CASSVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CASSParser#arrayDeclarator.
+    def visitArrayDeclarator(self, ctx:CASSParser.ArrayDeclaratorContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CASSParser#listInitializer.
+    def visitListInitializer(self, ctx:CASSParser.ListInitializerContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CASSParser#emptyInitializer.
+    def visitEmptyInitializer(self, ctx:CASSParser.EmptyInitializerContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CASSParser#nullptr.
+    def visitNullptr(self, ctx:CASSParser.NullptrContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CASSParser#argumentList.
     def visitArgumentList(self, ctx:CASSParser.ArgumentListContext):
         return self.visitChildren(ctx)

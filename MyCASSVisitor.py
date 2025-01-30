@@ -172,55 +172,105 @@ class MyCassVisitor(CASSVisitor):
         return CassNode("removed")
 
     def visitDeclarationStatement(self, ctx: CASSParser.DeclarationStatementContext):
-
-        # Mark this variable as local in the top scope
-        var_name = ctx.primaryExpression().getText()
-
-        if len(self.scopes) > 0:
-            self.scopes[-1].add(var_name)
         
-        type_label = ctx.typeSpec().getText()   # e.g. "int"
-        decl_node = CassNode(f"I#declaration#{type_label}$;") ##intermediate nodes
-        
+        type_label = ctx.typeSpec().getText()
 
-        if ctx.expression():
+        decl_node = CassNode(f"I#declaration#{type_label}$;")
 
-            assign_node = CassNode("I#init_declarator#$=$")
-
-            if ctx.POINTER():
-                ptr_dclr = CassNode("I#pointer_declarator#$")
-                ptr_dclr.add_child(self.visit(ctx.primaryExpression()))
-                assign_node.add_child(ptr_dclr)
-
-            else:
+        #Array handling
+        if ctx.arrayDeclarator():
+            
+            if ctx.emptyInitializer() or ctx.nullptr() or ctx.expression() :
                 
-                assign_node.add_child(self.visit(ctx.primaryExpression()))
+                placeholder = '$'
 
+                array_decl = self.visit(ctx.arrayDeclarator())
+
+                if(ctx.emptyInitializer()):
+                    placeholder = '{}'
+
+                if(ctx.nullptr()):
+                    placeholder = "nullptr"
+
+                if ctx.expression():
+                    helperNode = self.visit(ctx.expression())
+                    array_decl.add_child(helperNode)
+                    
+        
+                init_decl = CassNode(f"I#init_declarator#$={placeholder}")
+                init_decl.add_child(array_decl)
+                decl_node.add_child(init_decl)
+            
+            else:
+
+                decl_node.add_child(self.visit(ctx.arrayDeclarator()))
+
+            return decl_node
+
+
+        if ctx.primaryExpression():
+            
+            # Mark this variable as local in the top scope
+            var_name = ctx.primaryExpression().getText()
+
+            if len(self.scopes) > 0:
+                self.scopes[-1].add(var_name)
     
-            value_node = self.visit(ctx.expression())
-            assign_node.add_child(value_node)
+            pointer_node = CassNode("I#pointer_declarator#*$")
 
-            decl_node.add_child(assign_node)
+            if ctx.POINTER() and not(ctx.nullptr()) and not(ctx.emptyInitializer()) and not(ctx.expression()) :
 
-        else:
+                pointer_node.add_child(self.visit(ctx.primaryExpression()))
+                decl_node.add_child(pointer_node)
+                return decl_node
+            
+            if ctx.expression() or ctx.nullptr() or ctx.emptyInitializer():
 
-            if ctx.POINTER():
-                ptr_dclr = CassNode("I#pointer_declarator#$")
-                ptr_dclr.add_child(self.visit(ctx.primaryExpression()))
-                decl_node.add_child(ptr_dclr)
+                placeholder = '$'
 
-            else :
-            # no initializer, just add #VAR as a child
-                decl_node.add_child(self.visit(ctx.primaryExpression()))
+                if(ctx.emptyInitializer()):
+                    placeholder = '{}'
 
-        return decl_node
+                if(ctx.nullptr()):
+                    placeholder = "nullptr"
+                
+                if ctx.expression():
+                    helperNode = self.visit(ctx.expression())
+
+                assign_node = CassNode(f"I#init_declarator#$={placeholder}")
+                
+                if(ctx.POINTER()):
+
+                    pointer_node.add_child(self.visit(ctx.primaryExpression()))
+                    
+                    if ctx.expression():
+                        pointer_node.add_child(helperNode)
+                    
+                    assign_node.add_child(pointer_node)
+
+                else :
+                    
+                    assign_node.add_child(self.visit(ctx.primaryExpression()))
+                    
+                    if ctx.expression():
+                        assign_node.add_child(helperNode)
+
+                
+                decl_node.add_child(assign_node)
+
+            return decl_node
     
     
+    def visitListInitializer(self, ctx: CASSParser.ListInitializerContext):
 
+        placeholders = ",".join(["$"] * len(ctx.primaryExpression()))
+        list_init = CassNode(f"I#initializer_list#{{{placeholders}}}")
+        for c in ctx.primaryExpression():
+            list_init.add_child(self.visit(c))
+
+        return list_init
 
     def visitForBlockStatement(self, ctx: CASSParser.ForBlockStatementContext):
-
-        
     
         for_node = CassNode(f"I#for_statement#for($$;$)$")
         #for_node.add_child(CassNode("4"))
@@ -529,7 +579,7 @@ class MyCassVisitor(CASSVisitor):
         # Count how many arguments we have
         num_args = len(ctx.expression())
 
-        # Create a label like #argument_list#($$$...) with as many $ as arguments
+        # Create a label like #argument_list#($,$,$...) with as many $ as arguments
         placeholders = ",".join(["$"] * num_args)  # Join $ with commas if more than one
         arg_list_node = CassNode(f"#argument_list#({placeholders})")
         arg_list_node.add_child(CassNode(f"{num_args}"))
@@ -567,8 +617,10 @@ class MyCassVisitor(CASSVisitor):
     # Expression Collapsing
     # ---------------------
     def visitExpression(self, ctx: CASSParser.ExpressionContext):
+
         if ctx.assignmentExpression():
             return self.visit(ctx.assignmentExpression())
+        
         return None
 
 
@@ -582,16 +634,27 @@ class MyCassVisitor(CASSVisitor):
             # e.g. b = b + 1
             op_text = ctx.assignmentOperator().getText()  # '=' or '+=' or ...
             
+            placeholder = '$'
+
+            if ctx.nullptr():
+                placeholder = 'nullptr'
+
+            if ctx.emptyInitializer():
+                placeholder = '{}'
+
             # Use a node labeled #assignment_expression#$<op_text>
             # For a simple '=' you might produce '#assignment_expression#$=$'
             # For '+=' maybe '#assignment_expression#$+=$', etc.
-            node = CassNode(f"I#assignment_expression#$" + op_text + "$")
+            node = CassNode(f"I#assignment_expression#$" + op_text + placeholder)
 
             lhs = self.visit(ctx.unaryExpression())  # e.g. b
-            rhs = self.visit(ctx.assignmentExpression())  # e.g. b + 1
-
             node.add_child(lhs)
-            node.add_child(rhs)
+
+            if ctx.assignmentExpression():
+                rhs = self.visit(ctx.assignmentExpression())  # e.g. b + 1
+                node.add_child(rhs)
+
+            
             return node
         else:
             # No assignment operator => just pass logicalOrExpression up
@@ -600,6 +663,9 @@ class MyCassVisitor(CASSVisitor):
 
     def visitUnaryExpression(self, ctx: CASSParser.UnaryExpressionContext):
        
+        if ctx.listInitializer():
+            return self.visit(ctx.listInitializer())
+        
         if ctx.pointerExpression():
             return self.visit(ctx.pointerExpression())
         
@@ -633,6 +699,32 @@ class MyCassVisitor(CASSVisitor):
             ptr_node.add_child(self.visit(ctx.primaryExpression()))
         
         return ptr_node
+    
+    def visitArrayDeclarator(self, ctx: CASSParser.ArrayDeclaratorContext):
+
+
+        if len(ctx.primaryExpression()) > 1:
+
+            var_name = ctx.primaryExpression(0).getText()
+
+            if len(self.scopes) > 0:
+                self.scopes[-1].add(var_name)
+
+            arr_dclr = CassNode("I#array_declarator#$[$]")
+            arr_dclr.add_child(self.visit(ctx.primaryExpression(0)))
+            arr_dclr.add_child(self.visit(ctx.primaryExpression(1)))
+        
+        elif len(ctx.primaryExpression()) == 1:
+
+            var_name = ctx.primaryExpression(0).getText()
+            
+            if len(self.scopes) > 0:
+                self.scopes[-1].add(var_name)
+
+            arr_dclr = CassNode("I#array_declarator#$[]")
+            arr_dclr.add_child(self.visit(ctx.primaryExpression(0)))
+        
+        return arr_dclr
     
 
     def visitPrimaryExpression(self, ctx: CASSParser.PrimaryExpressionContext):

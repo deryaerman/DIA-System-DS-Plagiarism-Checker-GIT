@@ -38,7 +38,7 @@ statement
     ;
 
 declarationStatement
-    : typeSpec POINTER* primaryExpression ('=' expression)? ';'?
+    : typeSpec POINTER* (primaryExpression || arrayDeclarator) ('=' (expression | nullptr | emptyInitializer))? ';'?
     ;
 
 forBlockStatement
@@ -75,6 +75,22 @@ elseClause
 
 functionCall
     : ID '(' argumentList? ')'  
+    ;
+
+arrayDeclarator
+    : primaryExpression '[' primaryExpression? ']'
+    ;
+
+listInitializer
+    : '{' primaryExpression (',' primaryExpression)* '}'
+    ;
+
+emptyInitializer 
+    : '{' '}'
+    ;
+
+nullptr
+    : 'nullptr'
     ;
 
 argumentList
@@ -123,7 +139,7 @@ expression
     ;
 
 assignmentExpression
-    : unaryExpression assignmentOperator assignmentExpression
+    : unaryExpression assignmentOperator (assignmentExpression || nullptr || emptyInitializer) 
     | logicalOrExpression
     ;
 
@@ -132,6 +148,7 @@ unaryExpression
     | unaryExpression ('++' | '--')
     | pointerExpression
     | primaryExpression
+    | listInitializer
     ;
 
 comparingExpression

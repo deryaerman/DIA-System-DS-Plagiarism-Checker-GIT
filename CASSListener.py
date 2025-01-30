@@ -134,6 +134,42 @@ class CASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CASSParser#arrayDeclarator.
+    def enterArrayDeclarator(self, ctx:CASSParser.ArrayDeclaratorContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#arrayDeclarator.
+    def exitArrayDeclarator(self, ctx:CASSParser.ArrayDeclaratorContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#listInitializer.
+    def enterListInitializer(self, ctx:CASSParser.ListInitializerContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#listInitializer.
+    def exitListInitializer(self, ctx:CASSParser.ListInitializerContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#emptyInitializer.
+    def enterEmptyInitializer(self, ctx:CASSParser.EmptyInitializerContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#emptyInitializer.
+    def exitEmptyInitializer(self, ctx:CASSParser.EmptyInitializerContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#nullptr.
+    def enterNullptr(self, ctx:CASSParser.NullptrContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#nullptr.
+    def exitNullptr(self, ctx:CASSParser.NullptrContext):
+        pass
+
+
     # Enter a parse tree produced by CASSParser#argumentList.
     def enterArgumentList(self, ctx:CASSParser.ArgumentListContext):
         pass
