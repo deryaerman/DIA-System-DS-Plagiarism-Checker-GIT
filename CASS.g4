@@ -41,7 +41,7 @@ statement
     ;
 
 declarationStatement
-    : typeSpec POINTER* (primaryExpression || arrayDeclarator) ('=' (expression | nullptr | emptyInitializer))? ';'?
+    : typeSpec POINTER* (primaryExpression || arrayDeclarator) ('=' (statement | nullptr ';' | emptyInitializer ';'))? 
     ;
 
 forBlockStatement
