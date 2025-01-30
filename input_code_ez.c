@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 int calc_factorial(int n) {
     if (n < 0) {
         // Factorial not defined for negative numbers
@@ -27,4 +28,9 @@ int summation(int start_val,int end_val) {
 
 
     */
+>>>>>>> maria-new
+=======
+int factorial(int n) {
+    int* i = &a;
+}
 >>>>>>> maria-new

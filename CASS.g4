@@ -18,6 +18,7 @@ compoundStatement
     : '{' statement* '}'
     ;
 
+
 // --------------------------
 // 2) Declarations & Statements
 // --------------------------
@@ -32,13 +33,15 @@ statement
     | ifBlockStatement           
     | ifSingleStatement    
     | returnStatement
+    | switchStatement
+    | caseStatement
     | expressionStatement
     | functionDefinition  
     | includeStatement
     ;
 
 declarationStatement
-    : typeSpec POINTER* primaryExpression ('=' expression)? ';'?
+    : typeSpec POINTER* (primaryExpression || arrayDeclarator) ('=' (statement | nullptr ';' | emptyInitializer ';'))? 
     ;
 
 forBlockStatement
@@ -73,8 +76,32 @@ elseClause
     : 'else' (compoundStatement | ifBlockStatement | statement)
     ;
 
+switchStatement
+    : 'switch' '(' conditionClause ')' compoundStatement
+    ;
+
+caseStatement
+    : ('case' | defaultExpression) primaryExpression? ':' statement* breakExpression?
+    ;
+
 functionCall
     : ID '(' argumentList? ')'  
+    ;
+
+arrayDeclarator
+    : primaryExpression '[' primaryExpression? ']'
+    ;
+
+listInitializer
+    : '{' primaryExpression (',' primaryExpression)* '}'
+    ;
+
+emptyInitializer 
+    : '{' '}'
+    ;
+
+nullptr
+    : 'nullptr'
     ;
 
 argumentList
@@ -122,8 +149,16 @@ expression
     : assignmentExpression
     ;
 
+defaultExpression
+    : 'default'
+    ;
+
+breakExpression
+    : 'break' ';'
+    ;
+
 assignmentExpression
-    : unaryExpression assignmentOperator assignmentExpression
+    : unaryExpression assignmentOperator assignmentExpression nullptr? emptyInitializer?
     | logicalOrExpression
     ;
 
@@ -132,6 +167,7 @@ unaryExpression
     | unaryExpression ('++' | '--')
     | pointerExpression
     | primaryExpression
+    | listInitializer
     ;
 
 comparingExpression
@@ -212,11 +248,6 @@ ID
 
 INT
     : '-'? [0-9]+
-    ;
-
-BOOL
-    : 'true'
-    | 'false'
     ;
 
 BOOL

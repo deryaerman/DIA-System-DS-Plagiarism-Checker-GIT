@@ -125,12 +125,66 @@ class CASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CASSParser#switchStatement.
+    def enterSwitchStatement(self, ctx:CASSParser.SwitchStatementContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#switchStatement.
+    def exitSwitchStatement(self, ctx:CASSParser.SwitchStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#caseStatement.
+    def enterCaseStatement(self, ctx:CASSParser.CaseStatementContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#caseStatement.
+    def exitCaseStatement(self, ctx:CASSParser.CaseStatementContext):
+        pass
+
+
     # Enter a parse tree produced by CASSParser#functionCall.
     def enterFunctionCall(self, ctx:CASSParser.FunctionCallContext):
         pass
 
     # Exit a parse tree produced by CASSParser#functionCall.
     def exitFunctionCall(self, ctx:CASSParser.FunctionCallContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#arrayDeclarator.
+    def enterArrayDeclarator(self, ctx:CASSParser.ArrayDeclaratorContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#arrayDeclarator.
+    def exitArrayDeclarator(self, ctx:CASSParser.ArrayDeclaratorContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#listInitializer.
+    def enterListInitializer(self, ctx:CASSParser.ListInitializerContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#listInitializer.
+    def exitListInitializer(self, ctx:CASSParser.ListInitializerContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#emptyInitializer.
+    def enterEmptyInitializer(self, ctx:CASSParser.EmptyInitializerContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#emptyInitializer.
+    def exitEmptyInitializer(self, ctx:CASSParser.EmptyInitializerContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#nullptr.
+    def enterNullptr(self, ctx:CASSParser.NullptrContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#nullptr.
+    def exitNullptr(self, ctx:CASSParser.NullptrContext):
         pass
 
 
@@ -203,6 +257,24 @@ class CASSListener(ParseTreeListener):
 
     # Exit a parse tree produced by CASSParser#expression.
     def exitExpression(self, ctx:CASSParser.ExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#defaultExpression.
+    def enterDefaultExpression(self, ctx:CASSParser.DefaultExpressionContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#defaultExpression.
+    def exitDefaultExpression(self, ctx:CASSParser.DefaultExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by CASSParser#breakExpression.
+    def enterBreakExpression(self, ctx:CASSParser.BreakExpressionContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#breakExpression.
+    def exitBreakExpression(self, ctx:CASSParser.BreakExpressionContext):
         pass
 
 
