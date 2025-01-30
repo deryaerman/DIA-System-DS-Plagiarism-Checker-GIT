@@ -38,7 +38,7 @@ statement
     ;
 
 declarationStatement
-    : typeSpec primaryExpression ('=' expression)? ';'?
+    : typeSpec POINTER* primaryExpression ('=' expression)? ';'?
     ;
 
 forBlockStatement
@@ -141,7 +141,8 @@ comparingExpression
     ;
 
 primaryExpression
-    : ID                     
+    : ID
+    | PTR_EXPR                     
     | INT                    
     | FLOAT                  
     | CHAR                   
@@ -221,6 +222,14 @@ FLOAT
 
 CHAR 
     : '"'[a-zA-Z] '"'
+    ;
+
+POINTER
+    : '*'
+    ;
+
+PTR_EXPR
+    : '&' ID
     ;
 
 STRING

@@ -126,8 +126,8 @@ class MyCassVisitor(CASSVisitor):
     def visitParameterList(self, ctx: CASSParser.ParameterListContext):
         
         num_params = len(ctx.parameter())
-        dollar_signs = "$" * num_params
-        node = CassNode(f'I#parameter_list#({dollar_signs})')
+        placeholders = ",".join(["$"] * num_params)
+        node = CassNode(f'I#parameter_list#({placeholders})')
         #node.add_child(CassNode(f"{num_params}"))
         for p in ctx.parameter():
             node.add_child(self.visit(p))
@@ -181,10 +181,14 @@ class MyCassVisitor(CASSVisitor):
         type_label = ctx.typeSpec().getText()   # e.g. "int"
         decl_node = CassNode(f"I#declaration#{type_label}$;") ##intermediate nodes
 
+        if not(ctx.expression()) and ctx.POINTER() :
+            decl_node.add_child(CassNode("I#pointer_declarator#$"))
+
         # e.g. "int sum = 0;"
         var_name = ctx.primaryExpression().getText()
         if ctx.expression():
             assign_node = CassNode("I#init_declarator#$=$")
+            assign_node.add_child(CassNode("I#pointer_declarator#$"))
             assign_node.add_child(self.visit(ctx.primaryExpression()))
 
             # Visit the expression to see if it's #VAR or #LIT or something else
@@ -588,7 +592,7 @@ class MyCassVisitor(CASSVisitor):
         # If it's prefix like ++i
         if ctx.unaryExpression():
             op = ''.join('$' if x not in ('+', '-') else x for x in ctx.getText())
-            node = CassNode(f"I#update_statement#{op}")
+            node = CassNode(f"I#update_expression#{op}")
             node.add_child(self.visit(ctx.unaryExpression()))
             return node
         else:
@@ -605,14 +609,27 @@ class MyCassVisitor(CASSVisitor):
     def visitPrimaryExpression(self, ctx: CASSParser.PrimaryExpressionContext):
         # Case 1: It's an identifier
         if ctx.ID():
+
             var_text = ctx.ID().getText()
 
             # Check if var_text is declared in the current or any parent scope
             if self.isLocal(var_text):
                 return CassNode(f"v{var_text}")
             else:
-                # If not found in any scope, treat as global
                 return CassNode(f"V{var_text}")
+            
+        if ctx.PTR_EXPR():
+
+            var_text = ctx.getText()[1:]
+
+            if self.isLocal(var_text):
+                ptr_node = CassNode("tI#pointer_expression#&$")
+                ptr_node.add_child(CassNode(f"v{var_text}"))
+            else:
+                ptr_node = CassNode("tI#pointer_expression#&$")
+                ptr_node.add_child(CassNode(f"V{var_text}"))
+            
+            return ptr_node
 
         
         # Case 2: It's an integer literal
@@ -628,6 +645,7 @@ class MyCassVisitor(CASSVisitor):
         elif ctx.CHAR():
             lit_text = ctx.CHAR().getText()
             return CassNode(f"C{lit_text}")
+        
         elif ctx.STRING():
             str_text = ctx.STRING().getText()
             return CassNode(f"S{str_text}")

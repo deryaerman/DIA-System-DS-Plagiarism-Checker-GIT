@@ -10,6 +10,7 @@ else:
 
 def serializedATN():
     return [
+<<<<<<< HEAD
         4,1,45,327,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
@@ -126,6 +127,125 @@ def serializedATN():
         3,64,32,0,324,322,1,0,0,0,324,323,1,0,0,0,325,67,1,0,0,0,34,71,79,
         88,104,110,113,118,122,124,128,132,140,144,146,150,154,179,187,193,
         198,207,212,227,242,248,254,270,279,287,295,303,311,319,324
+=======
+        4,1,46,328,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
+        2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
+        7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,
+        2,27,7,27,2,28,7,28,2,29,7,29,2,30,7,30,2,31,7,31,2,32,7,32,1,0,
+        4,0,68,8,0,11,0,12,0,69,1,0,1,0,1,1,1,1,1,1,1,1,3,1,78,8,1,1,1,1,
+        1,1,1,1,2,1,2,5,2,85,8,2,10,2,12,2,88,9,2,1,2,1,2,1,3,1,3,1,3,1,
+        3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,3,3,103,8,3,1,4,1,4,5,4,107,8,4,10,
+        4,12,4,110,9,4,1,4,1,4,1,4,3,4,115,8,4,1,4,3,4,118,8,4,1,5,1,5,1,
+        5,3,5,123,8,5,1,5,1,5,3,5,127,8,5,3,5,129,8,5,1,5,1,5,3,5,133,8,
+        5,1,5,1,5,3,5,137,8,5,1,5,1,5,1,5,1,6,1,6,1,6,3,6,145,8,6,1,6,1,
+        6,3,6,149,8,6,3,6,151,8,6,1,6,1,6,3,6,155,8,6,1,6,1,6,3,6,159,8,
+        6,1,6,1,6,1,6,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,9,1,
+        9,1,9,1,10,1,10,1,10,1,10,1,10,1,10,1,10,3,10,185,8,10,1,11,1,11,
+        1,11,1,11,1,11,1,11,1,11,3,11,194,8,11,1,12,1,12,1,12,3,12,199,8,
+        12,1,12,1,12,1,13,1,13,1,13,5,13,206,8,13,10,13,12,13,209,9,13,1,
+        14,1,14,3,14,213,8,14,1,14,1,14,1,15,1,15,1,15,1,16,1,16,1,16,1,
+        17,1,17,1,17,5,17,226,8,17,10,17,12,17,229,9,17,1,18,1,18,1,18,1,
+        19,1,19,1,20,1,20,1,21,1,21,1,21,1,21,1,21,3,21,243,8,21,1,22,1,
+        22,1,22,1,22,3,22,249,8,22,1,22,1,22,5,22,253,8,22,10,22,12,22,256,
+        9,22,1,23,1,23,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,
+        1,24,1,24,3,24,272,8,24,1,25,1,25,1,26,1,26,1,26,5,26,279,8,26,10,
+        26,12,26,282,9,26,1,27,1,27,1,27,5,27,287,8,27,10,27,12,27,290,9,
+        27,1,28,1,28,1,28,5,28,295,8,28,10,28,12,28,298,9,28,1,29,1,29,1,
+        29,5,29,303,8,29,10,29,12,29,306,9,29,1,30,1,30,1,30,5,30,311,8,
+        30,10,30,12,30,314,9,30,1,31,1,31,1,31,5,31,319,8,31,10,31,12,31,
+        322,9,31,1,32,1,32,3,32,326,8,32,1,32,0,1,44,33,0,2,4,6,8,10,12,
+        14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,
+        58,60,62,64,0,7,1,0,14,17,1,0,18,19,1,0,20,23,2,0,5,5,24,27,1,0,
+        30,31,1,0,32,33,2,0,34,35,43,43,346,0,67,1,0,0,0,2,73,1,0,0,0,4,
+        82,1,0,0,0,6,102,1,0,0,0,8,104,1,0,0,0,10,119,1,0,0,0,12,141,1,0,
+        0,0,14,163,1,0,0,0,16,165,1,0,0,0,18,171,1,0,0,0,20,177,1,0,0,0,
+        22,186,1,0,0,0,24,195,1,0,0,0,26,202,1,0,0,0,28,210,1,0,0,0,30,216,
+        1,0,0,0,32,219,1,0,0,0,34,222,1,0,0,0,36,230,1,0,0,0,38,233,1,0,
+        0,0,40,235,1,0,0,0,42,242,1,0,0,0,44,248,1,0,0,0,46,257,1,0,0,0,
+        48,271,1,0,0,0,50,273,1,0,0,0,52,275,1,0,0,0,54,283,1,0,0,0,56,291,
+        1,0,0,0,58,299,1,0,0,0,60,307,1,0,0,0,62,315,1,0,0,0,64,325,1,0,
+        0,0,66,68,3,6,3,0,67,66,1,0,0,0,68,69,1,0,0,0,69,67,1,0,0,0,69,70,
+        1,0,0,0,70,71,1,0,0,0,71,72,5,0,0,1,72,1,1,0,0,0,73,74,3,38,19,0,
+        74,75,3,48,24,0,75,77,5,1,0,0,76,78,3,34,17,0,77,76,1,0,0,0,77,78,
+        1,0,0,0,78,79,1,0,0,0,79,80,5,2,0,0,80,81,3,4,2,0,81,3,1,0,0,0,82,
+        86,5,3,0,0,83,85,3,6,3,0,84,83,1,0,0,0,85,88,1,0,0,0,86,84,1,0,0,
+        0,86,87,1,0,0,0,87,89,1,0,0,0,88,86,1,0,0,0,89,90,5,4,0,0,90,5,1,
+        0,0,0,91,103,3,8,4,0,92,103,3,10,5,0,93,103,3,12,6,0,94,103,3,16,
+        8,0,95,103,3,18,9,0,96,103,3,20,10,0,97,103,3,22,11,0,98,103,3,28,
+        14,0,99,103,3,30,15,0,100,103,3,2,1,0,101,103,3,32,16,0,102,91,1,
+        0,0,0,102,92,1,0,0,0,102,93,1,0,0,0,102,94,1,0,0,0,102,95,1,0,0,
+        0,102,96,1,0,0,0,102,97,1,0,0,0,102,98,1,0,0,0,102,99,1,0,0,0,102,
+        100,1,0,0,0,102,101,1,0,0,0,103,7,1,0,0,0,104,108,3,38,19,0,105,
+        107,5,43,0,0,106,105,1,0,0,0,107,110,1,0,0,0,108,106,1,0,0,0,108,
+        109,1,0,0,0,109,111,1,0,0,0,110,108,1,0,0,0,111,114,3,48,24,0,112,
+        113,5,5,0,0,113,115,3,40,20,0,114,112,1,0,0,0,114,115,1,0,0,0,115,
+        117,1,0,0,0,116,118,5,6,0,0,117,116,1,0,0,0,117,118,1,0,0,0,118,
+        9,1,0,0,0,119,120,5,7,0,0,120,128,5,1,0,0,121,123,3,8,4,0,122,121,
+        1,0,0,0,122,123,1,0,0,0,123,129,1,0,0,0,124,129,1,0,0,0,125,127,
+        3,42,21,0,126,125,1,0,0,0,126,127,1,0,0,0,127,129,1,0,0,0,128,122,
+        1,0,0,0,128,124,1,0,0,0,128,126,1,0,0,0,129,130,1,0,0,0,130,132,
+        5,6,0,0,131,133,3,52,26,0,132,131,1,0,0,0,132,133,1,0,0,0,133,134,
+        1,0,0,0,134,136,5,6,0,0,135,137,3,44,22,0,136,135,1,0,0,0,136,137,
+        1,0,0,0,137,138,1,0,0,0,138,139,5,2,0,0,139,140,3,4,2,0,140,11,1,
+        0,0,0,141,142,5,7,0,0,142,150,5,1,0,0,143,145,3,8,4,0,144,143,1,
+        0,0,0,144,145,1,0,0,0,145,151,1,0,0,0,146,151,1,0,0,0,147,149,3,
+        42,21,0,148,147,1,0,0,0,148,149,1,0,0,0,149,151,1,0,0,0,150,144,
+        1,0,0,0,150,146,1,0,0,0,150,148,1,0,0,0,151,152,1,0,0,0,152,154,
+        5,6,0,0,153,155,3,52,26,0,154,153,1,0,0,0,154,155,1,0,0,0,155,156,
+        1,0,0,0,156,158,5,6,0,0,157,159,3,44,22,0,158,157,1,0,0,0,158,159,
+        1,0,0,0,159,160,1,0,0,0,160,161,5,2,0,0,161,162,3,6,3,0,162,13,1,
+        0,0,0,163,164,3,52,26,0,164,15,1,0,0,0,165,166,5,8,0,0,166,167,5,
+        1,0,0,167,168,3,14,7,0,168,169,5,2,0,0,169,170,3,4,2,0,170,17,1,
+        0,0,0,171,172,5,8,0,0,172,173,5,1,0,0,173,174,3,14,7,0,174,175,5,
+        2,0,0,175,176,3,6,3,0,176,19,1,0,0,0,177,178,5,9,0,0,178,179,5,1,
+        0,0,179,180,3,14,7,0,180,181,5,2,0,0,181,184,3,4,2,0,182,183,5,10,
+        0,0,183,185,3,4,2,0,184,182,1,0,0,0,184,185,1,0,0,0,185,21,1,0,0,
+        0,186,187,5,9,0,0,187,188,5,1,0,0,188,189,3,14,7,0,189,190,5,2,0,
+        0,190,193,3,6,3,0,191,192,5,10,0,0,192,194,3,6,3,0,193,191,1,0,0,
+        0,193,194,1,0,0,0,194,23,1,0,0,0,195,196,5,38,0,0,196,198,5,1,0,
+        0,197,199,3,26,13,0,198,197,1,0,0,0,198,199,1,0,0,0,199,200,1,0,
+        0,0,200,201,5,2,0,0,201,25,1,0,0,0,202,207,3,40,20,0,203,204,5,11,
+        0,0,204,206,3,40,20,0,205,203,1,0,0,0,206,209,1,0,0,0,207,205,1,
+        0,0,0,207,208,1,0,0,0,208,27,1,0,0,0,209,207,1,0,0,0,210,212,5,12,
+        0,0,211,213,3,40,20,0,212,211,1,0,0,0,212,213,1,0,0,0,213,214,1,
+        0,0,0,214,215,5,6,0,0,215,29,1,0,0,0,216,217,3,40,20,0,217,218,5,
+        6,0,0,218,31,1,0,0,0,219,220,5,13,0,0,220,221,5,45,0,0,221,33,1,
+        0,0,0,222,227,3,36,18,0,223,224,5,11,0,0,224,226,3,36,18,0,225,223,
+        1,0,0,0,226,229,1,0,0,0,227,225,1,0,0,0,227,228,1,0,0,0,228,35,1,
+        0,0,0,229,227,1,0,0,0,230,231,3,38,19,0,231,232,3,48,24,0,232,37,
+        1,0,0,0,233,234,7,0,0,0,234,39,1,0,0,0,235,236,3,42,21,0,236,41,
+        1,0,0,0,237,238,3,44,22,0,238,239,3,50,25,0,239,240,3,42,21,0,240,
+        243,1,0,0,0,241,243,3,52,26,0,242,237,1,0,0,0,242,241,1,0,0,0,243,
+        43,1,0,0,0,244,245,6,22,-1,0,245,246,7,1,0,0,246,249,3,44,22,3,247,
+        249,3,48,24,0,248,244,1,0,0,0,248,247,1,0,0,0,249,254,1,0,0,0,250,
+        251,10,2,0,0,251,253,7,1,0,0,252,250,1,0,0,0,253,256,1,0,0,0,254,
+        252,1,0,0,0,254,255,1,0,0,0,255,45,1,0,0,0,256,254,1,0,0,0,257,258,
+        7,2,0,0,258,47,1,0,0,0,259,272,5,38,0,0,260,272,5,44,0,0,261,272,
+        5,39,0,0,262,272,5,41,0,0,263,272,5,42,0,0,264,272,5,45,0,0,265,
+        272,5,40,0,0,266,272,3,24,12,0,267,268,5,1,0,0,268,269,3,40,20,0,
+        269,270,5,2,0,0,270,272,1,0,0,0,271,259,1,0,0,0,271,260,1,0,0,0,
+        271,261,1,0,0,0,271,262,1,0,0,0,271,263,1,0,0,0,271,264,1,0,0,0,
+        271,265,1,0,0,0,271,266,1,0,0,0,271,267,1,0,0,0,272,49,1,0,0,0,273,
+        274,7,3,0,0,274,51,1,0,0,0,275,280,3,54,27,0,276,277,5,28,0,0,277,
+        279,3,54,27,0,278,276,1,0,0,0,279,282,1,0,0,0,280,278,1,0,0,0,280,
+        281,1,0,0,0,281,53,1,0,0,0,282,280,1,0,0,0,283,288,3,56,28,0,284,
+        285,5,29,0,0,285,287,3,56,28,0,286,284,1,0,0,0,287,290,1,0,0,0,288,
+        286,1,0,0,0,288,289,1,0,0,0,289,55,1,0,0,0,290,288,1,0,0,0,291,296,
+        3,58,29,0,292,293,7,4,0,0,293,295,3,58,29,0,294,292,1,0,0,0,295,
+        298,1,0,0,0,296,294,1,0,0,0,296,297,1,0,0,0,297,57,1,0,0,0,298,296,
+        1,0,0,0,299,304,3,60,30,0,300,301,7,2,0,0,301,303,3,60,30,0,302,
+        300,1,0,0,0,303,306,1,0,0,0,304,302,1,0,0,0,304,305,1,0,0,0,305,
+        59,1,0,0,0,306,304,1,0,0,0,307,312,3,62,31,0,308,309,7,5,0,0,309,
+        311,3,62,31,0,310,308,1,0,0,0,311,314,1,0,0,0,312,310,1,0,0,0,312,
+        313,1,0,0,0,313,61,1,0,0,0,314,312,1,0,0,0,315,320,3,44,22,0,316,
+        317,7,6,0,0,317,319,3,44,22,0,318,316,1,0,0,0,319,322,1,0,0,0,320,
+        318,1,0,0,0,320,321,1,0,0,0,321,63,1,0,0,0,322,320,1,0,0,0,323,326,
+        3,60,30,0,324,326,3,62,31,0,325,323,1,0,0,0,325,324,1,0,0,0,326,
+        65,1,0,0,0,34,69,77,86,102,108,114,117,122,126,128,132,136,144,148,
+        150,154,158,184,193,198,207,212,227,242,248,254,271,280,288,296,
+        304,312,320,325
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
     ]
 
 class CASSParser ( Parser ):
@@ -143,7 +263,9 @@ class CASSParser ( Parser ):
                      "'include'", "'int'", "'float'", "'double'", "'void'", 
                      "'++'", "'--'", "'>'", "'<'", "'<='", "'>='", "'+='", 
                      "'-='", "'*='", "'/='", "'||'", "'&&'", "'=='", "'!='", 
-                     "'+'", "'-'", "'*'", "'/'", "'%'" ]
+                     "'+'", "'-'", "'/'", "'%'", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "'*'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
@@ -154,8 +276,8 @@ class CASSParser ( Parser ):
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "SL_COMMENT", "ML_COMMENT", "ID", "INT", 
-                      "BOOL", "FLOAT", "CHAR", "STRING", "WS" ]
+                      "SL_COMMENT", "ML_COMMENT", "ID", "INT", "BOOL", "FLOAT", 
+                      "CHAR", "POINTER", "PTR_EXPR", "STRING", "WS" ]
 
     RULE_prog = 0
     RULE_functionDefinition = 1
@@ -240,16 +362,17 @@ class CASSParser ( Parser ):
     T__32=33
     T__33=34
     T__34=35
-    T__35=36
-    SL_COMMENT=37
-    ML_COMMENT=38
-    ID=39
-    INT=40
-    BOOL=41
-    FLOAT=42
-    CHAR=43
-    STRING=44
-    WS=45
+    SL_COMMENT=36
+    ML_COMMENT=37
+    ID=38
+    INT=39
+    BOOL=40
+    FLOAT=41
+    CHAR=42
+    POINTER=43
+    PTR_EXPR=44
+    STRING=45
+    WS=46
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -313,7 +436,7 @@ class CASSParser ( Parser ):
                 self.state = 71 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 34634617320322) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774293890) != 0)):
                     break
 
             self.state = 73
@@ -450,8 +573,13 @@ class CASSParser ( Parser ):
             self.state = 88
             self._errHandler.sync(self)
             _la = self._input.LA(1)
+<<<<<<< HEAD
             while (((_la) & ~0x3f) == 0 and ((1 << _la) & 34634617320322) != 0):
                 self.state = 85
+=======
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774293890) != 0):
+                self.state = 83
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self.statement()
                 self.state = 90
                 self._errHandler.sync(self)
@@ -638,6 +766,12 @@ class CASSParser ( Parser ):
             return self.getTypedRuleContext(CASSParser.PrimaryExpressionContext,0)
 
 
+        def POINTER(self, i:int=None):
+            if i is None:
+                return self.getTokens(CASSParser.POINTER)
+            else:
+                return self.getToken(CASSParser.POINTER, i)
+
         def expression(self):
             return self.getTypedRuleContext(CASSParser.ExpressionContext,0)
 
@@ -671,12 +805,29 @@ class CASSParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 106
             self.typeSpec()
+<<<<<<< HEAD
             self.state = 107
             self.primaryExpression()
             self.state = 110
+=======
+            self.state = 108
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==43:
+                self.state = 105
+                self.match(CASSParser.POINTER)
+                self.state = 110
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+
+            self.state = 111
+            self.primaryExpression()
+            self.state = 114
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==5:
+<<<<<<< HEAD
                 self.state = 108
                 self.match(CASSParser.T__4)
                 self.state = 109
@@ -684,10 +835,23 @@ class CASSParser ( Parser ):
 
 
             self.state = 113
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
-            if la_ == 1:
+=======
                 self.state = 112
+                self.match(CASSParser.T__4)
+                self.state = 113
+                self.expression()
+
+
+            self.state = 117
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,6,self._ctx)
+            if la_ == 1:
+<<<<<<< HEAD
+                self.state = 112
+=======
+                self.state = 116
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self.match(CASSParser.T__5)
 
 
@@ -754,19 +918,35 @@ class CASSParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 115
             self.match(CASSParser.T__6)
             self.state = 116
             self.match(CASSParser.T__0)
             self.state = 124
+=======
+            self.state = 119
+            self.match(CASSParser.T__6)
+            self.state = 120
+            self.match(CASSParser.T__0)
+            self.state = 128
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
             if la_ == 1:
+<<<<<<< HEAD
                 self.state = 118
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if (((_la) & ~0x3f) == 0 and ((1 << _la) & 245760) != 0):
                     self.state = 117
+=======
+                self.state = 122
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 245760) != 0):
+                    self.state = 121
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                     self.declarationStatement()
 
 
@@ -776,17 +956,26 @@ class CASSParser ( Parser ):
                 pass
 
             elif la_ == 3:
+<<<<<<< HEAD
                 self.state = 122
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if (((_la) & ~0x3f) == 0 and ((1 << _la) & 34634617061378) != 0):
                     self.state = 121
+=======
+                self.state = 126
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774034946) != 0):
+                    self.state = 125
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                     self.assignmentExpression()
 
 
                 pass
 
 
+<<<<<<< HEAD
             self.state = 126
             self.match(CASSParser.T__5)
             self.state = 128
@@ -810,6 +999,31 @@ class CASSParser ( Parser ):
             self.state = 134
             self.match(CASSParser.T__1)
             self.state = 135
+=======
+            self.state = 130
+            self.match(CASSParser.T__5)
+            self.state = 132
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774034946) != 0):
+                self.state = 131
+                self.logicalOrExpression()
+
+
+            self.state = 134
+            self.match(CASSParser.T__5)
+            self.state = 136
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774034946) != 0):
+                self.state = 135
+                self.unaryExpression(0)
+
+
+            self.state = 138
+            self.match(CASSParser.T__1)
+            self.state = 139
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self.compoundStatement()
         except RecognitionException as re:
             localctx.exception = re
@@ -874,19 +1088,35 @@ class CASSParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 137
             self.match(CASSParser.T__6)
             self.state = 138
             self.match(CASSParser.T__0)
             self.state = 146
+=======
+            self.state = 141
+            self.match(CASSParser.T__6)
+            self.state = 142
+            self.match(CASSParser.T__0)
+            self.state = 150
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,13,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
             if la_ == 1:
+<<<<<<< HEAD
                 self.state = 140
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if (((_la) & ~0x3f) == 0 and ((1 << _la) & 245760) != 0):
                     self.state = 139
+=======
+                self.state = 144
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 245760) != 0):
+                    self.state = 143
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                     self.declarationStatement()
 
 
@@ -896,17 +1126,26 @@ class CASSParser ( Parser ):
                 pass
 
             elif la_ == 3:
+<<<<<<< HEAD
                 self.state = 144
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if (((_la) & ~0x3f) == 0 and ((1 << _la) & 34634617061378) != 0):
                     self.state = 143
+=======
+                self.state = 148
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if (((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774034946) != 0):
+                    self.state = 147
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                     self.assignmentExpression()
 
 
                 pass
 
 
+<<<<<<< HEAD
             self.state = 148
             self.match(CASSParser.T__5)
             self.state = 150
@@ -930,6 +1169,31 @@ class CASSParser ( Parser ):
             self.state = 156
             self.match(CASSParser.T__1)
             self.state = 157
+=======
+            self.state = 152
+            self.match(CASSParser.T__5)
+            self.state = 154
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774034946) != 0):
+                self.state = 153
+                self.logicalOrExpression()
+
+
+            self.state = 156
+            self.match(CASSParser.T__5)
+            self.state = 158
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774034946) != 0):
+                self.state = 157
+                self.unaryExpression(0)
+
+
+            self.state = 160
+            self.match(CASSParser.T__1)
+            self.state = 161
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self.statement()
         except RecognitionException as re:
             localctx.exception = re
@@ -977,7 +1241,11 @@ class CASSParser ( Parser ):
         self.enterRule(localctx, 14, self.RULE_conditionClause)
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 159
+=======
+            self.state = 163
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self.logicalOrExpression()
         except RecognitionException as re:
             localctx.exception = re
@@ -1029,6 +1297,7 @@ class CASSParser ( Parser ):
         self.enterRule(localctx, 16, self.RULE_whileBlockStatement)
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 161
             self.match(CASSParser.T__7)
             self.state = 162
@@ -1038,6 +1307,17 @@ class CASSParser ( Parser ):
             self.state = 164
             self.match(CASSParser.T__1)
             self.state = 165
+=======
+            self.state = 165
+            self.match(CASSParser.T__7)
+            self.state = 166
+            self.match(CASSParser.T__0)
+            self.state = 167
+            self.conditionClause()
+            self.state = 168
+            self.match(CASSParser.T__1)
+            self.state = 169
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self.compoundStatement()
         except RecognitionException as re:
             localctx.exception = re
@@ -1089,6 +1369,7 @@ class CASSParser ( Parser ):
         self.enterRule(localctx, 18, self.RULE_whileSingleStatement)
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 167
             self.match(CASSParser.T__7)
             self.state = 168
@@ -1098,6 +1379,17 @@ class CASSParser ( Parser ):
             self.state = 170
             self.match(CASSParser.T__1)
             self.state = 171
+=======
+            self.state = 171
+            self.match(CASSParser.T__7)
+            self.state = 172
+            self.match(CASSParser.T__0)
+            self.state = 173
+            self.conditionClause()
+            self.state = 174
+            self.match(CASSParser.T__1)
+            self.state = 175
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self.statement()
         except RecognitionException as re:
             localctx.exception = re
@@ -1153,6 +1445,7 @@ class CASSParser ( Parser ):
         self.enterRule(localctx, 20, self.RULE_ifBlockStatement)
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 173
             self.match(CASSParser.T__8)
             self.state = 174
@@ -1164,11 +1457,31 @@ class CASSParser ( Parser ):
             self.state = 177
             self.compoundStatement()
             self.state = 179
+=======
+            self.state = 177
+            self.match(CASSParser.T__8)
+            self.state = 178
+            self.match(CASSParser.T__0)
+            self.state = 179
+            self.conditionClause()
+            self.state = 180
+            self.match(CASSParser.T__1)
+            self.state = 181
+            self.compoundStatement()
+            self.state = 184
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
             if la_ == 1:
+<<<<<<< HEAD
                 self.state = 178
                 self.elseClause()
+=======
+                self.state = 182
+                self.match(CASSParser.T__9)
+                self.state = 183
+                self.compoundStatement()
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
 
 
         except RecognitionException as re:
@@ -1225,6 +1538,7 @@ class CASSParser ( Parser ):
         self.enterRule(localctx, 22, self.RULE_ifSingleStatement)
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 181
             self.match(CASSParser.T__8)
             self.state = 182
@@ -1235,10 +1549,23 @@ class CASSParser ( Parser ):
             self.match(CASSParser.T__1)
             self.state = 185
             self.statement()
+=======
+            self.state = 186
+            self.match(CASSParser.T__8)
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self.state = 187
+            self.match(CASSParser.T__0)
+            self.state = 188
+            self.conditionClause()
+            self.state = 189
+            self.match(CASSParser.T__1)
+            self.state = 190
+            self.statement()
+            self.state = 193
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,18,self._ctx)
             if la_ == 1:
+<<<<<<< HEAD
                 self.state = 186
                 self.elseClause()
 
@@ -1313,6 +1640,10 @@ class CASSParser ( Parser ):
                 pass
 
             elif la_ == 3:
+=======
+                self.state = 191
+                self.match(CASSParser.T__9)
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self.state = 192
                 self.statement()
                 pass
@@ -1375,7 +1706,11 @@ class CASSParser ( Parser ):
             self.state = 198
             self._errHandler.sync(self)
             _la = self._input.LA(1)
+<<<<<<< HEAD
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & 34634617061378) != 0):
+=======
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774034946) != 0):
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self.state = 197
                 self.argumentList()
 
@@ -1498,7 +1833,11 @@ class CASSParser ( Parser ):
             self.state = 212
             self._errHandler.sync(self)
             _la = self._input.LA(1)
+<<<<<<< HEAD
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & 34634617061378) != 0):
+=======
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & 61297774034946) != 0):
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self.state = 211
                 self.expression()
 
@@ -1965,7 +2304,11 @@ class CASSParser ( Parser ):
                 self.state = 246
                 self.unaryExpression(3)
                 pass
+<<<<<<< HEAD
             elif token in [1, 39, 40, 41, 42, 43, 44]:
+=======
+            elif token in [1, 38, 39, 40, 41, 42, 44, 45]:
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self.state = 247
                 self.primaryExpression()
                 pass
@@ -2068,6 +2411,9 @@ class CASSParser ( Parser ):
         def ID(self):
             return self.getToken(CASSParser.ID, 0)
 
+        def PTR_EXPR(self):
+            return self.getToken(CASSParser.PTR_EXPR, 0)
+
         def INT(self):
             return self.getToken(CASSParser.INT, 0)
 
@@ -2116,7 +2462,11 @@ class CASSParser ( Parser ):
         localctx = CASSParser.PrimaryExpressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 50, self.RULE_primaryExpression)
         try:
+<<<<<<< HEAD
             self.state = 270
+=======
+            self.state = 271
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,26,self._ctx)
             if la_ == 1:
@@ -2128,46 +2478,83 @@ class CASSParser ( Parser ):
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 260
+<<<<<<< HEAD
                 self.match(CASSParser.INT)
+=======
+                self.match(CASSParser.PTR_EXPR)
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 261
+<<<<<<< HEAD
                 self.match(CASSParser.FLOAT)
+=======
+                self.match(CASSParser.INT)
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 262
+<<<<<<< HEAD
                 self.match(CASSParser.CHAR)
+=======
+                self.match(CASSParser.FLOAT)
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 pass
 
             elif la_ == 5:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 263
+<<<<<<< HEAD
                 self.match(CASSParser.STRING)
+=======
+                self.match(CASSParser.CHAR)
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 pass
 
             elif la_ == 6:
                 self.enterOuterAlt(localctx, 6)
                 self.state = 264
+<<<<<<< HEAD
                 self.match(CASSParser.BOOL)
+=======
+                self.match(CASSParser.STRING)
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 pass
 
             elif la_ == 7:
                 self.enterOuterAlt(localctx, 7)
                 self.state = 265
+<<<<<<< HEAD
                 self.functionCall()
+=======
+                self.match(CASSParser.BOOL)
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 pass
 
             elif la_ == 8:
                 self.enterOuterAlt(localctx, 8)
                 self.state = 266
+<<<<<<< HEAD
                 self.match(CASSParser.T__0)
                 self.state = 267
                 self.expression()
                 self.state = 268
+=======
+                self.functionCall()
+                pass
+
+            elif la_ == 9:
+                self.enterOuterAlt(localctx, 9)
+                self.state = 267
+                self.match(CASSParser.T__0)
+                self.state = 268
+                self.expression()
+                self.state = 269
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self.match(CASSParser.T__1)
                 pass
 
@@ -2216,7 +2603,11 @@ class CASSParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 272
+=======
+            self.state = 273
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             _la = self._input.LA(1)
             if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 251658272) != 0)):
                 self._errHandler.recoverInline(self)
@@ -2273,6 +2664,7 @@ class CASSParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 274
             self.logicalAndExpression()
             self.state = 279
@@ -2284,6 +2676,19 @@ class CASSParser ( Parser ):
                 self.state = 276
                 self.logicalAndExpression()
                 self.state = 281
+=======
+            self.state = 275
+            self.logicalAndExpression()
+            self.state = 280
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==28:
+                self.state = 276
+                self.match(CASSParser.T__27)
+                self.state = 277
+                self.logicalAndExpression()
+                self.state = 282
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -2337,6 +2742,7 @@ class CASSParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 282
             self.equalityExpression()
             self.state = 287
@@ -2348,6 +2754,19 @@ class CASSParser ( Parser ):
                 self.state = 284
                 self.equalityExpression()
                 self.state = 289
+=======
+            self.state = 283
+            self.equalityExpression()
+            self.state = 288
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==29:
+                self.state = 284
+                self.match(CASSParser.T__28)
+                self.state = 285
+                self.equalityExpression()
+                self.state = 290
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -2401,6 +2820,7 @@ class CASSParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 290
             self.relationalExpression()
             self.state = 295
@@ -2408,15 +2828,30 @@ class CASSParser ( Parser ):
             _la = self._input.LA(1)
             while _la==30 or _la==31:
                 self.state = 291
+=======
+            self.state = 291
+            self.relationalExpression()
+            self.state = 296
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==30 or _la==31:
+                self.state = 292
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 _la = self._input.LA(1)
                 if not(_la==30 or _la==31):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
+<<<<<<< HEAD
                 self.state = 292
                 self.relationalExpression()
                 self.state = 297
+=======
+                self.state = 293
+                self.relationalExpression()
+                self.state = 298
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -2470,6 +2905,7 @@ class CASSParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 298
             self.additiveExpression()
             self.state = 303
@@ -2477,15 +2913,30 @@ class CASSParser ( Parser ):
             _la = self._input.LA(1)
             while (((_la) & ~0x3f) == 0 and ((1 << _la) & 15728640) != 0):
                 self.state = 299
+=======
+            self.state = 299
+            self.additiveExpression()
+            self.state = 304
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 15728640) != 0):
+                self.state = 300
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 _la = self._input.LA(1)
                 if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 15728640) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
+<<<<<<< HEAD
                 self.state = 300
                 self.additiveExpression()
                 self.state = 305
+=======
+                self.state = 301
+                self.additiveExpression()
+                self.state = 306
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -2539,6 +2990,7 @@ class CASSParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 306
             self.multiplicativeExpression()
             self.state = 311
@@ -2546,15 +2998,30 @@ class CASSParser ( Parser ):
             _la = self._input.LA(1)
             while _la==32 or _la==33:
                 self.state = 307
+=======
+            self.state = 307
+            self.multiplicativeExpression()
+            self.state = 312
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==32 or _la==33:
+                self.state = 308
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 _la = self._input.LA(1)
                 if not(_la==32 or _la==33):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
+<<<<<<< HEAD
                 self.state = 308
                 self.multiplicativeExpression()
                 self.state = 313
+=======
+                self.state = 309
+                self.multiplicativeExpression()
+                self.state = 314
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -2580,6 +3047,12 @@ class CASSParser ( Parser ):
             else:
                 return self.getTypedRuleContext(CASSParser.UnaryExpressionContext,i)
 
+
+        def POINTER(self, i:int=None):
+            if i is None:
+                return self.getTokens(CASSParser.POINTER)
+            else:
+                return self.getToken(CASSParser.POINTER, i)
 
         def getRuleIndex(self):
             return CASSParser.RULE_multiplicativeExpression
@@ -2608,6 +3081,7 @@ class CASSParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 314
             self.unaryExpression(0)
             self.state = 319
@@ -2615,15 +3089,30 @@ class CASSParser ( Parser ):
             _la = self._input.LA(1)
             while (((_la) & ~0x3f) == 0 and ((1 << _la) & 120259084288) != 0):
                 self.state = 315
+=======
+            self.state = 315
+            self.unaryExpression(0)
+            self.state = 320
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 8847632629760) != 0):
+                self.state = 316
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 120259084288) != 0)):
+                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 8847632629760) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
+<<<<<<< HEAD
                 self.state = 316
                 self.unaryExpression(0)
                 self.state = 321
+=======
+                self.state = 317
+                self.unaryExpression(0)
+                self.state = 322
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -2676,18 +3165,30 @@ class CASSParser ( Parser ):
         localctx = CASSParser.OperationExpressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 66, self.RULE_operationExpression)
         try:
+<<<<<<< HEAD
             self.state = 324
+=======
+            self.state = 325
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,33,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
                 self.state = 322
+=======
+                self.state = 323
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self.additiveExpression()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
+<<<<<<< HEAD
                 self.state = 323
+=======
+                self.state = 324
+>>>>>>> cbefaa0f782a20f67bc7627dcf1294c1b85e4d78
                 self.multiplicativeExpression()
                 pass
 
