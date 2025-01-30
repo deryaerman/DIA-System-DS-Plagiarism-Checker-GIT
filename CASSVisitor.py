@@ -134,6 +134,11 @@ class CASSVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CASSParser#pointerExpression.
+    def visitPointerExpression(self, ctx:CASSParser.PointerExpressionContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CASSParser#assignmentOperator.
     def visitAssignmentOperator(self, ctx:CASSParser.AssignmentOperatorContext):
         return self.visitChildren(ctx)

@@ -175,31 +175,43 @@ class MyCassVisitor(CASSVisitor):
 
         # Mark this variable as local in the top scope
         var_name = ctx.primaryExpression().getText()
+
         if len(self.scopes) > 0:
             self.scopes[-1].add(var_name)
         
         type_label = ctx.typeSpec().getText()   # e.g. "int"
         decl_node = CassNode(f"I#declaration#{type_label}$;") ##intermediate nodes
+        
 
-        if not(ctx.expression()) and ctx.POINTER() :
-            decl_node.add_child(CassNode("I#pointer_declarator#$"))
-
-        # e.g. "int sum = 0;"
-        var_name = ctx.primaryExpression().getText()
         if ctx.expression():
-            assign_node = CassNode("I#init_declarator#$=$")
-            assign_node.add_child(CassNode("I#pointer_declarator#$"))
-            assign_node.add_child(self.visit(ctx.primaryExpression()))
 
-            # Visit the expression to see if it's #VAR or #LIT or something else
+            assign_node = CassNode("I#init_declarator#$=$")
+
+            if ctx.POINTER():
+                ptr_dclr = CassNode("I#pointer_declarator#$")
+                ptr_dclr.add_child(self.visit(ctx.primaryExpression()))
+                assign_node.add_child(ptr_dclr)
+
+            else:
+                
+                assign_node.add_child(self.visit(ctx.primaryExpression()))
+
+    
             value_node = self.visit(ctx.expression())
             assign_node.add_child(value_node)
 
-            # Add `$=$` as the child of the `int$;` node
             decl_node.add_child(assign_node)
+
         else:
+
+            if ctx.POINTER():
+                ptr_dclr = CassNode("I#pointer_declarator#$")
+                ptr_dclr.add_child(self.visit(ctx.primaryExpression()))
+                decl_node.add_child(ptr_dclr)
+
+            else :
             # no initializer, just add #VAR as a child
-            decl_node.add_child(self.visit(ctx.primaryExpression()))
+                decl_node.add_child(self.visit(ctx.primaryExpression()))
 
         return decl_node
     
@@ -566,7 +578,9 @@ class MyCassVisitor(CASSVisitor):
 
 
     def visitUnaryExpression(self, ctx: CASSParser.UnaryExpressionContext):
-        # e.g. ++i, primaryExpression, etc.
+       
+        if ctx.pointerExpression():
+            return self.visit(ctx.pointerExpression())
         
         # If it's prefix like ++i
         if ctx.unaryExpression():
@@ -585,6 +599,21 @@ class MyCassVisitor(CASSVisitor):
                 return True
         return False
 
+    def visitPointerExpression(self, ctx: CASSParser.PointerExpressionContext): 
+    
+        var_text = ctx.primaryExpression().getText()
+        sign = ctx.getText()[0]
+
+        if self.isLocal(var_text):
+            ptr_node = CassNode(f"I#pointer_expression#{sign}$")
+            ptr_node.add_child(self.visit(ctx.primaryExpression()))
+        else:
+            ptr_node = CassNode(f"I#pointer_expression#{sign}$")
+            ptr_node.add_child(self.visit(ctx.primaryExpression()))
+        
+        return ptr_node
+    
+
     def visitPrimaryExpression(self, ctx: CASSParser.PrimaryExpressionContext):
         # Case 1: It's an identifier
         if ctx.ID():
@@ -596,19 +625,6 @@ class MyCassVisitor(CASSVisitor):
                 return CassNode(f"v{var_text}")
             else:
                 return CassNode(f"V{var_text}")
-            
-        if ctx.PTR_EXPR():
-
-            var_text = ctx.getText()[1:]
-
-            if self.isLocal(var_text):
-                ptr_node = CassNode("tI#pointer_expression#&$")
-                ptr_node.add_child(CassNode(f"v{var_text}"))
-            else:
-                ptr_node = CassNode("tI#pointer_expression#&$")
-                ptr_node.add_child(CassNode(f"V{var_text}"))
-            
-            return ptr_node
 
         
         # Case 2: It's an integer literal
