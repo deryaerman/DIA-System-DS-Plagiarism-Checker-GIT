@@ -1,4 +1,4 @@
-// Generated from c:/Users/Maria/Downloads/DIA-System-DS-Plagiarism-Checker-GIT/CASS.g4 by ANTLR 4.13.1
+// Generated from /Users/deryaerman/Desktop/School/Uni/DIA/DIA-System-DS-Plagiarism-Checker-GIT/CASS.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
