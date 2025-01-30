@@ -130,6 +130,7 @@ assignmentExpression
 unaryExpression
     : ('++' | '--') unaryExpression
     | unaryExpression ('++' | '--')
+    | pointerExpression
     | primaryExpression
     ;
 
@@ -141,8 +142,7 @@ comparingExpression
     ;
 
 primaryExpression
-    : ID
-    | PTR_EXPR                     
+    : ID                     
     | INT                    
     | FLOAT                  
     | CHAR                   
@@ -150,6 +150,11 @@ primaryExpression
     | BOOL                 
     | functionCall           
     | '(' expression ')'     
+    ;
+
+pointerExpression
+    : '&' primaryExpression
+    | '*' primaryExpression
     ;
 
 assignmentOperator
@@ -228,9 +233,6 @@ POINTER
     : '*'
     ;
 
-PTR_EXPR
-    : '&' ID
-    ;
 
 STRING
     : '"' (ESC_SEQ | ~["\\])* '"'  // A string starts and ends with double quotes

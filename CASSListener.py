@@ -242,6 +242,15 @@ class CASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CASSParser#pointerExpression.
+    def enterPointerExpression(self, ctx:CASSParser.PointerExpressionContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#pointerExpression.
+    def exitPointerExpression(self, ctx:CASSParser.PointerExpressionContext):
+        pass
+
+
     # Enter a parse tree produced by CASSParser#assignmentOperator.
     def enterAssignmentOperator(self, ctx:CASSParser.AssignmentOperatorContext):
         pass
