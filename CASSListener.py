@@ -116,6 +116,15 @@ class CASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CASSParser#elseClause.
+    def enterElseClause(self, ctx:CASSParser.ElseClauseContext):
+        pass
+
+    # Exit a parse tree produced by CASSParser#elseClause.
+    def exitElseClause(self, ctx:CASSParser.ElseClauseContext):
+        pass
+
+
     # Enter a parse tree produced by CASSParser#functionCall.
     def enterFunctionCall(self, ctx:CASSParser.FunctionCallContext):
         pass

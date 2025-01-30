@@ -62,11 +62,15 @@ whileSingleStatement
     ;
 
 ifBlockStatement
-    : 'if' '(' conditionClause ')' compoundStatement ('else' compoundStatement)? 
+    : 'if' '(' conditionClause ')' compoundStatement elseClause? 
     ;
 
 ifSingleStatement
-    : 'if' '(' conditionClause ')' statement ('else' statement)?
+    : 'if' '(' conditionClause ')' statement elseClause? 
+    ;
+
+elseClause
+    : 'else' (compoundStatement | ifBlockStatement | statement)
     ;
 
 functionCall

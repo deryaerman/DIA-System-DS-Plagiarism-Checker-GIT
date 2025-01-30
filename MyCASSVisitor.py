@@ -300,61 +300,82 @@ class MyCassVisitor(CASSVisitor):
         return while_node
     
     def visitIfBlockStatement(self, ctx: CASSParser.IfBlockStatementContext):
+
+        num_children = 0
+        if ctx.conditionClause():
+            num_children += 1
+        
+        if ctx.compoundStatement():
+            num_children += 1
+
+        if ctx.elseClause():
+            num_children += 1
+
+        dollar_signs = "$" * num_children  # Create the correct number of $ placeholders
+        
         # Create a node for the "if" statement
-        if_node = CassNode("I#if_statement#if$$")
+        if_node = CassNode(f"I#if_statement#if{dollar_signs}")
 
         cond_node = self.visit(ctx.conditionClause())
         if_node.add_child(cond_node)
 
         # Separate "if" and "else" blocks
-        if_block = []
-        else_block = []
+        # Visit the 'if' body (compoundStatement) and add as a child
+        if_body_node = self.visit(ctx.compoundStatement())
+        if_node.add_child(if_body_node)
 
-        # Iterate through statements to determine if they belong to "if" or "else"
-        has_else = False
-        for i, child in enumerate(ctx.children):
-            if child.getText() == "else":
-                has_else = True  # We found the "else"
-            elif isinstance(child, CASSParser.StatementContext):
-                # Add to "else" block if we're in the "else" part
-                if has_else:
-                    else_block.append(child)
-                else:
-                    if_block.append(child)
-
-        # Process "if" block statements
-        if_node.add_child(self.visit(ctx.compoundStatement(0)))
-
-        # Process "else" block statements, if any
-        if has_else:
-            else_node = CassNode("I#else_clause#else$")
-            # if len(ctx.ifBlockStatement().parameter()) > 1:
-            #     else_node.add_child(self.visit(ctx.ifBlockStatement(1)))
-            else_node.add_child(self.visit(ctx.compoundStatement(1)))
-            if_node.add_child(else_node)
+        # Handle 'else' clause if present
+        if ctx.elseClause():
+            else_clause_node = self.visit(ctx.elseClause())
+            if_node.add_child(else_clause_node)
 
         return if_node
+    
+    def visitElseClause(self, ctx: CASSParser.ElseClauseContext):
+        else_node = CassNode("I#else_clause#else$")
+
+        if ctx.ifBlockStatement():
+            nested_if_node = self.visit(ctx.ifBlockStatement())
+            else_node.add_child(nested_if_node)
+        elif ctx.compoundStatement():
+            else_body_node = self.visit(ctx.compoundStatement())
+            else_node.add_child(else_body_node)
+        else:
+            # It's a simple 'else' -> visit the statement
+            else_body_node = self.visit(ctx.statement())
+            else_node.add_child(else_body_node)
+
+        return else_node
 
 
     
     def visitIfSingleStatement(self, ctx: CASSParser.IfSingleStatementContext):
+        num_children = 0
+        if ctx.conditionClause():
+            num_children += 1
+        
+        if ctx.statement():
+            num_children += 1
+
+        if ctx.elseClause():
+            num_children += 1
+
+        dollar_signs = "$" * num_children  # Create the correct number of $ placeholders
+        
         # Create a node for the "if" statement
-        if_node = CassNode("I#if_statement#if$$")
+        if_node = CassNode(f"I#if_statement#if{dollar_signs}")
 
         # Condition
         cond_node = self.visit(ctx.conditionClause())
         if_node.add_child(cond_node)
 
         # Single "if" body statement
-        if_body_node = self.visit(ctx.statement(0))
+        if_body_node = self.visit(ctx.statement())
         if_node.add_child(if_body_node)
 
         # Optional "else"
-        if ctx.statement(1):
-            else_node = CassNode("I#else_clause#else$")
-            else_body_node = self.visit(ctx.statement(1))
-            #else_node.add_child(CassNode("1"))
-            else_node.add_child(else_body_node)
+        if ctx.elseClause():
+            else_node = self.visit(ctx.elseClause())
             if_node.add_child(else_node)
 
         return if_node
@@ -366,7 +387,7 @@ class MyCassVisitor(CASSVisitor):
         
         # Otherwise, create a node to represent the OR operation
         node = CassNode("I#binary_expression#$||$")
-        node.add_child(CassNode("2"))
+        
         
         for expr in ctx.logicalAndExpression():
             node.add_child(self.visit(expr))
@@ -378,7 +399,7 @@ class MyCassVisitor(CASSVisitor):
             return self.visit(ctx.equalityExpression(0))
         
         node = CassNode("I#binary_expression#$&&$")
-        node.add_child(CassNode("2"))
+        
         
         for expr in ctx.equalityExpression():
             node.add_child(self.visit(expr))
@@ -390,7 +411,7 @@ class MyCassVisitor(CASSVisitor):
             return self.visit(ctx.relationalExpression(0))
         
         node = CassNode(f"I#binary_expression#${ctx.getChild(1).getText()}$")
-        node.add_child(CassNode("2"))
+        
         
         lhs = self.visit(ctx.relationalExpression(0))  # Left operand
         rhs = self.visit(ctx.relationalExpression(1))  # Right operand
