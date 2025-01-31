@@ -1,7 +1,6 @@
 int main() {
     int num;
-    printf("Please enter a non-negative integer: ");
-    scanf("%d", &num);
+   
 
     if (num < 0) {
         printf("Error: Negative input is not allowed.\n");

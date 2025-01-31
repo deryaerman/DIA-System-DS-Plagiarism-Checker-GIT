@@ -41,15 +41,15 @@ statement
     ;
 
 declarationStatement
-    : typeSpec POINTER* (primaryExpression || arrayDeclarator) ('=' (statement | nullptr ';' | emptyInitializer ';'))? 
+    : typeSpec POINTER* (primaryExpression || arrayDeclarator) ('=' (expression || nullptr || emptyInitializer))? ';'?
     ;
 
 forBlockStatement
-    : 'for' '(' (declarationStatement? || assignmentExpression?) ';' logicalOrExpression? ';' unaryExpression? ')' compoundStatement
+    : 'for' '(' (declarationStatement || assignmentExpression) ';' logicalOrExpression ';' unaryExpression ')' compoundStatement
     ;
 
 forSingleStatement
-    : 'for' '(' (declarationStatement? || assignmentExpression?) ';' logicalOrExpression? ';' unaryExpression? ')' statement
+    : 'for' '(' (declarationStatement?|| assignmentExpression) ';' logicalOrExpression ';' unaryExpression ')' statement
     ;
 
 conditionClause
@@ -147,6 +147,7 @@ typeSpec
 
 expression
     : assignmentExpression
+    | functionCall
     ;
 
 defaultExpression

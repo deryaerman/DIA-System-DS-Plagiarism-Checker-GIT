@@ -6,12 +6,12 @@ from CASSParser import CASSParser
 from MyCASSVisitor import MyCassVisitor
 from CASSNode import assign_usage_links
 
-def drive_tree(input_file):
-    #if len(sys.argv) < 2:
-        #print("Usage: python driver.py <input_file>")
-        #sys.exit(1)
+def drive_tree():
+    if len(sys.argv) < 2:
+        print("Usage: python driver.py <input_file>")
+        sys.exit(1)
 
-    #input_file = sys.argv[1]
+    input_file = sys.argv[1]
 
     # 1) Lex & parse
     input_stream = FileStream(input_file)
@@ -69,5 +69,5 @@ def drive_tree(input_file):
     
 
 if __name__ == "__main__":
-    input_file = "input_code_ez.c"
-    print(drive_tree(input_file))
+    
+    drive_tree()

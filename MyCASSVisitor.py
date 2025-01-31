@@ -204,7 +204,7 @@ class MyCassVisitor(CASSVisitor):
         #Array handling
         if ctx.arrayDeclarator():
             
-            if ctx.emptyInitializer() or ctx.nullptr() or ctx.statement() :
+            if ctx.emptyInitializer() or ctx.nullptr() or ctx.expression() :
                 
                 placeholder = '$'
 
@@ -216,8 +216,8 @@ class MyCassVisitor(CASSVisitor):
                 if(ctx.nullptr()):
                     placeholder = "nullptr"
 
-                if ctx.statement():
-                    helperNode = self.visit(ctx.statement())
+                if ctx.expression():
+                    helperNode = self.visit(ctx.expression())
                     array_decl.add_child(helperNode)
                     
         
@@ -242,13 +242,13 @@ class MyCassVisitor(CASSVisitor):
     
             pointer_node = CassNode("I#pointer_declarator#*$")
 
-            if ctx.POINTER() and not(ctx.nullptr()) and not(ctx.emptyInitializer()) and not(ctx.statement()) :
+            if ctx.POINTER() and not(ctx.nullptr()) and not(ctx.emptyInitializer()) and not(ctx.expression()) :
 
                 pointer_node.add_child(self.visit(ctx.primaryExpression()))
                 decl_node.add_child(pointer_node)
                 return decl_node
             
-            if ctx.statement() or ctx.nullptr() or ctx.emptyInitializer():
+            if ctx.expression() or ctx.nullptr() or ctx.emptyInitializer():
 
                 placeholder = '$'
 
@@ -258,8 +258,8 @@ class MyCassVisitor(CASSVisitor):
                 if(ctx.nullptr()):
                     placeholder = "nullptr"
                 
-                if ctx.statement():
-                    helperNode = self.visit(ctx.statement())
+                if ctx.expression():
+                    helperNode = self.visit(ctx.expression())
 
                 assign_node = CassNode(f"I#init_declarator#$={placeholder}")
                 
@@ -267,7 +267,7 @@ class MyCassVisitor(CASSVisitor):
 
                     pointer_node.add_child(self.visit(ctx.primaryExpression()))
                     
-                    if ctx.statement():
+                    if ctx.expression():
                         pointer_node.add_child(helperNode)
                     
                     assign_node.add_child(pointer_node)
@@ -276,7 +276,7 @@ class MyCassVisitor(CASSVisitor):
                     
                     assign_node.add_child(self.visit(ctx.primaryExpression()))
                     
-                    if ctx.statement():
+                    if ctx.expression():
                         assign_node.add_child(helperNode)
 
                 
